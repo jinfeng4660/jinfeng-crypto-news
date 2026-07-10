@@ -1,0 +1,12 @@
+<item>
+<title>Crypto Biz: How stablecoins found their niche</title>
+<description>Stablecoins are carving out specialized roles.</description>
+</item>
+<item>
+<title>Bitcoin whales sent BTC price to $64K as Coinbase Premium broke key level</title>
+<description>US whales propel BTC to $64K.</description>
+</item>
+<item>
+<title>Circle gets OCC approval for national trust bank</title>
+<description>Circle receives final OCC approval.</description>
+</item>

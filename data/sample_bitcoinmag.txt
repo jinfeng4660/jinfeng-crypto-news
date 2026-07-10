@@ -1,0 +1,4 @@
+<item>
+<title>Metaplanet Announces Joint Study to Bring Bitcoin-Backed Digital Credit to Japan</title>
+<description>Metaplanet launches study for BTC-backed credit in Japan.</description>
+</item>

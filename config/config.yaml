@@ -1,0 +1,105 @@
+# Signal - 全球加密快讯智能推送系统
+# 金峰策略 · 2026-07-11 定型版
+
+project:
+  name: "Signal"
+  version: "0.4.0"
+  author: "金峰策略"
+  description: "全球加密快讯智能推送系统 - 四层评分 + 按时段分层推送"
+
+# =============================================
+# 第一层：数据源层
+# =============================================
+sources:
+  web:
+    enabled: true
+    panews:
+      name: "PANews"
+      url: "https://www.panewslab.com/"
+      lang: "zh"
+      enabled: true
+    cryptopanic:
+      name: "CryptoPanic"
+      url: "https://cryptopanic.com/news"
+      lang: "en"
+      enabled: true
+    cointelegraph:
+      name: "Cointelegraph"
+      url: "https://cointelegraph.com/rss"
+      lang: "en"
+      enabled: true
+    bitcoinmag:
+      name: "Bitcoin Magazine"
+      url: "https://bitcoinmagazine.com/.rss/full/"
+      lang: "en"
+      enabled: true
+
+# =============================================
+# 第二层：去重与翻译
+# =============================================
+processing:
+  dedup:
+    method: "fingerprint"  # 基于英文品牌词的内容指纹
+    key: "en_first_word"   # 取第一个4+字母英文词作为主指纹
+  translation:
+    enabled: true
+    engine: "mapping_table"  # 30条精确标题映射 + 50+关键词替换
+
+# =============================================
+# 第三层：四层评分引擎
+# =============================================
+scoring:
+  enabled: true
+  engine: "keyword_levels"
+  push_all: true
+  levels:
+    S:
+      name: "交易级信号"
+      emoji: "🔴"
+      desc: "直接影响交易决策——链上资金/爆仓/交易所挤兑/监管突变/宏观数据"
+    A:
+      name: "重要趋势"
+      emoji: "🟠"
+      desc: "影响中期判断——机构动态/地缘政治/链上数据"
+    B:
+      name: "辅助参考"
+      emoji: "⚡"
+      desc: "有价值但非紧急——生态进展/L1更新/项目进展"
+    C:
+      name: "一般资讯"
+      emoji: "💡"
+      desc: "背景参考——研究报告/行业观点"
+
+# =============================================
+# 第四层：智能分析引擎
+# =============================================
+analysis:
+  engine: "regex_rules"  # 50+条正则，自动判断偏多/偏空/观望
+  risk_first: true       # 偏空信号优先（风控原则）
+
+# =============================================
+# 第五层：推送层（按时段分层）
+# =============================================
+push:
+  safew:
+    enabled: true
+    bot_token: "14005993:3GJmLY4TjcPKUJG7kkaLUnNSYaVrwLu1cBT"
+    chat_id: "10000698411"
+  feishu:
+    enabled: true
+    webhook_url: "https://open.feishu.cn/open-apis/bot/v2/hook/6bef4316-a7ec-44f1-b692-9ff1217ff8f5"
+  
+  schedule:
+    # 静默时段 00:00-05:59：全部积压
+    # 06:00：每日首推（夜间积压全量推送，含S级）
+    # 06:00-23:00：S级实时推，A/B/C每小时积压后统推
+    # 23:00-23:59：最后一批采集+flush后进入静默
+    quiet_hours_start: 0
+    quiet_hours_end: 5
+    batch_interval_hours: 1
+
+logging:
+  level: "INFO"
+  file: "data/signal.log"
+  max_size_mb: 10
+  backup_count: 3

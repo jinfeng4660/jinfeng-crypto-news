@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>金峰策略 · 全球加密快讯</title>
+<meta name="description" content="金峰策略全球加密快讯 - 实时加密货币新闻聚合与智能分析">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0d1117; color: #c9d1d9; min-height: 100vh; }
+::selection { background: #ffd70040; }
+
+/* Header */
+.header { background: linear-gradient(135deg, #161b22 0%, #0d1117 100%); border-bottom: 1px solid #30363d; padding: 24px 20px; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(12px); }
+.header-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.header h1 { font-size: 22px; font-weight: 700; color: #ffd700; }
+.header h1 span { color: #8b949e; font-weight: 400; }
+.header-time { font-size: 13px; color: #8b949e; }
+
+/* Stats Bar */
+.stats-bar { max-width: 1100px; margin: 20px auto; padding: 0 20px; display: flex; gap: 16px; flex-wrap: wrap; }
+.stat-item { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 12px 16px; min-width: 100px; flex: 1; }
+.stat-item .stat-num { font-size: 24px; font-weight: 700; }
+.stat-item .stat-label { font-size: 12px; color: #8b949e; margin-top: 2px; }
+.stat-s .stat-num { color: #ff4444; }
+.stat-a .stat-num { color: #ff8c00; }
+.stat-b .stat-num { color: #f0c040; }
+.stat-c .stat-num { color: #888; }
+
+/* Layout */
+.main-layout { max-width: 1100px; margin: 0 auto; padding: 0 20px 60px; display: grid; grid-template-columns: 1fr 280px; gap: 24px; }
+
+/* News Feed */
+.news-feed { min-width: 0; }
+.news-feed h2 { font-size: 16px; color: #8b949e; margin-bottom: 16px; font-weight: 500; }
+
+/* Card */
+.card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; margin-bottom: 12px; padding: 16px; display: flex; gap: 14px; border-left: 3px solid; transition: border-color 0.2s, background 0.2s; }
+.card:hover { border-color: #58a6ff; background: #1c2128; }
+.card-votes { display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 40px; }
+.vote-btn { background: none; border: 1px solid #30363d; border-radius: 6px; color: #8b949e; cursor: pointer; font-size: 12px; padding: 4px 8px; transition: all 0.15s; }
+.vote-btn:hover { border-color: #58a6ff; color: #58a6ff; background: #1f6feb20; }
+.vote-btn.up:hover { border-color: #3fb950; color: #3fb950; background: #3fb95020; }
+.vote-btn.down:hover { border-color: #f85149; color: #f85149; background: #f8514920; }
+.vote-count { font-size: 13px; font-weight: 600; color: #c9d1d9; }
+.card-body { flex: 1; min-width: 0; }
+.card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
+.level-badge { font-size: 11px; padding: 2px 8px; border-radius: 12px; font-weight: 600; letter-spacing: 0.3px; }
+.source-badge { font-size: 11px; color: #8b949e; background: #21262d; padding: 2px 8px; border-radius: 10px; }
+.card-title { font-size: 15px; font-weight: 600; line-height: 1.4; margin-bottom: 8px; color: #e6edf3; }
+.card-title a { color: inherit; text-decoration: none; }
+.card-title a:hover { color: #58a6ff; }
+.card-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+.signal-tag { font-size: 12px; padding: 2px 8px; border-radius: 10px; background: #21262d; color: #8b949e; }
+.card-analysis { font-size: 13px; color: #8b949e; line-height: 1.5; margin-bottom: 6px; }
+.card-summary { font-size: 12px; color: #484f58; line-height: 1.4; }
+
+/* Sidebar */
+.sidebar { position: sticky; top: 100px; align-self: start; }
+.sidebar-section { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 16px; margin-bottom: 16px; }
+.sidebar-section h3 { font-size: 14px; color: #c9d1d9; margin-bottom: 12px; font-weight: 600; }
+.filter-btn { display: block; width: 100%; background: none; border: 1px solid #30363d; border-radius: 6px; color: #c9d1d9; cursor: pointer; font-size: 13px; padding: 8px 12px; margin-bottom: 6px; text-align: left; transition: all 0.15s; }
+.filter-btn:hover { border-color: #58a6ff; background: #1f6feb10; }
+.filter-btn .count { float: right; color: #8b949e; }
+.filter-btn.active { border-color: #58a6ff; background: #1f6feb20; }
+.filter-s.active { border-color: #ff4444; background: #ff444410; }
+.filter-a.active { border-color: #ff8c00; background: #ff8c0010; }
+.filter-b.active { border-color: #f0c040; background: #f0c04010; }
+.filter-c.active { border-color: #888; background: #88810; }
+
+/* Footer */
+.footer { text-align: center; padding: 32px 20px; border-top: 1px solid #30363d; max-width: 1100px; margin: 0 auto; }
+.footer p { font-size: 12px; color: #484f58; }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .main-layout { grid-template-columns: 1fr; }
+    .sidebar { position: static; }
+    .card { padding: 12px; }
+    .card-votes { min-width: 32px; }
+    .vote-btn { padding: 2px 6px; font-size: 10px; }
+    .stats-bar { gap: 8px; }
+    .stat-item { padding: 8px 12px; min-width: 60px; }
+    .stat-item .stat-num { font-size: 18px; }
+    .header h1 { font-size: 18px; }
+}
+
+/* Filter hide */
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<header class="header">
+<div class="header-inner">
+    <h1>金峰策略 <span>· 全球加密快讯</span></h1>
+    <span class="header-time">🕐 2026-07-11 01:27 CST</span>
+</div>
+</header>
+
+<div class="stats-bar">
+    <div class="stat-item stat-s"><div class="stat-num">7</div><div class="stat-label">🔴 交易级信号</div></div>
+    <div class="stat-item stat-a"><div class="stat-num">8</div><div class="stat-label">🟠 重要趋势</div></div>
+    <div class="stat-item stat-b"><div class="stat-num">9</div><div class="stat-label">⚡ 辅助参考</div></div>
+    <div class="stat-item stat-c"><div class="stat-num">1</div><div class="stat-label">💡 一般资讯</div></div>
+    <div class="stat-item" style="border-color:#ffd70030;">
+        <div class="stat-num" style="color:#ffd700;">25</div>
+        <div class="stat-label">📰 全部快讯</div>
+    </div>
+</div>
+
+<div class="main-layout">
+
+<div class="news-feed">
+    <h2>📰 快讯列表</h2>
+    <div id="news-list">
+        
+        <div class="card level-S" style="border-left-color: #ff4444;">
+            <div class="card-votes">
+                <button class="vote-btn up" onclick="vote(1,1)">▲</button>
+                <span class="vote-count" id="score-1">6</span>
+                <button class="vote-btn down" onclick="vote(1,-1)">▼</button>
+            </div>
+            <div class="card-body">
+                <div class="card-header">
+                    <span class="level-badge" style="background:#ff444420;color:#ff4444">🔴 交易级信号</span>
+                    <span class="source-badge">PANews</span>
+                </div>
+                <div class="card-title">CoinGlass：过去24小时爆仓逾2.35亿美元，主爆空单</div>
+                <div class="card-meta">
+                    <span class="signal-tag">⏸️ 观望</span>
+                </div>
+                <div class="card-analysis"></div>
+                <div class="card-summary">PANews 7月10日消息，据CoinGlass，过去24小时全球爆仓58,248人，总金额约2.35亿美元，空单爆仓1.67亿美元。</div>
+            </div>
+        </div>
+        <div class="card level-S" style="border-left-color: #ff4444;">
+            <div class="card-votes">
+                <button class="vote-btn up" onclick="vote(2,1)">▲</button>
+                <span class="vote-count" id="score-2">2</span>
+                <button class="vote-btn down" onclick="vote(2,-1)">▼</button>
+            </div>
+            <div class="card-body">
+                <div class="card-header">
+                    <span class="level-badge" style="background:#ff444420;color:#ff4444">🔴 交易级信号</span>
+                    <span class="source-badge">PANews</span>
+                </div>
+                <div class="card-title">加密友好银行Nubank获墨西哥银行牌照</div>
+                <div class="card-meta">
+                    <span class="signal-tag">⏸️ 观望</span>
+                </div>
+                <div class="card-analysis"></div>
+                <div class="card-summary"></div>
+            </div>
+        </div>
+        <div class="card level-S" style="border-left-color: #ff4444;">
+            <div class="card-votes">
+                <button class="vote-btn up" onclick="vote(3,1)">▲</button>
+                <span class="vote-count" id="score-3">2</span>
+                <button class="vote-btn down" onclick="vote(3,-1)">▼</button>
+            </div>
+            <div class="card-body">
+                <div class="card-header">
+                    <span class="level-badge" style="background:#ff444420;color:#ff4444">🔴 交易级信号</span>
+                    <span class="source-badge">PANews</span>
+                </div>
+                <div class="card-title">James Wynn高杠杆做空标普500屡遭爆仓，累计亏损2200万美元</div>
+                <div class="card-meta">
+                    <span class="signal-tag">⏸️ 观望</span>
+                </div>
+                <div class="card-analysis"></div>
+                <div class="card-summary"></div>
+            </div>
+        </div>
+        <div class="card level-S" style="border-left-color: #ff4444;">
+            <div class="card-votes">
+                <button class="vote-btn up" onclick="vote(4,1)">▲</button>
+                <span class="vote-count" id="score-4">2</span>
+                <button class="vote-btn down" onclick="vote(4,-1)">▼</button>
+            </div>
+            <div class="card-body">
+                <div class="card-header">
+                    <span class="level-badge" style="background:#ff444420;color:#ff4444">🔴 交易级信号</span>
+                    <span class="source-badge">PANews</span>
+                </div>
+                <div class="card-title">Strategy比特币出售扰动市场，渣打仍坚持年末10万美元目标</div>
+                <div class="card-meta">
+                    <span class="signal-tag">⏸️ 观望</span>
+                </div>
+                <div class="card-analysis"></div>
+                <div class="card-summary"></div>
+            </div>
+        </div>
+        <div class="card level-S" style="border-left-color: #ff4444;">
+            <div class="card-votes">
+                <button class="vote-btn up" onclick="vote(5,1)">▲</button>
+                <span class="vote-count" id="score-5">2</span>
+                <button class="vote-btn down" onclick="vote(5,-1)">▼</button>
+            </div>
+            <div class="card-body">
+                <div class="card-header">
+                    <span class="level-badge" style="background:#ff444420;color:#ff4444">🔴 交易级信号</span>
+                    <span class="source-badge">CryptoPanic</span>
+                </div>
+                <div class="card-title">巨鲸亏损452万美元</div>
+                <div class="card-meta">
+                    <span class="signal-tag">⏸️ 观望</span>
+                </div>
+                <div class="card-analysis"></div>
+                <div class="card-summary"></div>
+            </div>
+        </div>
+        <div class="card level-S" style="border-left-color: #ff4444;">
+            <div class="card-votes">
+                <button class="vote-btn up" onclick="vote(6,1)">▲</button>
+                <span class="vote-count" id="score-6">2</span>
+                <button class="vote-btn down" onclick="vote(6,-1)">▼</button>
+            </div>
+            <div class="card-body">
+                <div class="card-header">
+                    <span class="level-badge" style="background:#ff444420;color:#ff4444">🔴 交易级信号</span>
+                    <span class="source-badge">CryptoPanic</span>
+                </div>
+                <div class="card-title">华尔街准备迎接BTC暴涨</div>
+                <div class="card-meta">
+                    <span class="signal-tag">⏸️ 观望</span>
+                </div>
+                <div class="card-analysis"></div>
+                <div class="card-summary"></div>
+            </div>
+        </div>
+        <div class="card level-S" style="border-left-color: #ff4444;">
+            <div class="card-votes">
+                <button class="vote-btn up" onclick="vote(7,1)">▲</button>
+                <span class="vote-count" id="score-7">2</span>
+                <button class="vote-btn down" onclick="vote(7,-1)">▼</button>
+            </div>
+            <div class="card-body">
+                <div class="card-header">
+                    <span class="level-badge" style="background:#ff444420;color:#ff4444">🔴 交易级信号</span>
+                    <span class="source-badge">CryptoPanic</span>
+                </div>
+                <div class="card-title">交易所挤兑警告</div>
+                <div class="card-meta">
+                    <span class="signal-tag">⏸️ 观望</span>
+                </div>
+                <div class="card-analysis"></div>
+                <div class="card-summary"></div>
+            </div>
+        </div>
+        <div class="card level-A" style="border-left-color: #ff8c00;">
+            <div class="card-votes">
+                <button class="vote-btn up" onclick="vote(8,1)">▲</button>
+                <span class="vote-count" id="score-8">12</span>
+                <button class="vote-btn down" onclick="vote(8,-1)">▼</button>
+            </div>
+            <div class="card-body">
+                <div class="card-header">
+                    <span class="level-badge" style="background:#ff8c0020;color:#ff8c00">🟠 重要趋势</span>
+                    <span class="source-badge">Cointelegraph</span>
+                </div>
+                <div class="card-title">Circle获OCC批准</div>
+                <div class="card-meta">
+                    <span class="signal-tag">⏸️ 观望</span>
+                </div>
+                <div class="card-analysis"></div>
+                <div class="card-summary">Circle receives final OCC approval.</div>
+            </div>
+        </div>
+        <div class="card level-A" style="border-left-color: #ff8c00;">
+            <div class="card-votes">
+                <button class="vote-btn up" onclick="vote(9,1)">▲</button>
+                <span class="vote-count" id="score-9">6</span>
+                <button class="vote-btn down" onclick="vote(9,-1)">▼</button>
+            </div>
+            <div class="card-body">
+                <div class="card-header">
+                    <span class="level-badge" style="background:#ff8c0020;color:#ff8c00">🟠 重要趋势</span>
+                    <span class="source-badge">PANews</span>
+                </div>
+                <div class="card-title">美国民主党高层在投票前夕抨击特朗普加密货币政策</div>
+                <div class="card-meta">
+                    <span class="signal-tag">⏸️ 观望</span>
+                </div>
+                <div class="card-analysis"></div>
+                <div class="card-summary">PANews 7月10日消息，五位参议员抨击特朗普施压国会通过加密法案。</div>
+            </div>
+        </div>
+        <div class="card level-A" style="border-left-color: #ff8c00;">
+            <div class="card-votes">
+                <button class="vote-btn up" onclick="vote(10,1)">▲</button>
+                <span class="vote-count" id="score-10">6</span>
+                <button class="vote-btn down" onclick="vote(10,-1)">▼</button>
+            </div>
+            <div class="card-body">
+                <div class="card-header">
+                    <span class="level-badge" style="background:#ff8c0020;color:#ff8c00">🟠 重要趋势</span>
+                    <span class="source-badge">PANews</span>
+                </div>
+                <div class="card-title">BTC跌破64000美元，日内涨幅 1.78%</div>
+                <div class="card-meta">
+                    <span class="signal-tag">⏸️ 观望</span>
+                </div>
+                <div class="card-analysis"></div>
+                <div class="card-summary">PANews 7月10日消息，BTC跌破64000美元，现报63977.70美元。</div>
+            </div>
+        </div>
+        <div class="card level-A" style="border-left-color: #ff8c00;">
+            <div class="card-votes">
+                <button class="vote-btn up" onclick="vote(11,1)">▲</button>
+                <span class="vote-count" id="score-11">4</span>
+                <button class="vote-btn down" onclick="vote(11,-1)">▼</button>
+            </div>
+            <div class="card-body">
+                <div class="card-header">
+                    <span class="level-badge" style="background:#ff8c0020;color:#ff8c00">🟠 重要趋势</span>
+                    <span class="source-badge">PANews</span>
+                </div>
+                <div class="card-title">Kraken 推出 AI 代理交易</div>
+                <div class="card-meta">
+                    <span class="signal-tag">⏸️ 观望</span>
+                </div>
+                <div class="card-analysis"></div>
+                <div class="card-summary"></div>
+            </div>
+        </div>
+        <div class="card level-A" style="border-left-color: #ff8c00;">
+            <div class="card-votes">
+                <button class="vote-btn up" onclick="vote(12,1)">▲</button>
+                <span class="vote-count" id="score-12">4</span>
+                <button class="vote-btn down" onclick="vote(12,-1)">▼</button>
+            </div>
+            <div class="card-body">
+                <div class="card-header">
+                    <span class="level-badge" style="background:#ff8c0020;color:#ff8c00">🟠 重要趋势</span>
+                    <span class="source-badge">PANews</span>
+                </div>
+                <div class="card-title">USDC Treasury 在 Solana 上新铸造2.5亿枚 USDC</div>
+                <div class="card-meta">
+                    <span class="signal-tag">⏸️ 观望</span>
+                </div>
+                <div class="card-analysis"></div>
+                <div class="card-summary"></div>
+            </div>
+        </div>
+        <div class="card level-A" style="border-left-color: #ff8c00;">
+            <div class="card-votes">
+                <button class="vote-btn up" onclick="vote(13,1)">▲</button>
+                <span class="vote-count" id="score-13">2</span>
+                <button class="vote-btn down" onclick="vote(13,-1)">▼</button>
+            </div>
+            <div class="card-body">
+                <div class="card-header">
+                    <span class="level-badge" style="background:#ff8c0020;color:#ff8c00">🟠 重要趋势</span>
+                    <span class="source-badge">PANews</span>
+                </div>
+                <div class="card-title">Binance 上线 SK Hynix 美股永续合约</div>
+                <div class="card-meta">
+                    <span class="signal-tag">⏸️ 观望</span>
+                </div>
+                <div class="card-analysis"></div>
+                <div class="card-summary"></div>
+            </div>
+        </div>
+        <div class="card level-A" style="border-left-color: #ff8c00;">
+            <div class="card-votes">
+                <button class="vote-btn up" onclick="vote(14,1)">▲</button>
+                <span class="vote-count" id="score-14">2</span>
+                <button class="vote-btn down" onclick="vote(14,-1)">▼</button>
+            </div>
+            <div class="card-body">
+                <div class="card-header">
+                    <span class="level-badge" style="background:#ff8c0020;color:#ff8c00">🟠 重要趋势</span>
+                    <span class="source-badge">CryptoPanic</span>
+                </div>
+                <div class="card-title">Polymarket申请NFA牌照</div>
+                <div class="card-meta">
+                    <span class="signal-tag">⏸️ 观望</span>
+                </div>
+                <div class="card-analysis"></div>
+                <div class="card-summary"></div>
+            </div>
+        </div>
+        <div class="card level-A" style="border-left-color: #ff8c00;">
+            <div class="card-votes">
+                <button class="vote-btn up" onclick="vote(15,1)">▲</button>
+                <span class="vote-count" id="score-15">2</span>
+                <button class="vote-btn down" onclick="vote(15,-1)">▼</button>
+            </div>
+            <div class="card-body">
+                <div class="card-header">
+                    <span class="level-badge" style="background:#ff8c0020;color:#ff8c00">🟠 重要趋势</span>
+                    <span class="source-badge">CryptoPanic</span>
+                </div>
+                <div class="card-title">30年期收益率创新高</div>
+                <div class="card-meta">
+                    <span class="signal-tag">⏸️ 观望</span>
+                </div>
+                <div class="card-analysis"></div>
+                <div class="card-summary"></div>
+            </div>
+        </div>
+        <div class="card level-B" style="border-left-color: #f0c040;">
+            <div class="card-votes">
+                <button class="vote-btn up" onclick="vote(16,1)">▲</button>
+                <span class="vote-count" id="score-16">10</span>
+                <button class="vote-btn down" onclick="vote(16,-1)">▼</button>
+            </div>
+            <div class="card-body">
+                <div class="card-header">
+                    <span class="level-badge" style="background:#f0c04020;color:#f0c040">⚡ 辅助参考</span>
+                    <span class="source-badge">Bitcoin Magazine</span>
+                </div>
+                <div class="card-title">Metaplanet联合研究：BTC抵押数字信贷登陆日本</div>
+                <div class="card-meta">
+                    <span class="signal-tag">⏸️ 观望</span>
+                </div>
+                <div class="card-analysis"></div>
+                <div class="card-summary">Metaplanet launches study for BTC-backed credit in Japan.</div>
+            </div>
+        </div>
+        <div class="card level-B" style="border-left-color: #f0c040;">
+            <div class="card-votes">
+                <button class="vote-btn up" onclick="vote(17,1)">▲</button>
+                <span class="vote-count" id="score-17">8</span>
+                <button class="vote-btn down" onclick="vote(17,-1)">▼</button>
+            </div>
+            <div class="card-body">
+                <div class="card-header">
+                    <span class="level-badge" style="background:#f0c04020;color:#f0c040">⚡ 辅助参考</span>
+                    <span class="source-badge">PANews</span>
+                </div>
+                <div class="card-title">现代汽车在Avalanche公链上线内部跨境汇款系统</div>
+                <div class="card-meta">
+                    <span class="signal-tag">⏸️ 观望</span>
+                </div>
+                <div class="card-analysis"></div>
+                <div class="card-summary">PANews 7月10日消息，现代汽车成为首家使用稳定币跨境结算的韩国大企业。</div>
+            </div>
+        </div>
+        <div class="card level-B" style="border-left-color: #f0c040;">
+            <div class="card-votes">
+                <button class="vote-btn up" onclick="vote(18,1)">▲</button>
+                <span class="vote-count" id="score-18">6</span>
+                <button class="vote-btn down" onclick="vote(18,-1)">▼</button>
+            </div>
+            <div class="card-body">
+                <div class="card-header">
+                    <span class="level-badge" style="background:#f0c04020;color:#f0c040">⚡ 辅助参考</span>
+                    <span class="source-badge">CryptoPanic</span>
+                </div>
+                <div class="card-title">BNB Chain推AI代理链</div>
+                <div class="card-meta">
+                    <span class="signal-tag">⏸️ 观望</span>
+                </div>
+                <div class="card-analysis"></div>
+                <div class="card-summary"></div>
+            </div>
+        </div>
+        <div class="card level-B" style="border-left-color: #f0c040;">
+            <div class="card-votes">
+                <button class="vote-btn up" onclick="vote(19,1)">▲</button>
+                <span class="vote-count" id="score-19">6</span>
+                <button class="vote-btn down" onclick="vote(19,-1)">▼</button>
+            </div>
+            <div class="card-body">
+                <div class="card-header">
+                    <span class="level-badge" style="background:#f0c04020;color:#f0c040">⚡ 辅助参考</span>
+                    <span class="source-badge">Cointelegraph</span>
+                </div>
+                <div class="card-title">巨鲸推动BTC</div>
+                <div class="card-meta">
+                    <span class="signal-tag">⏸️ 观望</span>
+                </div>
+                <div class="card-analysis"></div>
+                <div class="card-summary">US whales propel BTC to $64K.</div>
+            </div>
+        </div>
+        <div class="card level-B" style="border-left-color: #f0c040;">
+            <div class="card-votes">
+                <button class="vote-btn up" onclick="vote(20,1)">▲</button>
+                <span class="vote-count" id="score-20">4</span>
+                <button class="vote-btn down" onclick="vote(20,-1)">▼</button>
+            </div>
+            <div class="card-body">
+                <div class="card-header">
+                    <span class="level-badge" style="background:#f0c04020;color:#f0c040">⚡ 辅助参考</span>
+                    <span class="source-badge">CryptoPanic</span>
+                </div>
+                <div class="card-title">Aave V3上线zkSync</div>
+                <div class="card-meta">
+                    <span class="signal-tag">⏸️ 观望</span>
+                </div>
+                <div class="card-analysis"></div>
+                <div class="card-summary"></div>
+            </div>
+        </div>
+        <div class="card level-B" style="border-left-color: #f0c040;">
+            <div class="card-votes">
+                <button class="vote-btn up" onclick="vote(21,1)">▲</button>
+                <span class="vote-count" id="score-21">4</span>
+                <button class="vote-btn down" onclick="vote(21,-1)">▼</button>
+            </div>
+            <div class="card-body">
+                <div class="card-header">
+                    <span class="level-badge" style="background:#f0c04020;color:#f0c040">⚡ 辅助参考</span>
+                    <span class="source-badge">Cointelegraph</span>
+                </div>
+                <div class="card-title">稳定币走向分化</div>
+                <div class="card-meta">
+                    <span class="signal-tag">⏸️ 观望</span>
+                </div>
+                <div class="card-analysis"></div>
+                <div class="card-summary">Stablecoins are carving out specialized roles.</div>
+            </div>
+        </div>
+        <div class="card level-B" style="border-left-color: #f0c040;">
+            <div class="card-votes">
+                <button class="vote-btn up" onclick="vote(22,1)">▲</button>
+                <span class="vote-count" id="score-22">2</span>
+                <button class="vote-btn down" onclick="vote(22,-1)">▼</button>
+            </div>
+            <div class="card-body">
+                <div class="card-header">
+                    <span class="level-badge" style="background:#f0c04020;color:#f0c040">⚡ 辅助参考</span>
+                    <span class="source-badge">PANews</span>
+                </div>
+                <div class="card-title">地址0xf02d亏损452万美元后再次10倍杠杆做空HYPE</div>
+                <div class="card-meta">
+                    <span class="signal-tag">⏸️ 观望</span>
+                </div>
+                <div class="card-analysis"></div>
+                <div class="card-summary"></div>
+            </div>
+        </div>
+        <div class="card level-B" style="border-left-color: #f0c040;">
+            <div class="card-votes">
+                <button class="vote-btn up" onclick="vote(23,1)">▲</button>
+                <span class="vote-count" id="score-23">2</span>
+                <button class="vote-btn down" onclick="vote(23,-1)">▼</button>
+            </div>
+            <div class="card-body">
+                <div class="card-header">
+                    <span class="level-badge" style="background:#f0c04020;color:#f0c040">⚡ 辅助参考</span>
+                    <span class="source-badge">CryptoPanic</span>
+                </div>
+                <div class="card-title">现代汽车用稳定币汇款</div>
+                <div class="card-meta">
+                    <span class="signal-tag">⏸️ 观望</span>
+                </div>
+                <div class="card-analysis"></div>
+                <div class="card-summary"></div>
+            </div>
+        </div>
+        <div class="card level-B" style="border-left-color: #f0c040;">
+            <div class="card-votes">
+                <button class="vote-btn up" onclick="vote(24,1)">▲</button>
+                <span class="vote-count" id="score-24">2</span>
+                <button class="vote-btn down" onclick="vote(24,-1)">▼</button>
+            </div>
+            <div class="card-body">
+                <div class="card-header">
+                    <span class="level-badge" style="background:#f0c04020;color:#f0c040">⚡ 辅助参考</span>
+                    <span class="source-badge">CryptoPanic</span>
+                </div>
+                <div class="card-title">Tom Lee：加密是新存储交易</div>
+                <div class="card-meta">
+                    <span class="signal-tag">⏸️ 观望</span>
+                </div>
+                <div class="card-analysis"></div>
+                <div class="card-summary"></div>
+            </div>
+        </div>
+        <div class="card level-C" style="border-left-color: #888;">
+            <div class="card-votes">
+                <button class="vote-btn up" onclick="vote(25,1)">▲</button>
+                <span class="vote-count" id="score-25">2</span>
+                <button class="vote-btn down" onclick="vote(25,-1)">▼</button>
+            </div>
+            <div class="card-body">
+                <div class="card-header">
+                    <span class="level-badge" style="background:#88820;color:#888">💡 一般资讯</span>
+                    <span class="source-badge">CryptoPanic</span>
+                </div>
+                <div class="card-title">剑桥研究</div>
+                <div class="card-meta">
+                    <span class="signal-tag">⏸️ 观望</span>
+                </div>
+                <div class="card-analysis"></div>
+                <div class="card-summary"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<aside class="sidebar">
+    <div class="sidebar-section">
+        <h3>📊 筛选级别</h3>
+        <button class="filter-btn active" onclick="filterAll()">全部 <span class="count">25</span></button>
+        <button class="filter-btn filter-s active" onclick="filterLevel('S')">🔴 交易级 <span class="count">7</span></button>
+        <button class="filter-btn filter-a active" onclick="filterLevel('A')">🟠 重要趋势 <span class="count">8</span></button>
+        <button class="filter-btn filter-b active" onclick="filterLevel('B')">⚡ 辅助参考 <span class="count">9</span></button>
+        <button class="filter-btn filter-c active" onclick="filterLevel('C')">💡 一般资讯 <span class="count">1</span></button>
+    </div>
+    <div class="sidebar-section">
+        <h3>📡 数据源</h3>
+        <div style="font-size:13px;color:#8b949e;line-height:1.8;">
+            PANews: 11条<br>
+            CryptoPanic: 10条<br>
+            Cointelegraph: 3条<br>
+            Bitcoin Magazine: 1条<br>
+        </div>
+    </div>
+    <div class="sidebar-section">
+        <h3>🔗 链接</h3>
+        <p style="font-size:13px;color:#8b949e;line-height:1.8;">
+            <a href="https://cryptopanic.com" style="color:#58a6ff;text-decoration:none;" target="_blank">CryptoPanic</a><br>
+            <a href="https://www.panewslab.com" style="color:#58a6ff;text-decoration:none;" target="_blank">PANews</a><br>
+            <a href="https://cointelegraph.com" style="color:#58a6ff;text-decoration:none;" target="_blank">Cointelegraph</a><br>
+            <a href="https://bitcoinmagazine.com" style="color:#58a6ff;text-decoration:none;" target="_blank">Bitcoin Magazine</a>
+        </p>
+    </div>
+</aside>
+
+</div>
+
+<footer class="footer">
+    <p>金峰策略 · 仅供研究参考 · 不构成投资建议</p>
+    <p style="margin-top:4px;">🕐 2026-07-11 01:27 CST · 数据来源: PANews / CryptoPanic / Cointelegraph / Bitcoin Magazine</p>
+</footer>
+
+<script>
+let currentFilter = 'ALL';
+
+function filterLevel(lv) {
+    const cards = document.querySelectorAll('.card');
+    const btns = document.querySelectorAll('.filter-btn');
+    if (currentFilter === lv) {
+        currentFilter = 'ALL';
+        btns.forEach(b => b.classList.add('active'));
+        cards.forEach(c => c.classList.remove('hidden'));
+        return;
+    }
+    currentFilter = lv;
+    const targetBtns = document.querySelectorAll('.filter-'+lv.toLowerCase());
+    btns.forEach(b => b.classList.remove('active'));
+    document.querySelector('.filter-btn:first-child')?.classList.remove('active');
+    targetBtns.forEach(b => b.classList.add('active'));
+    cards.forEach(c => {
+        if (c.classList.contains('level-'+lv)) {
+            c.classList.remove('hidden');
+        } else {
+            c.classList.add('hidden');
+        }
+    });
+}
+
+function filterAll() {
+    currentFilter = 'ALL';
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.add('active'));
+    document.querySelectorAll('.card').forEach(c => c.classList.remove('hidden'));
+}
+
+function vote(id, dir) {
+    const el = document.getElementById('score-'+id);
+    if (!el) return;
+    let cur = parseInt(el.textContent) || 0;
+    cur += dir;
+    el.textContent = cur;
+    el.style.color = dir > 0 ? '#3fb950' : '#f85149';
+    setTimeout(() => el.style.color = '', 500);
+}
+</script>
+
+</body>
+</html>
