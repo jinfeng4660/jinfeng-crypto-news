@@ -33,6 +33,16 @@ sources:
       url: "https://bitcoinmagazine.com/.rss/full/"
       lang: "en"
       enabled: true
+    coindesk:
+      name: "CoinDesk"
+      url: "https://www.coindesk.com/"
+      lang: "en"
+      enabled: true
+    decrypt:
+      name: "Decrypt"
+      url: "https://decrypt.co/"
+      lang: "en"
+      enabled: true
 
 # =============================================
 # 第二层：去重与翻译
@@ -82,11 +92,11 @@ analysis:
 # =============================================
 push:
   safew:
-    enabled: true
+    enabled: false
     bot_token: "14005993:3GJmLY4TjcPKUJG7kkaLUnNSYaVrwLu1cBT"
     chat_id: "10000698411"
   feishu:
-    enabled: true
+    enabled: false
     webhook_url: "https://open.feishu.cn/open-apis/bot/v2/hook/6bef4316-a7ec-44f1-b692-9ff1217ff8f5"
   
   schedule:
