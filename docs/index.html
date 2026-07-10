@@ -95,11 +95,6 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif
 .footer { text-align:center; padding:24px 20px; border-top:1px solid #30363d; max-width:1100px; margin:0 auto; }
 .footer p { font-size:11px; color:#484f58; }
 
-/* Bookmark */
-.bookmark-btn { background:none; border:none; color:#484f58; cursor:pointer; font-size:14px; margin-left:auto; transition:color .15s; }
-.bookmark-btn:hover { color:#ffd700; }
-.bookmark-btn.bookmarked { color:#ffd700; }
-
 /* Animation */
 @keyframes fadeIn { from { opacity:0;transform:translateY(8px); } to { opacity:1;transform:translateY(0); } }
 .card { animation:fadeIn .3s ease; }
@@ -108,25 +103,16 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif
 @media (max-width:768px) {
     .main-layout { grid-template-columns:1fr; }
     .sidebar { position:static; }
-    .card { padding:10px; gap:8px; }
-    .card-votes { min-width:30px; gap:3px; }
+    .card { padding:10px; }
+    .card-votes { min-width:30px; }
     .vote-btn { font-size:10px; padding:2px 6px; }
     .stats-bar { gap:6px; }
     .stat-item { padding:8px 10px; min-width:60px; }
     .stat-item .stat-num { font-size:18px; }
     .header h1 { font-size:16px; }
-    .header h1 span { display:none; }
     .ticker { padding:6px 12px; }
     .ticker-inner { gap:12px; }
     .ticker-item { font-size:11px; }
-    .coin-bar { justify-content:center; gap:4px; }
-    .coin-btn { font-size:11px; padding:4px 10px; }
-    .card-title { font-size:13px; }
-    .card-analysis { font-size:11px; }
-    .card-header { gap:4px; }
-    .sidebar-section { padding:10px; }
-    #fgi-box { flex-direction:column; }
-    .search-bar input { font-size:13px; padding:8px 12px; }
 }
 
 .hidden { display:none !important; }
@@ -146,7 +132,7 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif
 <header class="header">
 <div class="header-inner">
     <h1>金峰策略 <span>· 全球加密快讯</span></h1>
-    <span class="header-time" id="header-time">🕐 2026-07-11 02:40 CST</span>
+    <span class="header-time" id="header-time">🕐 2026-07-11 02:27 CST</span>
 </div>
 <div class="search-bar">
     <input type="text" id="search-input" placeholder="🔍 搜索新闻标题..." oninput="doSearch(this.value)">
@@ -154,11 +140,11 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif
 </header>
 
 <div class="stats-bar" id="stats-bar">
-    <div class="stat-item stat-s" onclick="filterByLevel('ALL')"><div class="stat-num">18</div><div class="stat-label">📰 全部</div></div>
-    <div class="stat-item stat-s" onclick="filterByLevel('S')"><div class="stat-num">2</div><div class="stat-label">🔴 S交易级</div></div>
+    <div class="stat-item stat-s" onclick="filterByLevel('ALL')"><div class="stat-num">25</div><div class="stat-label">📰 全部</div></div>
+    <div class="stat-item stat-s" onclick="filterByLevel('S')"><div class="stat-num">7</div><div class="stat-label">🔴 S交易级</div></div>
     <div class="stat-item stat-a" onclick="filterByLevel('A')"><div class="stat-num">8</div><div class="stat-label">🟠 A重要趋势</div></div>
-    <div class="stat-item stat-b" onclick="filterByLevel('B')"><div class="stat-num">8</div><div class="stat-label">⚡ B辅助参考</div></div>
-    <div class="stat-item stat-c" onclick="filterByLevel('C')"><div class="stat-num">0</div><div class="stat-label">💡 C资讯</div></div>
+    <div class="stat-item stat-b" onclick="filterByLevel('B')"><div class="stat-num">9</div><div class="stat-label">⚡ B辅助参考</div></div>
+    <div class="stat-item stat-c" onclick="filterByLevel('C')"><div class="stat-num">1</div><div class="stat-label">💡 C资讯</div></div>
 </div>
 
 <div class="coin-bar" id="coin-bar">
@@ -177,7 +163,7 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif
 <div class="news-feed">
     <div class="news-feed-header">
         <h2>📰 快讯列表</h2>
-        <span id="feed-count">18 条</span>
+        <span id="feed-count">25 条</span>
     </div>
     <div id="news-list">
         
@@ -196,11 +182,11 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif
                 </div>
                 <div class="card-title">CoinGlass：过去24小时爆仓逾2.35亿美元，主爆空单</div>
                 <div class="card-analysis">💡 市场关注度提升，需结合技术面综合判断</div>
-                <div class="card-summary">市场关注度提升，需结合技术面综合判断</div>
+                <div class="card-summary">PANews 7月10日消息，据CoinGlass，过去24小时全球爆仓58,248人，总金额约2.35亿美元，空单爆仓1.67亿美元。</div>
                 <div class="card-footer">
-                    <span class="vote-info" id="vote-bullish-0">👍 11</span>
-                    <span class="vote-info" id="vote-bearish-0">👎 8</span>
-                    <span class="vote-info" id="vote-important-0">⚡ 11</span>
+                    <span class="vote-info" id="vote-bullish-0">👍 26</span>
+                    <span class="vote-info" id="vote-bearish-0">👎 27</span>
+                    <span class="vote-info" id="vote-important-0">⚡ 6</span>
                 </div>
             </div>
         </div>
@@ -213,21 +199,21 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif
             <div class="card-body">
                 <div class="card-header">
                     <span class="level-badge" style="background:#ff444420;color:#ff4444">🔴 交易级</span>
-                    <span class="sentiment-badge" style="background:#8b949e15;color:#8b949e">➡️ 中性</span>
-                    <span class="source-badge">CryptoPanic</span>
+                    <span class="sentiment-badge" style="background:#3fb95015;color:#3fb950">📈 看涨</span>
+                    <span class="source-badge">PANews</span>
                     <span class="coin-tag coin-all">ALL</span>
                 </div>
-                <div class="card-title">James Wynn高杠杆做空标普500屡遭爆仓，累计亏损2200万美元</div>
+                <div class="card-title">加密友好银行Nubank获墨西哥银行牌照</div>
                 <div class="card-analysis">💡 市场关注度提升，需结合技术面综合判断</div>
                 <div class="card-summary">市场关注度提升，需结合技术面综合判断</div>
                 <div class="card-footer">
-                    <span class="vote-info" id="vote-bullish-1">👍 12</span>
-                    <span class="vote-info" id="vote-bearish-1">👎 19</span>
-                    <span class="vote-info" id="vote-important-1">⚡ 8</span>
+                    <span class="vote-info" id="vote-bullish-1">👍 23</span>
+                    <span class="vote-info" id="vote-bearish-1">👎 30</span>
+                    <span class="vote-info" id="vote-important-1">⚡ 15</span>
                 </div>
             </div>
         </div>
-        <div class="card level-A" style="border-left-color: #ff8c00;" data-index="2">
+        <div class="card level-S" style="border-left-color: #ff4444;" data-index="2">
             <div class="card-votes">
                 <button class="vote-btn up" onclick="vote(2,'bullish')">▲</button>
                 <button class="vote-btn" onclick="vote(2,'important')">⚡</button>
@@ -235,22 +221,22 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif
             </div>
             <div class="card-body">
                 <div class="card-header">
-                    <span class="level-badge" style="background:#ff8c0020;color:#ff8c00">🟠 重要趋势</span>
-                    <span class="sentiment-badge" style="background:#3fb95015;color:#3fb950">📈 看涨</span>
+                    <span class="level-badge" style="background:#ff444420;color:#ff4444">🔴 交易级</span>
+                    <span class="sentiment-badge" style="background:#8b949e15;color:#8b949e">➡️ 中性</span>
                     <span class="source-badge">PANews</span>
                     <span class="coin-tag coin-all">ALL</span>
                 </div>
-                <div class="card-title">Circle获OCC批准 迈出合规化关键一步</div>
+                <div class="card-title">James Wynn高杠杆做空标普500屡遭爆仓，累计亏损2200万美元</div>
                 <div class="card-analysis">💡 市场关注度提升，需结合技术面综合判断</div>
                 <div class="card-summary">市场关注度提升，需结合技术面综合判断</div>
                 <div class="card-footer">
-                    <span class="vote-info" id="vote-bullish-2">👍 22</span>
-                    <span class="vote-info" id="vote-bearish-2">👎 26</span>
-                    <span class="vote-info" id="vote-important-2">⚡ 20</span>
+                    <span class="vote-info" id="vote-bullish-2">👍 19</span>
+                    <span class="vote-info" id="vote-bearish-2">👎 22</span>
+                    <span class="vote-info" id="vote-important-2">⚡ 8</span>
                 </div>
             </div>
         </div>
-        <div class="card level-A" style="border-left-color: #ff8c00;" data-index="3">
+        <div class="card level-S" style="border-left-color: #ff4444;" data-index="3">
             <div class="card-votes">
                 <button class="vote-btn up" onclick="vote(3,'bullish')">▲</button>
                 <button class="vote-btn" onclick="vote(3,'important')">⚡</button>
@@ -258,22 +244,22 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif
             </div>
             <div class="card-body">
                 <div class="card-header">
-                    <span class="level-badge" style="background:#ff8c0020;color:#ff8c00">🟠 重要趋势</span>
+                    <span class="level-badge" style="background:#ff444420;color:#ff4444">🔴 交易级</span>
                     <span class="sentiment-badge" style="background:#8b949e15;color:#8b949e">➡️ 中性</span>
-                    <span class="source-badge">CryptoPanic</span>
-                    <span class="coin-tag coin-eth">ETH</span>
+                    <span class="source-badge">PANews</span>
+                    <span class="coin-tag coin-btc">BTC</span>
                 </div>
-                <div class="card-title">稳定币监管走向分化：Circle合规加速 vs Tether面临欧盟挑战</div>
+                <div class="card-title">Strategy比特币出售扰动市场，渣打仍坚持年末10万美元目标</div>
                 <div class="card-analysis">💡 市场关注度提升，需结合技术面综合判断</div>
                 <div class="card-summary">市场关注度提升，需结合技术面综合判断</div>
                 <div class="card-footer">
                     <span class="vote-info" id="vote-bullish-3">👍 45</span>
-                    <span class="vote-info" id="vote-bearish-3">👎 20</span>
-                    <span class="vote-info" id="vote-important-3">⚡ 10</span>
+                    <span class="vote-info" id="vote-bearish-3">👎 30</span>
+                    <span class="vote-info" id="vote-important-3">⚡ 9</span>
                 </div>
             </div>
         </div>
-        <div class="card level-A" style="border-left-color: #ff8c00;" data-index="4">
+        <div class="card level-S" style="border-left-color: #ff4444;" data-index="4">
             <div class="card-votes">
                 <button class="vote-btn up" onclick="vote(4,'bullish')">▲</button>
                 <button class="vote-btn" onclick="vote(4,'important')">⚡</button>
@@ -281,22 +267,22 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif
             </div>
             <div class="card-body">
                 <div class="card-header">
-                    <span class="level-badge" style="background:#ff8c0020;color:#ff8c00">🟠 重要趋势</span>
-                    <span class="sentiment-badge" style="background:#3fb95015;color:#3fb950">📈 看涨</span>
-                    <span class="source-badge">PANews</span>
+                    <span class="level-badge" style="background:#ff444420;color:#ff4444">🔴 交易级</span>
+                    <span class="sentiment-badge" style="background:#f8514915;color:#f85149">📉 看跌</span>
+                    <span class="source-badge">CryptoPanic</span>
                     <span class="coin-tag coin-all">ALL</span>
                 </div>
-                <div class="card-title">Kraken 推出 AI 代理交易功能</div>
+                <div class="card-title">巨鲸亏损452万美元</div>
                 <div class="card-analysis">💡 市场关注度提升，需结合技术面综合判断</div>
                 <div class="card-summary">市场关注度提升，需结合技术面综合判断</div>
                 <div class="card-footer">
-                    <span class="vote-info" id="vote-bullish-4">👍 12</span>
-                    <span class="vote-info" id="vote-bearish-4">👎 24</span>
-                    <span class="vote-info" id="vote-important-4">⚡ 12</span>
+                    <span class="vote-info" id="vote-bullish-4">👍 37</span>
+                    <span class="vote-info" id="vote-bearish-4">👎 30</span>
+                    <span class="vote-info" id="vote-important-4">⚡ 17</span>
                 </div>
             </div>
         </div>
-        <div class="card level-A" style="border-left-color: #ff8c00;" data-index="5">
+        <div class="card level-S" style="border-left-color: #ff4444;" data-index="5">
             <div class="card-votes">
                 <button class="vote-btn up" onclick="vote(5,'bullish')">▲</button>
                 <button class="vote-btn" onclick="vote(5,'important')">⚡</button>
@@ -304,22 +290,22 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif
             </div>
             <div class="card-body">
                 <div class="card-header">
-                    <span class="level-badge" style="background:#ff8c0020;color:#ff8c00">🟠 重要趋势</span>
+                    <span class="level-badge" style="background:#ff444420;color:#ff4444">🔴 交易级</span>
                     <span class="sentiment-badge" style="background:#3fb95015;color:#3fb950">📈 看涨</span>
-                    <span class="source-badge">PANews</span>
-                    <span class="coin-tag coin-sol">SOL</span>
+                    <span class="source-badge">CryptoPanic</span>
+                    <span class="coin-tag coin-btc">BTC</span>
                 </div>
-                <div class="card-title">USDC Treasury 在 Solana 上新铸造 2.5 亿枚 USDC</div>
+                <div class="card-title">华尔街准备迎接BTC暴涨</div>
                 <div class="card-analysis">💡 市场关注度提升，需结合技术面综合判断</div>
                 <div class="card-summary">市场关注度提升，需结合技术面综合判断</div>
                 <div class="card-footer">
-                    <span class="vote-info" id="vote-bullish-5">👍 30</span>
-                    <span class="vote-info" id="vote-bearish-5">👎 9</span>
-                    <span class="vote-info" id="vote-important-5">⚡ 17</span>
+                    <span class="vote-info" id="vote-bullish-5">👍 43</span>
+                    <span class="vote-info" id="vote-bearish-5">👎 28</span>
+                    <span class="vote-info" id="vote-important-5">⚡ 14</span>
                 </div>
             </div>
         </div>
-        <div class="card level-A" style="border-left-color: #ff8c00;" data-index="6">
+        <div class="card level-S" style="border-left-color: #ff4444;" data-index="6">
             <div class="card-votes">
                 <button class="vote-btn up" onclick="vote(6,'bullish')">▲</button>
                 <button class="vote-btn" onclick="vote(6,'important')">⚡</button>
@@ -327,18 +313,18 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif
             </div>
             <div class="card-body">
                 <div class="card-header">
-                    <span class="level-badge" style="background:#ff8c0020;color:#ff8c00">🟠 重要趋势</span>
-                    <span class="sentiment-badge" style="background:#8b949e15;color:#8b949e">➡️ 中性</span>
+                    <span class="level-badge" style="background:#ff444420;color:#ff4444">🔴 交易级</span>
+                    <span class="sentiment-badge" style="background:#f8514915;color:#f85149">📉 看跌</span>
                     <span class="source-badge">CryptoPanic</span>
-                    <span class="coin-tag coin-btc">BTC</span>
+                    <span class="coin-tag coin-all">ALL</span>
                 </div>
-                <div class="card-title">Strategy BTC Selling Spooks Market, But Standard Chartered Still Sees $100K by Year-End</div>
+                <div class="card-title">交易所挤兑警告</div>
                 <div class="card-analysis">💡 市场关注度提升，需结合技术面综合判断</div>
                 <div class="card-summary">市场关注度提升，需结合技术面综合判断</div>
                 <div class="card-footer">
-                    <span class="vote-info" id="vote-bullish-6">👍 25</span>
-                    <span class="vote-info" id="vote-bearish-6">👎 5</span>
-                    <span class="vote-info" id="vote-important-6">⚡ 10</span>
+                    <span class="vote-info" id="vote-bullish-6">👍 23</span>
+                    <span class="vote-info" id="vote-bearish-6">👎 29</span>
+                    <span class="vote-info" id="vote-important-6">⚡ 20</span>
                 </div>
             </div>
         </div>
@@ -352,16 +338,16 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif
                 <div class="card-header">
                     <span class="level-badge" style="background:#ff8c0020;color:#ff8c00">🟠 重要趋势</span>
                     <span class="sentiment-badge" style="background:#3fb95015;color:#3fb950">📈 看涨</span>
-                    <span class="source-badge">PANews</span>
+                    <span class="source-badge">Cointelegraph</span>
                     <span class="coin-tag coin-all">ALL</span>
                 </div>
-                <div class="card-title">Polymarket 正式申请美国 NFA 牌照</div>
+                <div class="card-title">Circle获OCC批准</div>
                 <div class="card-analysis">💡 市场关注度提升，需结合技术面综合判断</div>
-                <div class="card-summary">市场关注度提升，需结合技术面综合判断</div>
+                <div class="card-summary">Circle receives final OCC approval.</div>
                 <div class="card-footer">
-                    <span class="vote-info" id="vote-bullish-7">👍 50</span>
-                    <span class="vote-info" id="vote-bearish-7">👎 8</span>
-                    <span class="vote-info" id="vote-important-7">⚡ 19</span>
+                    <span class="vote-info" id="vote-bullish-7">👍 25</span>
+                    <span class="vote-info" id="vote-bearish-7">👎 17</span>
+                    <span class="vote-info" id="vote-important-7">⚡ 12</span>
                 </div>
             </div>
         </div>
@@ -380,11 +366,11 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif
                 </div>
                 <div class="card-title">美国民主党高层在投票前夕抨击特朗普加密货币政策</div>
                 <div class="card-analysis">💡 市场关注度提升，需结合技术面综合判断</div>
-                <div class="card-summary">市场关注度提升，需结合技术面综合判断</div>
+                <div class="card-summary">PANews 7月10日消息，五位参议员抨击特朗普施压国会通过加密法案。</div>
                 <div class="card-footer">
-                    <span class="vote-info" id="vote-bullish-8">👍 22</span>
-                    <span class="vote-info" id="vote-bearish-8">👎 29</span>
-                    <span class="vote-info" id="vote-important-8">⚡ 5</span>
+                    <span class="vote-info" id="vote-bullish-8">👍 40</span>
+                    <span class="vote-info" id="vote-bearish-8">👎 16</span>
+                    <span class="vote-info" id="vote-important-8">⚡ 12</span>
                 </div>
             </div>
         </div>
@@ -397,21 +383,21 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif
             <div class="card-body">
                 <div class="card-header">
                     <span class="level-badge" style="background:#ff8c0020;color:#ff8c00">🟠 重要趋势</span>
-                    <span class="sentiment-badge" style="background:#3fb95015;color:#3fb950">📈 看涨</span>
-                    <span class="source-badge">Decrypt</span>
-                    <span class="coin-tag coin-all">ALL</span>
+                    <span class="sentiment-badge" style="background:#8b949e15;color:#8b949e">➡️ 中性</span>
+                    <span class="source-badge">PANews</span>
+                    <span class="coin-tag coin-btc">BTC</span>
                 </div>
-                <div class="card-title">US Lawmakers Reintroduce Stablecoin Bill with Bipartisan Support</div>
+                <div class="card-title">BTC跌破64000美元，日内涨幅 1.78%</div>
                 <div class="card-analysis">💡 市场关注度提升，需结合技术面综合判断</div>
-                <div class="card-summary">市场关注度提升，需结合技术面综合判断</div>
+                <div class="card-summary">PANews 7月10日消息，BTC跌破64000美元，现报63977.70美元。</div>
                 <div class="card-footer">
-                    <span class="vote-info" id="vote-bullish-9">👍 32</span>
-                    <span class="vote-info" id="vote-bearish-9">👎 22</span>
-                    <span class="vote-info" id="vote-important-9">⚡ 18</span>
+                    <span class="vote-info" id="vote-bullish-9">👍 46</span>
+                    <span class="vote-info" id="vote-bearish-9">👎 11</span>
+                    <span class="vote-info" id="vote-important-9">⚡ 17</span>
                 </div>
             </div>
         </div>
-        <div class="card level-B" style="border-left-color: #f0c040;" data-index="10">
+        <div class="card level-A" style="border-left-color: #ff8c00;" data-index="10">
             <div class="card-votes">
                 <button class="vote-btn up" onclick="vote(10,'bullish')">▲</button>
                 <button class="vote-btn" onclick="vote(10,'important')">⚡</button>
@@ -419,22 +405,22 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif
             </div>
             <div class="card-body">
                 <div class="card-header">
-                    <span class="level-badge" style="background:#f0c04020;color:#f0c040">⚡ 辅助参考</span>
+                    <span class="level-badge" style="background:#ff8c0020;color:#ff8c00">🟠 重要趋势</span>
                     <span class="sentiment-badge" style="background:#3fb95015;color:#3fb950">📈 看涨</span>
                     <span class="source-badge">PANews</span>
-                    <span class="coin-tag coin-bnb">BNB</span>
+                    <span class="coin-tag coin-all">ALL</span>
                 </div>
-                <div class="card-title">BNB Chain 推出 AI 代理链</div>
+                <div class="card-title">Kraken 推出 AI 代理交易</div>
                 <div class="card-analysis">💡 市场关注度提升，需结合技术面综合判断</div>
                 <div class="card-summary">市场关注度提升，需结合技术面综合判断</div>
                 <div class="card-footer">
-                    <span class="vote-info" id="vote-bullish-10">👍 13</span>
-                    <span class="vote-info" id="vote-bearish-10">👎 6</span>
-                    <span class="vote-info" id="vote-important-10">⚡ 6</span>
+                    <span class="vote-info" id="vote-bullish-10">👍 36</span>
+                    <span class="vote-info" id="vote-bearish-10">👎 27</span>
+                    <span class="vote-info" id="vote-important-10">⚡ 5</span>
                 </div>
             </div>
         </div>
-        <div class="card level-B" style="border-left-color: #f0c040;" data-index="11">
+        <div class="card level-A" style="border-left-color: #ff8c00;" data-index="11">
             <div class="card-votes">
                 <button class="vote-btn up" onclick="vote(11,'bullish')">▲</button>
                 <button class="vote-btn" onclick="vote(11,'important')">⚡</button>
@@ -442,22 +428,22 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif
             </div>
             <div class="card-body">
                 <div class="card-header">
-                    <span class="level-badge" style="background:#f0c04020;color:#f0c040">⚡ 辅助参考</span>
+                    <span class="level-badge" style="background:#ff8c0020;color:#ff8c00">🟠 重要趋势</span>
                     <span class="sentiment-badge" style="background:#3fb95015;color:#3fb950">📈 看涨</span>
                     <span class="source-badge">PANews</span>
-                    <span class="coin-tag coin-btc">BTC</span>
+                    <span class="coin-tag coin-sol">SOL</span>
                 </div>
-                <div class="card-title">Bitcoin Magazine：Metaplanet 联合研究 BTC 抵押数字信贷登陆日本</div>
+                <div class="card-title">USDC Treasury 在 Solana 上新铸造2.5亿枚 USDC</div>
                 <div class="card-analysis">💡 市场关注度提升，需结合技术面综合判断</div>
                 <div class="card-summary">市场关注度提升，需结合技术面综合判断</div>
                 <div class="card-footer">
-                    <span class="vote-info" id="vote-bullish-11">👍 23</span>
-                    <span class="vote-info" id="vote-bearish-11">👎 7</span>
-                    <span class="vote-info" id="vote-important-11">⚡ 9</span>
+                    <span class="vote-info" id="vote-bullish-11">👍 25</span>
+                    <span class="vote-info" id="vote-bearish-11">👎 16</span>
+                    <span class="vote-info" id="vote-important-11">⚡ 4</span>
                 </div>
             </div>
         </div>
-        <div class="card level-B" style="border-left-color: #f0c040;" data-index="12">
+        <div class="card level-A" style="border-left-color: #ff8c00;" data-index="12">
             <div class="card-votes">
                 <button class="vote-btn up" onclick="vote(12,'bullish')">▲</button>
                 <button class="vote-btn" onclick="vote(12,'important')">⚡</button>
@@ -465,22 +451,22 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif
             </div>
             <div class="card-body">
                 <div class="card-header">
-                    <span class="level-badge" style="background:#f0c04020;color:#f0c040">⚡ 辅助参考</span>
-                    <span class="sentiment-badge" style="background:#3fb95015;color:#3fb950">📈 看涨</span>
-                    <span class="source-badge">CoinDesk</span>
-                    <span class="coin-tag coin-eth">ETH</span>
+                    <span class="level-badge" style="background:#ff8c0020;color:#ff8c00">🟠 重要趋势</span>
+                    <span class="sentiment-badge" style="background:#8b949e15;color:#8b949e">➡️ 中性</span>
+                    <span class="source-badge">PANews</span>
+                    <span class="coin-tag coin-all">ALL</span>
                 </div>
-                <div class="card-title">Ethereum Layer 2 TVL Breaks $50B as Base Leads Growth</div>
+                <div class="card-title">Binance 上线 SK Hynix 美股永续合约</div>
                 <div class="card-analysis">💡 市场关注度提升，需结合技术面综合判断</div>
                 <div class="card-summary">市场关注度提升，需结合技术面综合判断</div>
                 <div class="card-footer">
-                    <span class="vote-info" id="vote-bullish-12">👍 17</span>
-                    <span class="vote-info" id="vote-bearish-12">👎 22</span>
-                    <span class="vote-info" id="vote-important-12">⚡ 6</span>
+                    <span class="vote-info" id="vote-bullish-12">👍 19</span>
+                    <span class="vote-info" id="vote-bearish-12">👎 25</span>
+                    <span class="vote-info" id="vote-important-12">⚡ 12</span>
                 </div>
             </div>
         </div>
-        <div class="card level-B" style="border-left-color: #f0c040;" data-index="13">
+        <div class="card level-A" style="border-left-color: #ff8c00;" data-index="13">
             <div class="card-votes">
                 <button class="vote-btn up" onclick="vote(13,'bullish')">▲</button>
                 <button class="vote-btn" onclick="vote(13,'important')">⚡</button>
@@ -488,22 +474,22 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif
             </div>
             <div class="card-body">
                 <div class="card-header">
-                    <span class="level-badge" style="background:#f0c04020;color:#f0c040">⚡ 辅助参考</span>
+                    <span class="level-badge" style="background:#ff8c0020;color:#ff8c00">🟠 重要趋势</span>
                     <span class="sentiment-badge" style="background:#3fb95015;color:#3fb950">📈 看涨</span>
-                    <span class="source-badge">PANews</span>
+                    <span class="source-badge">CryptoPanic</span>
                     <span class="coin-tag coin-all">ALL</span>
                 </div>
-                <div class="card-title">Aave V3 上线 zkSync</div>
+                <div class="card-title">Polymarket申请NFA牌照</div>
                 <div class="card-analysis">💡 市场关注度提升，需结合技术面综合判断</div>
                 <div class="card-summary">市场关注度提升，需结合技术面综合判断</div>
                 <div class="card-footer">
-                    <span class="vote-info" id="vote-bullish-13">👍 12</span>
-                    <span class="vote-info" id="vote-bearish-13">👎 26</span>
-                    <span class="vote-info" id="vote-important-13">⚡ 14</span>
+                    <span class="vote-info" id="vote-bullish-13">👍 10</span>
+                    <span class="vote-info" id="vote-bearish-13">👎 28</span>
+                    <span class="vote-info" id="vote-important-13">⚡ 10</span>
                 </div>
             </div>
         </div>
-        <div class="card level-B" style="border-left-color: #f0c040;" data-index="14">
+        <div class="card level-A" style="border-left-color: #ff8c00;" data-index="14">
             <div class="card-votes">
                 <button class="vote-btn up" onclick="vote(14,'bullish')">▲</button>
                 <button class="vote-btn" onclick="vote(14,'important')">⚡</button>
@@ -511,17 +497,17 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif
             </div>
             <div class="card-body">
                 <div class="card-header">
-                    <span class="level-badge" style="background:#f0c04020;color:#f0c040">⚡ 辅助参考</span>
-                    <span class="sentiment-badge" style="background:#3fb95015;color:#3fb950">📈 看涨</span>
-                    <span class="source-badge">PANews</span>
+                    <span class="level-badge" style="background:#ff8c0020;color:#ff8c00">🟠 重要趋势</span>
+                    <span class="sentiment-badge" style="background:#f8514915;color:#f85149">📉 看跌</span>
+                    <span class="source-badge">CryptoPanic</span>
                     <span class="coin-tag coin-all">ALL</span>
                 </div>
-                <div class="card-title">现代汽车在 Avalanche 公链上线内部跨境汇款系统</div>
+                <div class="card-title">30年期收益率创新高</div>
                 <div class="card-analysis">💡 市场关注度提升，需结合技术面综合判断</div>
                 <div class="card-summary">市场关注度提升，需结合技术面综合判断</div>
                 <div class="card-footer">
-                    <span class="vote-info" id="vote-bullish-14">👍 10</span>
-                    <span class="vote-info" id="vote-bearish-14">👎 13</span>
+                    <span class="vote-info" id="vote-bullish-14">👍 12</span>
+                    <span class="vote-info" id="vote-bearish-14">👎 7</span>
                     <span class="vote-info" id="vote-important-14">⚡ 8</span>
                 </div>
             </div>
@@ -536,16 +522,16 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif
                 <div class="card-header">
                     <span class="level-badge" style="background:#f0c04020;color:#f0c040">⚡ 辅助参考</span>
                     <span class="sentiment-badge" style="background:#3fb95015;color:#3fb950">📈 看涨</span>
-                    <span class="source-badge">CryptoPanic</span>
+                    <span class="source-badge">Bitcoin Magazine</span>
                     <span class="coin-tag coin-btc">BTC</span>
                 </div>
-                <div class="card-title">Bitfinex分析师：BTC回调属健康修正，技术指标仍指向上涨</div>
+                <div class="card-title">Metaplanet联合研究：BTC抵押数字信贷登陆日本</div>
                 <div class="card-analysis">💡 市场关注度提升，需结合技术面综合判断</div>
-                <div class="card-summary">市场关注度提升，需结合技术面综合判断</div>
+                <div class="card-summary">Metaplanet launches study for BTC-backed credit in Japan.</div>
                 <div class="card-footer">
-                    <span class="vote-info" id="vote-bullish-15">👍 37</span>
-                    <span class="vote-info" id="vote-bearish-15">👎 28</span>
-                    <span class="vote-info" id="vote-important-15">⚡ 3</span>
+                    <span class="vote-info" id="vote-bullish-15">👍 43</span>
+                    <span class="vote-info" id="vote-bearish-15">👎 30</span>
+                    <span class="vote-info" id="vote-important-15">⚡ 8</span>
                 </div>
             </div>
         </div>
@@ -559,16 +545,16 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif
                 <div class="card-header">
                     <span class="level-badge" style="background:#f0c04020;color:#f0c040">⚡ 辅助参考</span>
                     <span class="sentiment-badge" style="background:#3fb95015;color:#3fb950">📈 看涨</span>
-                    <span class="source-badge">Decrypt</span>
-                    <span class="coin-tag coin-sol">SOL</span>
+                    <span class="source-badge">PANews</span>
+                    <span class="coin-tag coin-all">ALL</span>
                 </div>
-                <div class="card-title">Solana NFT Sales Volume Up 40% in Q2 Despite Broader Market Slump</div>
+                <div class="card-title">现代汽车在Avalanche公链上线内部跨境汇款系统</div>
                 <div class="card-analysis">💡 市场关注度提升，需结合技术面综合判断</div>
-                <div class="card-summary">市场关注度提升，需结合技术面综合判断</div>
+                <div class="card-summary">PANews 7月10日消息，现代汽车成为首家使用稳定币跨境结算的韩国大企业。</div>
                 <div class="card-footer">
-                    <span class="vote-info" id="vote-bullish-16">👍 32</span>
-                    <span class="vote-info" id="vote-bearish-16">👎 12</span>
-                    <span class="vote-info" id="vote-important-16">⚡ 16</span>
+                    <span class="vote-info" id="vote-bullish-16">👍 24</span>
+                    <span class="vote-info" id="vote-bearish-16">👎 13</span>
+                    <span class="vote-info" id="vote-important-16">⚡ 4</span>
                 </div>
             </div>
         </div>
@@ -581,17 +567,178 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif
             <div class="card-body">
                 <div class="card-header">
                     <span class="level-badge" style="background:#f0c04020;color:#f0c040">⚡ 辅助参考</span>
+                    <span class="sentiment-badge" style="background:#3fb95015;color:#3fb950">📈 看涨</span>
+                    <span class="source-badge">CryptoPanic</span>
+                    <span class="coin-tag coin-bnb">BNB</span>
+                </div>
+                <div class="card-title">BNB Chain推AI代理链</div>
+                <div class="card-analysis">💡 市场关注度提升，需结合技术面综合判断</div>
+                <div class="card-summary">市场关注度提升，需结合技术面综合判断</div>
+                <div class="card-footer">
+                    <span class="vote-info" id="vote-bullish-17">👍 24</span>
+                    <span class="vote-info" id="vote-bearish-17">👎 17</span>
+                    <span class="vote-info" id="vote-important-17">⚡ 10</span>
+                </div>
+            </div>
+        </div>
+        <div class="card level-B" style="border-left-color: #f0c040;" data-index="18">
+            <div class="card-votes">
+                <button class="vote-btn up" onclick="vote(18,'bullish')">▲</button>
+                <button class="vote-btn" onclick="vote(18,'important')">⚡</button>
+                <button class="vote-btn down" onclick="vote(18,'bearish')">▼</button>
+            </div>
+            <div class="card-body">
+                <div class="card-header">
+                    <span class="level-badge" style="background:#f0c04020;color:#f0c040">⚡ 辅助参考</span>
+                    <span class="sentiment-badge" style="background:#3fb95015;color:#3fb950">📈 看涨</span>
+                    <span class="source-badge">Cointelegraph</span>
+                    <span class="coin-tag coin-btc">BTC</span>
+                </div>
+                <div class="card-title">巨鲸推动BTC</div>
+                <div class="card-analysis">💡 市场关注度提升，需结合技术面综合判断</div>
+                <div class="card-summary">US whales propel BTC to $64K.</div>
+                <div class="card-footer">
+                    <span class="vote-info" id="vote-bullish-18">👍 17</span>
+                    <span class="vote-info" id="vote-bearish-18">👎 5</span>
+                    <span class="vote-info" id="vote-important-18">⚡ 9</span>
+                </div>
+            </div>
+        </div>
+        <div class="card level-B" style="border-left-color: #f0c040;" data-index="19">
+            <div class="card-votes">
+                <button class="vote-btn up" onclick="vote(19,'bullish')">▲</button>
+                <button class="vote-btn" onclick="vote(19,'important')">⚡</button>
+                <button class="vote-btn down" onclick="vote(19,'bearish')">▼</button>
+            </div>
+            <div class="card-body">
+                <div class="card-header">
+                    <span class="level-badge" style="background:#f0c04020;color:#f0c040">⚡ 辅助参考</span>
+                    <span class="sentiment-badge" style="background:#3fb95015;color:#3fb950">📈 看涨</span>
+                    <span class="source-badge">CryptoPanic</span>
+                    <span class="coin-tag coin-all">ALL</span>
+                </div>
+                <div class="card-title">Aave V3上线zkSync</div>
+                <div class="card-analysis">💡 市场关注度提升，需结合技术面综合判断</div>
+                <div class="card-summary">市场关注度提升，需结合技术面综合判断</div>
+                <div class="card-footer">
+                    <span class="vote-info" id="vote-bullish-19">👍 41</span>
+                    <span class="vote-info" id="vote-bearish-19">👎 30</span>
+                    <span class="vote-info" id="vote-important-19">⚡ 17</span>
+                </div>
+            </div>
+        </div>
+        <div class="card level-B" style="border-left-color: #f0c040;" data-index="20">
+            <div class="card-votes">
+                <button class="vote-btn up" onclick="vote(20,'bullish')">▲</button>
+                <button class="vote-btn" onclick="vote(20,'important')">⚡</button>
+                <button class="vote-btn down" onclick="vote(20,'bearish')">▼</button>
+            </div>
+            <div class="card-body">
+                <div class="card-header">
+                    <span class="level-badge" style="background:#f0c04020;color:#f0c040">⚡ 辅助参考</span>
+                    <span class="sentiment-badge" style="background:#8b949e15;color:#8b949e">➡️ 中性</span>
+                    <span class="source-badge">Cointelegraph</span>
+                    <span class="coin-tag coin-all">ALL</span>
+                </div>
+                <div class="card-title">稳定币走向分化</div>
+                <div class="card-analysis">💡 市场关注度提升，需结合技术面综合判断</div>
+                <div class="card-summary">Stablecoins are carving out specialized roles.</div>
+                <div class="card-footer">
+                    <span class="vote-info" id="vote-bullish-20">👍 36</span>
+                    <span class="vote-info" id="vote-bearish-20">👎 8</span>
+                    <span class="vote-info" id="vote-important-20">⚡ 5</span>
+                </div>
+            </div>
+        </div>
+        <div class="card level-B" style="border-left-color: #f0c040;" data-index="21">
+            <div class="card-votes">
+                <button class="vote-btn up" onclick="vote(21,'bullish')">▲</button>
+                <button class="vote-btn" onclick="vote(21,'important')">⚡</button>
+                <button class="vote-btn down" onclick="vote(21,'bearish')">▼</button>
+            </div>
+            <div class="card-body">
+                <div class="card-header">
+                    <span class="level-badge" style="background:#f0c04020;color:#f0c040">⚡ 辅助参考</span>
                     <span class="sentiment-badge" style="background:#f8514915;color:#f85149">📉 看跌</span>
                     <span class="source-badge">PANews</span>
                     <span class="coin-tag coin-hype">HYPE</span>
                 </div>
-                <div class="card-title">地址 0xf02d 亏损 452 万美元后再次 10 倍杠杆做空 HYPE</div>
+                <div class="card-title">地址0xf02d亏损452万美元后再次10倍杠杆做空HYPE</div>
                 <div class="card-analysis">💡 市场关注度提升，需结合技术面综合判断</div>
                 <div class="card-summary">市场关注度提升，需结合技术面综合判断</div>
                 <div class="card-footer">
-                    <span class="vote-info" id="vote-bullish-17">👍 31</span>
-                    <span class="vote-info" id="vote-bearish-17">👎 23</span>
-                    <span class="vote-info" id="vote-important-17">⚡ 17</span>
+                    <span class="vote-info" id="vote-bullish-21">👍 49</span>
+                    <span class="vote-info" id="vote-bearish-21">👎 24</span>
+                    <span class="vote-info" id="vote-important-21">⚡ 9</span>
+                </div>
+            </div>
+        </div>
+        <div class="card level-B" style="border-left-color: #f0c040;" data-index="22">
+            <div class="card-votes">
+                <button class="vote-btn up" onclick="vote(22,'bullish')">▲</button>
+                <button class="vote-btn" onclick="vote(22,'important')">⚡</button>
+                <button class="vote-btn down" onclick="vote(22,'bearish')">▼</button>
+            </div>
+            <div class="card-body">
+                <div class="card-header">
+                    <span class="level-badge" style="background:#f0c04020;color:#f0c040">⚡ 辅助参考</span>
+                    <span class="sentiment-badge" style="background:#3fb95015;color:#3fb950">📈 看涨</span>
+                    <span class="source-badge">CryptoPanic</span>
+                    <span class="coin-tag coin-all">ALL</span>
+                </div>
+                <div class="card-title">现代汽车用稳定币汇款</div>
+                <div class="card-analysis">💡 市场关注度提升，需结合技术面综合判断</div>
+                <div class="card-summary">市场关注度提升，需结合技术面综合判断</div>
+                <div class="card-footer">
+                    <span class="vote-info" id="vote-bullish-22">👍 21</span>
+                    <span class="vote-info" id="vote-bearish-22">👎 7</span>
+                    <span class="vote-info" id="vote-important-22">⚡ 8</span>
+                </div>
+            </div>
+        </div>
+        <div class="card level-B" style="border-left-color: #f0c040;" data-index="23">
+            <div class="card-votes">
+                <button class="vote-btn up" onclick="vote(23,'bullish')">▲</button>
+                <button class="vote-btn" onclick="vote(23,'important')">⚡</button>
+                <button class="vote-btn down" onclick="vote(23,'bearish')">▼</button>
+            </div>
+            <div class="card-body">
+                <div class="card-header">
+                    <span class="level-badge" style="background:#f0c04020;color:#f0c040">⚡ 辅助参考</span>
+                    <span class="sentiment-badge" style="background:#3fb95015;color:#3fb950">📈 看涨</span>
+                    <span class="source-badge">CryptoPanic</span>
+                    <span class="coin-tag coin-all">ALL</span>
+                </div>
+                <div class="card-title">Tom Lee：加密是新存储交易</div>
+                <div class="card-analysis">💡 市场关注度提升，需结合技术面综合判断</div>
+                <div class="card-summary">市场关注度提升，需结合技术面综合判断</div>
+                <div class="card-footer">
+                    <span class="vote-info" id="vote-bullish-23">👍 38</span>
+                    <span class="vote-info" id="vote-bearish-23">👎 20</span>
+                    <span class="vote-info" id="vote-important-23">⚡ 15</span>
+                </div>
+            </div>
+        </div>
+        <div class="card level-C" style="border-left-color: #888;" data-index="24">
+            <div class="card-votes">
+                <button class="vote-btn up" onclick="vote(24,'bullish')">▲</button>
+                <button class="vote-btn" onclick="vote(24,'important')">⚡</button>
+                <button class="vote-btn down" onclick="vote(24,'bearish')">▼</button>
+            </div>
+            <div class="card-body">
+                <div class="card-header">
+                    <span class="level-badge" style="background:#88820;color:#888">💡 一般资讯</span>
+                    <span class="sentiment-badge" style="background:#8b949e15;color:#8b949e">➡️ 中性</span>
+                    <span class="source-badge">CryptoPanic</span>
+                    <span class="coin-tag coin-all">ALL</span>
+                </div>
+                <div class="card-title">剑桥研究</div>
+                <div class="card-analysis">💡 市场关注度提升，需结合技术面综合判断</div>
+                <div class="card-summary">市场关注度提升，需结合技术面综合判断</div>
+                <div class="card-footer">
+                    <span class="vote-info" id="vote-bullish-24">👍 24</span>
+                    <span class="vote-info" id="vote-bearish-24">👎 18</span>
+                    <span class="vote-info" id="vote-important-24">⚡ 16</span>
                 </div>
             </div>
         </div>
@@ -602,14 +749,6 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif
     <div class="sidebar-section">
         <h3>📊 情绪分布</h3>
         <div id="sentiment-chart" style="font-size:13px;color:#8b949e;line-height:1.8;"></div>
-    </div>
-    <div class="sidebar-section">
-        <h3>😱 恐惧与贪婪指数</h3>
-        <div id="fgi-box" style="display:flex;align-items:center;gap:12px;">
-            <div id="fgi-gauge" style="width:60px;height:60px;border-radius:50%;border:4px solid #30363d;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:#c9d1d9;flex-shrink:0;"></div>
-            <div id="fgi-text" style="font-size:13px;color:#8b949e;line-height:1.5;"></div>
-        </div>
-        <p style="font-size:11px;color:#484f58;margin-top:8px;">📡 数据来源: Alternative.me</p>
     </div>
     <div class="sidebar-section">
         <h3>🔥 热门话题</h3>
@@ -627,7 +766,7 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif
     </div>
     <div class="sidebar-section">
         <h3>📡 数据源分布</h3>
-        <p><span style="display:inline-block;margin-right:12px;font-size:13px;color:#8b949e;">PANews: <b style="color:#c9d1d9;">11</b></span><span style="display:inline-block;margin-right:12px;font-size:13px;color:#8b949e;">CryptoPanic: <b style="color:#c9d1d9;">4</b></span><span style="display:inline-block;margin-right:12px;font-size:13px;color:#8b949e;">Decrypt: <b style="color:#c9d1d9;">2</b></span><span style="display:inline-block;margin-right:12px;font-size:13px;color:#8b949e;">CoinDesk: <b style="color:#c9d1d9;">1</b></span></p>
+        <p><span style="display:inline-block;margin-right:12px;font-size:13px;color:#8b949e;">PANews: <b style="color:#c9d1d9;">11</b></span><span style="display:inline-block;margin-right:12px;font-size:13px;color:#8b949e;">CryptoPanic: <b style="color:#c9d1d9;">10</b></span><span style="display:inline-block;margin-right:12px;font-size:13px;color:#8b949e;">Cointelegraph: <b style="color:#c9d1d9;">3</b></span><span style="display:inline-block;margin-right:12px;font-size:13px;color:#8b949e;">Bitcoin Magazine: <b style="color:#c9d1d9;">1</b></span></p>
     </div>
     <div class="sidebar-section">
         <h3>🔗 更多资源</h3>
@@ -643,12 +782,12 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif
 
 <footer class="footer">
     <p>金峰策略 · 全球加密快讯 · 仅供研究参考 · 不构成投资建议</p>
-    <p style="margin-top:4px;">🕐 2026-07-11 02:40 CST · 采集频率: 每30分钟更新</p>
+    <p style="margin-top:4px;">🕐 2026-07-11 02:27 CST · 采集频率: 每30分钟更新</p>
 </footer>
 
 <script>
 // ========== 数据 ==========
-const ARTICLES = [{"id": 0, "level": "S", "score": 2, "title": "CoinGlass：过去24小时爆仓逾2.35亿美元，主爆空单", "original": "", "source": "PANews", "sentiment": "bullish", "analysis": "市场关注度提升，需结合技术面综合判断", "summary": "市场关注度提升，需结合技术面综合判断", "coins": ["ALL"], "votes": {"bullish": 11, "bearish": 8, "important": 11}}, {"id": 1, "level": "S", "score": 2, "title": "James Wynn高杠杆做空标普500屡遭爆仓，累计亏损2200万美元", "original": "", "source": "CryptoPanic", "sentiment": "neutral", "analysis": "市场关注度提升，需结合技术面综合判断", "summary": "市场关注度提升，需结合技术面综合判断", "coins": ["ALL"], "votes": {"bullish": 12, "bearish": 19, "important": 8}}, {"id": 2, "level": "A", "score": 6, "title": "Circle获OCC批准 迈出合规化关键一步", "original": "", "source": "PANews", "sentiment": "bullish", "analysis": "市场关注度提升，需结合技术面综合判断", "summary": "市场关注度提升，需结合技术面综合判断", "coins": ["ALL"], "votes": {"bullish": 22, "bearish": 26, "important": 20}}, {"id": 3, "level": "A", "score": 6, "title": "稳定币监管走向分化：Circle合规加速 vs Tether面临欧盟挑战", "original": "", "source": "CryptoPanic", "sentiment": "neutral", "analysis": "市场关注度提升，需结合技术面综合判断", "summary": "市场关注度提升，需结合技术面综合判断", "coins": ["ETH"], "votes": {"bullish": 45, "bearish": 20, "important": 10}}, {"id": 4, "level": "A", "score": 4, "title": "Kraken 推出 AI 代理交易功能", "original": "", "source": "PANews", "sentiment": "bullish", "analysis": "市场关注度提升，需结合技术面综合判断", "summary": "市场关注度提升，需结合技术面综合判断", "coins": ["ALL"], "votes": {"bullish": 12, "bearish": 24, "important": 12}}, {"id": 5, "level": "A", "score": 4, "title": "USDC Treasury 在 Solana 上新铸造 2.5 亿枚 USDC", "original": "", "source": "PANews", "sentiment": "bullish", "analysis": "市场关注度提升，需结合技术面综合判断", "summary": "市场关注度提升，需结合技术面综合判断", "coins": ["SOL"], "votes": {"bullish": 30, "bearish": 9, "important": 17}}, {"id": 6, "level": "A", "score": 4, "title": "Strategy BTC Selling Spooks Market, But Standard Chartered Still Sees $100K by Year-End", "original": "Strategy Bitcoin Selling Spooks Market, But Standard Chartered Still Sees $100K by Year-End", "source": "CryptoPanic", "sentiment": "neutral", "analysis": "市场关注度提升，需结合技术面综合判断", "summary": "市场关注度提升，需结合技术面综合判断", "coins": ["BTC"], "votes": {"bullish": 25, "bearish": 5, "important": 10}}, {"id": 7, "level": "A", "score": 2, "title": "Polymarket 正式申请美国 NFA 牌照", "original": "", "source": "PANews", "sentiment": "bullish", "analysis": "市场关注度提升，需结合技术面综合判断", "summary": "市场关注度提升，需结合技术面综合判断", "coins": ["ALL"], "votes": {"bullish": 50, "bearish": 8, "important": 19}}, {"id": 8, "level": "A", "score": 2, "title": "美国民主党高层在投票前夕抨击特朗普加密货币政策", "original": "", "source": "PANews", "sentiment": "neutral", "analysis": "市场关注度提升，需结合技术面综合判断", "summary": "市场关注度提升，需结合技术面综合判断", "coins": ["ALL"], "votes": {"bullish": 22, "bearish": 29, "important": 5}}, {"id": 9, "level": "A", "score": 2, "title": "US Lawmakers Reintroduce Stablecoin Bill with Bipartisan Support", "original": "", "source": "Decrypt", "sentiment": "bullish", "analysis": "市场关注度提升，需结合技术面综合判断", "summary": "市场关注度提升，需结合技术面综合判断", "coins": ["ALL"], "votes": {"bullish": 32, "bearish": 22, "important": 18}}, {"id": 10, "level": "B", "score": 6, "title": "BNB Chain 推出 AI 代理链", "original": "", "source": "PANews", "sentiment": "bullish", "analysis": "市场关注度提升，需结合技术面综合判断", "summary": "市场关注度提升，需结合技术面综合判断", "coins": ["BNB"], "votes": {"bullish": 13, "bearish": 6, "important": 6}}, {"id": 11, "level": "B", "score": 6, "title": "Bitcoin Magazine：Metaplanet 联合研究 BTC 抵押数字信贷登陆日本", "original": "", "source": "PANews", "sentiment": "bullish", "analysis": "市场关注度提升，需结合技术面综合判断", "summary": "市场关注度提升，需结合技术面综合判断", "coins": ["BTC"], "votes": {"bullish": 23, "bearish": 7, "important": 9}}, {"id": 12, "level": "B", "score": 6, "title": "Ethereum Layer 2 TVL Breaks $50B as Base Leads Growth", "original": "", "source": "CoinDesk", "sentiment": "bullish", "analysis": "市场关注度提升，需结合技术面综合判断", "summary": "市场关注度提升，需结合技术面综合判断", "coins": ["ETH"], "votes": {"bullish": 17, "bearish": 22, "important": 6}}, {"id": 13, "level": "B", "score": 4, "title": "Aave V3 上线 zkSync", "original": "", "source": "PANews", "sentiment": "bullish", "analysis": "市场关注度提升，需结合技术面综合判断", "summary": "市场关注度提升，需结合技术面综合判断", "coins": ["ALL"], "votes": {"bullish": 12, "bearish": 26, "important": 14}}, {"id": 14, "level": "B", "score": 4, "title": "现代汽车在 Avalanche 公链上线内部跨境汇款系统", "original": "", "source": "PANews", "sentiment": "bullish", "analysis": "市场关注度提升，需结合技术面综合判断", "summary": "市场关注度提升，需结合技术面综合判断", "coins": ["ALL"], "votes": {"bullish": 10, "bearish": 13, "important": 8}}, {"id": 15, "level": "B", "score": 4, "title": "Bitfinex分析师：BTC回调属健康修正，技术指标仍指向上涨", "original": "", "source": "CryptoPanic", "sentiment": "bullish", "analysis": "市场关注度提升，需结合技术面综合判断", "summary": "市场关注度提升，需结合技术面综合判断", "coins": ["BTC"], "votes": {"bullish": 37, "bearish": 28, "important": 3}}, {"id": 16, "level": "B", "score": 4, "title": "Solana NFT Sales Volume Up 40% in Q2 Despite Broader Market Slump", "original": "", "source": "Decrypt", "sentiment": "bullish", "analysis": "市场关注度提升，需结合技术面综合判断", "summary": "市场关注度提升，需结合技术面综合判断", "coins": ["SOL"], "votes": {"bullish": 32, "bearish": 12, "important": 16}}, {"id": 17, "level": "B", "score": 2, "title": "地址 0xf02d 亏损 452 万美元后再次 10 倍杠杆做空 HYPE", "original": "", "source": "PANews", "sentiment": "bearish", "analysis": "市场关注度提升，需结合技术面综合判断", "summary": "市场关注度提升，需结合技术面综合判断", "coins": ["HYPE"], "votes": {"bullish": 31, "bearish": 23, "important": 17}}];
+const ARTICLES = [{"id": 0, "level": "S", "score": 6, "title": "CoinGlass：过去24小时爆仓逾2.35亿美元，主爆空单", "original": "", "source": "PANews", "sentiment": "bullish", "analysis": "市场关注度提升，需结合技术面综合判断", "summary": "PANews 7月10日消息，据CoinGlass，过去24小时全球爆仓58,248人，总金额约2.35亿美元，空单爆仓1.67亿美元。", "coins": ["ALL"], "votes": {"bullish": 26, "bearish": 27, "important": 6}}, {"id": 1, "level": "S", "score": 2, "title": "加密友好银行Nubank获墨西哥银行牌照", "original": "", "source": "PANews", "sentiment": "bullish", "analysis": "市场关注度提升，需结合技术面综合判断", "summary": "市场关注度提升，需结合技术面综合判断", "coins": ["ALL"], "votes": {"bullish": 23, "bearish": 30, "important": 15}}, {"id": 2, "level": "S", "score": 2, "title": "James Wynn高杠杆做空标普500屡遭爆仓，累计亏损2200万美元", "original": "", "source": "PANews", "sentiment": "neutral", "analysis": "市场关注度提升，需结合技术面综合判断", "summary": "市场关注度提升，需结合技术面综合判断", "coins": ["ALL"], "votes": {"bullish": 19, "bearish": 22, "important": 8}}, {"id": 3, "level": "S", "score": 2, "title": "Strategy比特币出售扰动市场，渣打仍坚持年末10万美元目标", "original": "", "source": "PANews", "sentiment": "neutral", "analysis": "市场关注度提升，需结合技术面综合判断", "summary": "市场关注度提升，需结合技术面综合判断", "coins": ["BTC"], "votes": {"bullish": 45, "bearish": 30, "important": 9}}, {"id": 4, "level": "S", "score": 2, "title": "巨鲸亏损452万美元", "original": "Whale Realizes $4.52 Million Loss Before Doubling Down on HYPE Short", "source": "CryptoPanic", "sentiment": "bearish", "analysis": "市场关注度提升，需结合技术面综合判断", "summary": "市场关注度提升，需结合技术面综合判断", "coins": ["ALL"], "votes": {"bullish": 37, "bearish": 30, "important": 17}}, {"id": 5, "level": "S", "score": 2, "title": "华尔街准备迎接BTC暴涨", "original": "WALL STREET is Preparing For Bitcoin To EXPLODE HIGHER!!", "source": "CryptoPanic", "sentiment": "bullish", "analysis": "市场关注度提升，需结合技术面综合判断", "summary": "市场关注度提升，需结合技术面综合判断", "coins": ["BTC"], "votes": {"bullish": 43, "bearish": 28, "important": 14}}, {"id": 6, "level": "S", "score": 2, "title": "交易所挤兑警告", "original": "MASSIVE Bank Run On Crypto Exchanges", "source": "CryptoPanic", "sentiment": "bearish", "analysis": "市场关注度提升，需结合技术面综合判断", "summary": "市场关注度提升，需结合技术面综合判断", "coins": ["ALL"], "votes": {"bullish": 23, "bearish": 29, "important": 20}}, {"id": 7, "level": "A", "score": 12, "title": "Circle获OCC批准", "original": "Circle gets OCC approval for national trust bank", "source": "Cointelegraph", "sentiment": "bullish", "analysis": "市场关注度提升，需结合技术面综合判断", "summary": "Circle receives final OCC approval.", "coins": ["ALL"], "votes": {"bullish": 25, "bearish": 17, "important": 12}}, {"id": 8, "level": "A", "score": 6, "title": "美国民主党高层在投票前夕抨击特朗普加密货币政策", "original": "", "source": "PANews", "sentiment": "neutral", "analysis": "市场关注度提升，需结合技术面综合判断", "summary": "PANews 7月10日消息，五位参议员抨击特朗普施压国会通过加密法案。", "coins": ["ALL"], "votes": {"bullish": 40, "bearish": 16, "important": 12}}, {"id": 9, "level": "A", "score": 6, "title": "BTC跌破64000美元，日内涨幅 1.78%", "original": "", "source": "PANews", "sentiment": "neutral", "analysis": "市场关注度提升，需结合技术面综合判断", "summary": "PANews 7月10日消息，BTC跌破64000美元，现报63977.70美元。", "coins": ["BTC"], "votes": {"bullish": 46, "bearish": 11, "important": 17}}, {"id": 10, "level": "A", "score": 4, "title": "Kraken 推出 AI 代理交易", "original": "", "source": "PANews", "sentiment": "bullish", "analysis": "市场关注度提升，需结合技术面综合判断", "summary": "市场关注度提升，需结合技术面综合判断", "coins": ["ALL"], "votes": {"bullish": 36, "bearish": 27, "important": 5}}, {"id": 11, "level": "A", "score": 4, "title": "USDC Treasury 在 Solana 上新铸造2.5亿枚 USDC", "original": "", "source": "PANews", "sentiment": "bullish", "analysis": "市场关注度提升，需结合技术面综合判断", "summary": "市场关注度提升，需结合技术面综合判断", "coins": ["SOL"], "votes": {"bullish": 25, "bearish": 16, "important": 4}}, {"id": 12, "level": "A", "score": 2, "title": "Binance 上线 SK Hynix 美股永续合约", "original": "", "source": "PANews", "sentiment": "neutral", "analysis": "市场关注度提升，需结合技术面综合判断", "summary": "市场关注度提升，需结合技术面综合判断", "coins": ["ALL"], "votes": {"bullish": 19, "bearish": 25, "important": 12}}, {"id": 13, "level": "A", "score": 2, "title": "Polymarket申请NFA牌照", "original": "Polymarket files for NFA license to offer regulated margin trading in US", "source": "CryptoPanic", "sentiment": "bullish", "analysis": "市场关注度提升，需结合技术面综合判断", "summary": "市场关注度提升，需结合技术面综合判断", "coins": ["ALL"], "votes": {"bullish": 10, "bearish": 28, "important": 10}}, {"id": 14, "level": "A", "score": 2, "title": "30年期收益率创新高", "original": "What the Highest 30-Year Treasury Yield Since 2007 Means for Bitcoin and Gold", "source": "CryptoPanic", "sentiment": "bearish", "analysis": "市场关注度提升，需结合技术面综合判断", "summary": "市场关注度提升，需结合技术面综合判断", "coins": ["ALL"], "votes": {"bullish": 12, "bearish": 7, "important": 8}}, {"id": 15, "level": "B", "score": 10, "title": "Metaplanet联合研究：BTC抵押数字信贷登陆日本", "original": "Metaplanet Announces Joint Study to Bring Bitcoin-Backed Digital Credit to Japan", "source": "Bitcoin Magazine", "sentiment": "bullish", "analysis": "市场关注度提升，需结合技术面综合判断", "summary": "Metaplanet launches study for BTC-backed credit in Japan.", "coins": ["BTC"], "votes": {"bullish": 43, "bearish": 30, "important": 8}}, {"id": 16, "level": "B", "score": 8, "title": "现代汽车在Avalanche公链上线内部跨境汇款系统", "original": "", "source": "PANews", "sentiment": "bullish", "analysis": "市场关注度提升，需结合技术面综合判断", "summary": "PANews 7月10日消息，现代汽车成为首家使用稳定币跨境结算的韩国大企业。", "coins": ["ALL"], "votes": {"bullish": 24, "bearish": 13, "important": 4}}, {"id": 17, "level": "B", "score": 6, "title": "BNB Chain推AI代理链", "original": "BNB Chain trading chain targets AI agents", "source": "CryptoPanic", "sentiment": "bullish", "analysis": "市场关注度提升，需结合技术面综合判断", "summary": "市场关注度提升，需结合技术面综合判断", "coins": ["BNB"], "votes": {"bullish": 24, "bearish": 17, "important": 10}}, {"id": 18, "level": "B", "score": 6, "title": "巨鲸推动BTC", "original": "Bitcoin whales sent BTC price to $64K as Coinbase Premium broke key level", "source": "Cointelegraph", "sentiment": "bullish", "analysis": "市场关注度提升，需结合技术面综合判断", "summary": "US whales propel BTC to $64K.", "coins": ["BTC"], "votes": {"bullish": 17, "bearish": 5, "important": 9}}, {"id": 19, "level": "B", "score": 4, "title": "Aave V3上线zkSync", "original": "Aave V3 On zkSync Era Gives DeFi Lending Another Push Into ZK Rollups", "source": "CryptoPanic", "sentiment": "bullish", "analysis": "市场关注度提升，需结合技术面综合判断", "summary": "市场关注度提升，需结合技术面综合判断", "coins": ["ALL"], "votes": {"bullish": 41, "bearish": 30, "important": 17}}, {"id": 20, "level": "B", "score": 4, "title": "稳定币走向分化", "original": "Crypto Biz: How stablecoins found their niche", "source": "Cointelegraph", "sentiment": "neutral", "analysis": "市场关注度提升，需结合技术面综合判断", "summary": "Stablecoins are carving out specialized roles.", "coins": ["ALL"], "votes": {"bullish": 36, "bearish": 8, "important": 5}}, {"id": 21, "level": "B", "score": 2, "title": "地址0xf02d亏损452万美元后再次10倍杠杆做空HYPE", "original": "", "source": "PANews", "sentiment": "bearish", "analysis": "市场关注度提升，需结合技术面综合判断", "summary": "市场关注度提升，需结合技术面综合判断", "coins": ["HYPE"], "votes": {"bullish": 49, "bearish": 24, "important": 9}}, {"id": 22, "level": "B", "score": 2, "title": "现代汽车用稳定币汇款", "original": "Hyundai Card Tests Stablecoin Treasury Rails on Avalanche", "source": "CryptoPanic", "sentiment": "bullish", "analysis": "市场关注度提升，需结合技术面综合判断", "summary": "市场关注度提升，需结合技术面综合判断", "coins": ["ALL"], "votes": {"bullish": 21, "bearish": 7, "important": 8}}, {"id": 23, "level": "B", "score": 2, "title": "Tom Lee：加密是新存储交易", "original": "Tom Lee Says Crypto Is The New Memory Trade", "source": "CryptoPanic", "sentiment": "bullish", "analysis": "市场关注度提升，需结合技术面综合判断", "summary": "市场关注度提升，需结合技术面综合判断", "coins": ["ALL"], "votes": {"bullish": 38, "bearish": 20, "important": 15}}, {"id": 24, "level": "C", "score": 2, "title": "剑桥研究", "original": "Cambridge research puts 31% of Ethereum node activity in the US", "source": "CryptoPanic", "sentiment": "neutral", "analysis": "市场关注度提升，需结合技术面综合判断", "summary": "市场关注度提升，需结合技术面综合判断", "coins": ["ALL"], "votes": {"bullish": 24, "bearish": 18, "important": 16}}];
 
 let currentLevel = 'ALL';
 let currentCoin = 'ALL';
@@ -782,80 +921,7 @@ function vote(idx, type) {
     // 动画闪烁
     el.style.color = type === 'bullish' ? '#3fb950' : type === 'bearish' ? '#f85149' : '#ffd700';
     setTimeout(() => el.style.color = '', 600);
-    saveVotes();
 }
-
-// ========== 投票持久化（localStorage） ==========
-function saveVotes() {
-    try { localStorage.setItem('signal_votes_' + location.pathname, JSON.stringify(voted)); } catch(e) {}
-}
-function loadVotes() {
-    try {
-        const data = JSON.parse(localStorage.getItem('signal_votes_' + location.pathname));
-        if(data) Object.assign(voted, data);
-        // 恢复按钮状态
-        Object.keys(voted).forEach(k => {
-            if(voted[k]) {
-                const [idx, type] = k.split('-');
-                const btnMap = {'bullish':'up','bearish':'down','important':'imp'};
-                const cards = document.querySelectorAll('.card');
-                const className = btnMap[type] || '';
-                cards[idx]?.querySelectorAll('.vote-btn').forEach(b => {
-                    if(b.classList.contains(className)) b.classList.add('voted');
-                });
-            }
-        });
-    } catch(e) {}
-}
-loadVotes();
-
-// ========== 收藏功能（localStorage持久化） ==========
-function toggleBookmark(idx) {
-    let bookmarks = JSON.parse(localStorage.getItem('signal_bookmarks') || '[]');
-    const btn = document.getElementById('bookmark-' + idx);
-    if(bookmarks.includes(idx)) {
-        bookmarks = bookmarks.filter(i => i !== idx);
-        btn.classList.remove('bookmarked');
-    } else {
-        bookmarks.push(idx);
-        btn.classList.add('bookmarked');
-    }
-    localStorage.setItem('signal_bookmarks', JSON.stringify(bookmarks));
-}
-// 恢复收藏状态
-(function() {
-    const bookmarks = JSON.parse(localStorage.getItem('signal_bookmarks') || '[]');
-    bookmarks.forEach(idx => {
-        const btn = document.getElementById('bookmark-' + idx);
-        if(btn) btn.classList.add('bookmarked');
-    });
-})();
-
-// ========== 恐惧与贪婪指数 ==========
-async function fetchFGI() {
-    try {
-        const r = await fetch('https://api.alternative.me/fng/?limit=1');
-        const d = await r.json();
-        const val = parseInt(d.data[0].value);
-        const classification = d.data[0].value_classification;
-        const gauge = document.getElementById('fgi-gauge');
-        const text = document.getElementById('fgi-text');
-        gauge.textContent = val;
-        // 渐变颜色
-        let color;
-        if(val <= 25) { color = '#f85149'; }      // 极度恐惧
-        else if(val <= 45) { color = '#f0883e'; }  // 恐惧
-        else if(val <= 55) { color = '#f0c040'; }  // 中性
-        else if(val <= 75) { color = '#3fb950'; }  // 贪婪
-        else { color = '#2ea043'; }                // 极度贪婪
-        gauge.style.borderColor = color;
-        gauge.style.color = color;
-        text.innerHTML = `<b style="color:${color}">${classification}</b><br><span style="font-size:11px;color:#484f58;">最新指数</span>`;
-    } catch(e) {
-        document.getElementById('fgi-text').textContent = '数据暂不可用';
-    }
-}
-fetchFGI();
 
 // ========== 自动刷新 ==========
 setTimeout(() => {
