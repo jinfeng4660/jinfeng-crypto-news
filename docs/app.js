@@ -438,29 +438,24 @@ function renderCalendar(){
   var cp=$('calendar-panel');
   if(!cp)return;
   var cd=typeof CALENDAR_DATA!=='undefined'?CALENDAR_DATA:[];
-  if(!cd||!cd.length){cp.innerHTML='<div class="cal-empty">暂无财经日历数据</div>';return}
+  if(!cd||!cd.length){return} // HTML skeleton is already in index.html
   
-  // Simple stats: total events, next upcoming
-  var todayStr=new Date().toISOString().slice(0,10);
-  var upcoming=cd.filter(function(ev){return ev.date&&ev.date>=todayStr}).sort(function(a,b){return a.date.localeCompare(b.date)||(a.time||'').localeCompare(b.time||'')});
+  // Update stats in skeleton
   var hiCount=cd.filter(function(ev){return ev.impact==='high'}).length;
   var dateCount={};
   cd.forEach(function(ev){if(ev.date)dateCount[ev.date]=1});
   var totalDays=Object.keys(dateCount).length;
+  if($('cal-total'))$('cal-total').innerHTML='<span style="color:#e1e4e8;font-weight:700">'+cd.length+'</span> 条事件';
+  if($('cal-days'))$('cal-days').innerHTML='<span style="color:#e1e4e8">'+totalDays+'</span> 天';
+  if($('cal-high'))$('cal-high').innerHTML='<span style="color:#f85149">'+hiCount+'</span> 条高影响';
   
-  var html='<div style="font-size:11px;color:#8b949e;padding:4px 0;line-height:1.6">';
-  html+='<div>📊 共 '+cd.length+' 条事件 / '+totalDays+' 天</div>';
-  html+='<div>🔴 高影响 '+hiCount+' 条</div>';
-  if(upcoming.length>0){
-    var next=upcoming[0];
-    html+='<div style="margin-top:4px;padding:4px 6px;background:#121318;border-radius:4px;border-left:2px solid #58a6ff">';
-    html+='<div style="font-size:10px;color:#484f58">下一事件</div>';
-    html+='<div style="font-size:11px;color:#e6edf3">'+esc(next.date)+' '+esc(next.time||'')+'</div>';
-    html+='<div style="font-size:10px;color:#c9d1d9">'+esc(next.currency)+' '+esc(next.title)+'</div>';
-    html+='</div>';
+  // Next upcoming event
+  var todayStr=new Date().toISOString().slice(0,10);
+  var upcoming=cd.filter(function(ev){return ev.date&&ev.date>=todayStr}).sort(function(a,b){return a.date.localeCompare(b.date)||(a.time||'').localeCompare(b.time||'')});
+  if(upcoming.length && $('cal-next-title')){
+    var ev=upcoming[0];
+    $('cal-next-title').textContent=ev.currency+' '+ev.title+(ev.time?' '+ev.time:'');
   }
-  html+='</div>';
-  cp.innerHTML=html;
 }
 
 function renderCalEvent(ev){
