@@ -715,6 +715,7 @@ function renderChainPanel(mb,cd,coin){
     var lineColor=isUp?'#3fb950':'#f85149';
     var areaColor=isUp?'rgba(63,185,80,0.12)':'rgba(248,81,73,0.12)';
     var changePct=((endP-startP)/startP*100).toFixed(2);
+    var gColor='#30363d'; // grid line color
     // Expand range to include actual high/low in case start/end exceed close range
     var chartMinP=Math.min(minP,startP,endP);
     var chartMaxP=Math.max(maxP,startP,endP);
