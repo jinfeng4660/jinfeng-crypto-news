@@ -496,6 +496,28 @@ def render_site_v05(articles, now_str):
     """v0.5 SPA模式：生成数据JSON + 引用独立的前端app.js"""
     import random
     
+    # 采集链上数据（BTC/ETH/SOL 合约数据+AI分析）
+    try:
+        from chain_data import fetch_all_chain_data, generate_chain_analysis
+        raw_chain = fetch_all_chain_data(["BTC", "ETH", "SOL"])
+        chain_analyses = {}
+        for coin in ["BTC", "ETH", "SOL"]:
+            if coin in raw_chain:
+                analysis = generate_chain_analysis(raw_chain, coin)
+                if analysis:
+                    # 合并链上原始数据和AI分析
+                    merged = {**raw_chain[coin], **analysis}
+                    chain_analyses[coin] = merged
+        chain_data_json = json.dumps({
+            "coins": chain_analyses,
+            "fear_greed": raw_chain.get("_fear_greed"),
+            "time": raw_chain.get("_time"),
+        }, ensure_ascii=False)
+        print(f"[链上] 3条链上数据采集+AI分析完成")
+    except Exception as e:
+        print(f"[链上] 错误: {e}")
+        chain_data_json = "null"
+    
     # 采集财经日历（V2带历史+AI分析）
     try:
         from calendar_fetcher_v2 import run_calendar_pipeline
@@ -757,14 +779,46 @@ body{{font-family:'Inter','Noto Sans SC',-apple-system,BlinkMacSystemFont,sans-s
 .cal-open-full:hover{{background:#1b1d23;color:#58a6ff;border-color:#58a6ff33}}
 .cal-empty{{text-align:center;color:#484f58;padding:12px 0;font-size:11px}}
 @media(max-width:900px){{.cal-ev{{font-size:11px}}.cal-val{{font-size:10px}}.cal-ai-row{{font-size:10px}}}}
+/* ===== 链上数据弹窗 ===== */
+.chain-overlay{{display:none;position:fixed;inset:0;z-index:299;background:#00000088;backdrop-filter:blur(2px)}}
+.chain-overlay.open{{display:block}}
+.chain-modal{{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:300;width:480px;max-width:90vw;max-height:85vh;background:#0d0e12;border:1px solid #30363d;border-radius:16px;overflow:hidden;box-shadow:0 20px 60px #00000066}}
+.chain-modal.open{{display:flex;flex-direction:column}}
+.chain-modal-header{{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid #1b1d23;background:#121318}}
+.chain-modal-title{{font-size:18px;font-weight:800;color:#e1e4e8;display:flex;align-items:center;gap:8px}}
+.chain-close-btn{{background:none;border:none;color:#484f58;font-size:20px;cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;transition:all .15s}}
+.chain-close-btn:hover{{background:#1b1d23;color:#e1e4e8}}
+.chain-modal-body{{padding:20px;overflow-y:auto;flex:1}}
+.chain-loading{{text-align:center;padding:30px;color:#484f58;font-size:14px}}
+.chain-score{{text-align:center;padding:10px 0 16px}}
+.chain-score-num{{font-size:42px;font-weight:900;display:block;line-height:1}}
+.chain-score-label{{font-size:12px;color:#484f58;margin-top:4px}}
+.chain-score-bar{{width:200px;height:6px;background:#1b1d23;border-radius:3px;margin:8px auto;overflow:hidden}}
+.chain-score-fill{{height:100%;border-radius:3px;transition:width .8s}}
+.chain-metrics{{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}}
+.chain-metric{{background:#121318;border:1px solid #1b1d23;border-radius:10px;padding:10px 12px}}
+.chain-metric .label{{font-size:10px;color:#484f58;margin-bottom:3px}}
+.chain-metric .value{{font-size:16px;font-weight:700;color:#e1e4e8;font-variant-numeric:tabular-nums}}
+.chain-metric .sub{{font-size:10px;color:#8b949e;margin-top:2px}}
+.chain-metric .value.up{{color:#3fb950}}
+.chain-metric .value.down{{color:#f85149}}
+.chain-signals{{margin:12px 0}}
+.chain-signal{{display:flex;align-items:flex-start;gap:8px;padding:8px 12px;background:#121318;border:1px solid #1b1d23;border-radius:8px;margin-bottom:4px;font-size:12px;color:#c9d1d9;line-height:1.5}}
+.chain-signal .emoji{{width:20px;text-align:center;flex-shrink:0;font-size:14px}}
+.chain-summary{{background:#121318;border:1px solid #1b1d23;border-radius:8px;padding:12px;margin:12px 0;border-left:3px solid #ffd70044}}
+.chain-summary .label{{font-size:10px;color:#58a6ff;font-weight:600;margin-bottom:4px}}
+.chain-summary .text{{font-size:13px;color:#c9d1d9;line-height:1.6}}
+.ticker-coin{{cursor:pointer;transition:background .15s}}
+.ticker-coin:hover{{background:#1b1d23}}
+@media(max-width:600px){{.chain-metrics{{grid-template-columns:1fr}}.chain-modal{{width:92vw}}}}
 </style>
 </head>
 <body>
 <div id="nprogress"><div class="bar" id="nprogress-bar"></div></div>
 <div class="ticker"><div class="ticker-inner" id="ticker-bar">
-<div class="ticker-item"><span class="ticker-symbol">BTC</span><span class="ticker-price" id="btc-price">—</span><span class="ticker-change" id="btc-change"></span></div>
-<div class="ticker-item"><span class="ticker-symbol">ETH</span><span class="ticker-price" id="eth-price">—</span><span class="ticker-change" id="eth-change"></span></div>
-<div class="ticker-item"><span class="ticker-symbol">SOL</span><span class="ticker-price" id="sol-price">—</span><span class="ticker-change" id="sol-change"></span></div>
+<div class="ticker-item ticker-coin" onclick="openChainPanel('BTC')" title="点击查看BTC链上数据分析"><span class="ticker-symbol">BTC</span><span class="ticker-price" id="btc-price">—</span><span class="ticker-change" id="btc-change"></span></div>
+<div class="ticker-item ticker-coin" onclick="openChainPanel('ETH')" title="点击查看ETH链上数据分析"><span class="ticker-symbol">ETH</span><span class="ticker-price" id="eth-price">—</span><span class="ticker-change" id="eth-change"></span></div>
+<div class="ticker-item ticker-coin" onclick="openChainPanel('SOL')" title="点击查看SOL链上数据分析"><span class="ticker-symbol">SOL</span><span class="ticker-price" id="sol-price">—</span><span class="ticker-change" id="sol-change"></span></div>
 <div class="ticker-item"><span class="ticker-symbol">LINK</span><span class="ticker-price" id="link-price">—</span><span class="ticker-change" id="link-change"></span></div>
 <div class="ticker-item"><span class="ticker-symbol">DOGE</span><span class="ticker-price" id="doge-price">—</span><span class="ticker-change" id="doge-change"></span></div>
 <div class="ticker-status"><span class="ticker-dot live"></span><span>实时</span></div>
@@ -803,7 +857,19 @@ body{{font-family:'Inter','Noto Sans SC',-apple-system,BlinkMacSystemFont,sans-s
 <div class="sidebar-mobile" id="sidebar-mobile"></div>
 <footer class="footer"><p>金峰策略 · 全球加密快讯 · 仅供研究参考 · 不构成投资建议</p><div class="update-badge" id="footer-update">🕐 更新于 —</div></footer>
 <script src="app.js?v=1783743833"></script>
-<script>var DATA = ''' + articles_json + '''; var CALENDAR_DATA = ''' + calendar_json + '''; renderCards(DATA);</script>
+<script>var DATA = ''' + articles_json + '''; var CALENDAR_DATA = ''' + calendar_json + '''; var CHAIN_DATA = ''' + chain_data_json + '''; renderCards(DATA);</script>
+
+<!-- ===== 链上数据弹窗 ===== -->
+<div class="chain-overlay" id="chain-overlay" onclick="closeChainPanel()"></div>
+<div class="chain-modal" id="chain-modal">
+  <div class="chain-modal-header">
+    <span class="chain-modal-title" id="chain-modal-title">BTC 链上数据分析</span>
+    <button class="chain-close-btn" onclick="closeChainPanel()">✕</button>
+  </div>
+  <div class="chain-modal-body" id="chain-modal-body">
+    <div class="chain-loading">加载中…</div>
+  </div>
+</div>
 </body>
 </html>'''
     with open(html_path, "w", encoding="utf-8") as f:

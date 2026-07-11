@@ -1,0 +1,36 @@
+Source: Cointelegraph RSS
+URL: https://cointelegraph.com/rss
+Fetched: 2026-07-11 12:42 CST
+Last Build: Sat, 11 Jul 2026 04:39:14 +0000
+
+Top Stories:
+1. Here's what happened in crypto today
+2. Robinhood says its AI agent feature will 'soon' be assisting crypto traders - 70K agentic accounts created since late May
+3. DOJ moves to dismiss charges against alleged $722M BitClub fraudster
+4. Kraken to overhaul app with AI investing assistant - AI recommends trades
+5. Senate Democrats call for hearings into Trump's ties to crypto amid CLARITY Act discussions
+6. US CBDC ban to go into effect without Trump signoff on housing bill
+7. New Hampshire council votes down $100M Bitcoin bonds
+8. Backpack joins race for 24/7 stock markets with tokenized equities
+9. Crypto Biz: How stablecoins found their niche
+10. Bitcoin whales sent BTC price to $64K as Coinbase Premium broke key level - CryptoQuant
+11. A16z's Andreessen lands Federal Reserve role as AI reshapes policy debate
+12. MiCA licensing only the beginning as crypto custodians face scrutiny
+13. Crypto lobby's $189M campaign for CLARITY Act
+14. US charges prisoner over alleged laundering of seized Kraken crypto
+15. Wall Street banks tighten prediction market rules for staff
+16. USDC issuer Circle wins final OCC approval for national trust bank charter
+17. Japanese lender CRYL launches Bitcoin-backed loans of up to $6.2M
+18. TeraWulf eyes $3.5B debt raise for Anthropic-linked data center
+19. Metaplanet explores Bitcoin-backed digital credit with JPYC in Japan
+20. Bitcoin returns to $64.3K with new 3-week BTC price highs imminent
+21. EU parliament passes 'chat control' allowing private chat scans until 2028
+22. Robinhood Chain sees over $70M in ETH bridged during first week
+23. Zcash targets July 28 launch for Ironwood network upgrade
+24. Hackers tried to backdoor Injective NPM package to steal wallet keys
+25. DeFi may be 'quietly re-rating' given outperformance against Bitcoin: Bitwise
+26. Coinbase chief legal officer to transition to advisory role on July 31
+27. Bitdeer stock jumps 14% as company expands US mining hardware production
+28. White House says it received no Democratic response related to SEC, CFTC vacancies
+29. Phantom, Hyperliquid ask CFTC to modernize rules for onchain derivatives
+30. Bitcoin miners' AI pivot faces investor scrutiny over insider sales

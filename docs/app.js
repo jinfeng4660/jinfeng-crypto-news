@@ -567,3 +567,174 @@ function expandCalendar(){
   });
   cp.innerHTML=html;
 }
+
+// ===== Chain Data Panel (链上数据弹窗) =====
+function openChainPanel(coin){
+  var ov=$('chain-overlay'),md=$('chain-modal'),mb=$('chain-modal-body'),mt=$('chain-modal-title');
+  if(!ov||!md||!mb)return;
+  
+  // Close if already open with same coin
+  if(md.classList.contains('open')&&mt.dataset.coin===coin){closeChainPanel();return}
+  
+  ov.classList.add('open');
+  md.classList.add('open');
+  mt.textContent=coin+' 链上数据分析';
+  mt.dataset.coin=coin;
+  mb.innerHTML='<div class="chain-loading">加载中…</div>';
+  
+  var cd=typeof CHAIN_DATA!=='undefined'&&CHAIN_DATA?CHAIN_DATA:null;
+  if(!cd||!cd.coins||!cd.coins[coin]){
+    mb.innerHTML='<div class="chain-loading" style="padding:30px">⚠️ 链上数据暂不可用，请稍后刷新页面</div>';
+    return;
+  }
+  
+  renderChainPanel(mb,cd,coin);
+}
+
+function closeChainPanel(){
+  var ov=$('chain-overlay'),md=$('chain-modal');
+  if(ov)ov.classList.remove('open');
+  if(md)md.classList.remove('open');
+}
+
+// ESC key to close
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape')closeChainPanel();
+});
+
+function renderChainPanel(mb,cd,coin){
+  var d=cd.coins[coin]||{};
+  var fg=cd.fear_greed||{};
+  var price=d.price||0;
+  var change=d.change_pct||0;
+  var score=d.score||50;
+  var risk=d.risk_level||'中';
+  var signals=d.signals||[];
+  var detail=d.detail||'';
+  var marketTrend=d.market_trend||'中性';
+  var leverageSent=d.leverage_sentiment||'中性';
+  var capitalFlow=d.capital_flow||'中性';
+  
+  // Score color
+  var sc=score>=65?'#3fb950':score>=45?'#d29922':'#f85149';
+  
+  var html='';
+  
+  // Score circle
+  html+='<div class="chain-score">';
+  html+='  <span class="chain-score-num" style="color:'+sc+'">'+score+'</span>';
+  html+='  <span class="chain-score-label">综合评分 · 风险等级 '+risk+'</span>';
+  html+='  <div class="chain-score-bar">';
+  html+='    <div class="chain-score-fill" style="width:'+score+'%;background:'+sc+'"></div>';
+  html+='  </div>';
+  html+='</div>';
+  
+  // Summary
+  html+='<div class="chain-summary">';
+  html+='  <div class="label">🤖 金峰策略AI分析</div>';
+  html+='  <div class="text">'+esc(detail)+'</div>';
+  html+='</div>';
+  
+  // 3 status tags
+  var trendEmoji=marketTrend.includes('上涨')||marketTrend.includes('强势')?'📈':marketTrend.includes('下跌')?'📉':'➡️';
+  html+='<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">';
+  html+='  <span style="font-size:11px;padding:3px 8px;border-radius:6px;background:#121318;border:1px solid #1b1d23;color:#c9d1d9">'+trendEmoji+' '+esc(marketTrend)+'</span>';
+  var levEmoji=leverageSent.includes('过热')?'🔥':leverageSent.includes('偏')||leverageSent.includes('略')?'💸':'⚖️';
+  html+='  <span style="font-size:11px;padding:3px 8px;border-radius:6px;background:#121318;border:1px solid #1b1d23;color:#c9d1d9">'+levEmoji+' '+esc(leverageSent)+'</span>';
+  var capEmoji=capitalFlow.includes('极度偏多')?'⚠️':capitalFlow.includes('偏多')?'👥':capitalFlow.includes('偏空')?'🟢':'⚖️';
+  html+='  <span style="font-size:11px;padding:3px 8px;border-radius:6px;background:#121318;border:1px solid #1b1d23;color:#c9d1d9">'+capEmoji+' '+esc(capitalFlow)+'</span>';
+  html+='</div>';
+  
+  // Key metrics grid
+  var pc=change>=0?'up':'down';
+  var pcLabel=(change>=0?'+':'')+change.toFixed(2)+'%';
+  
+  html+='<div class="chain-metrics">';
+  html+='  <div class="chain-metric"><div class="label">价格</div><div class="value" style="color:#e1e4e8;font-size:18px">$'+fmt(price)+'</div><div class="value '+pc+'" style="font-size:13px;font-weight:500">'+pcLabel+'</div></div>';
+  html+='  <div class="chain-metric"><div class="label">24h成交量</div><div class="value" style="color:#e1e4e8">$'+(d.volume_24h?fmt(Math.round(d.volume_24h)):'—')+'</div></div>';
+  
+  if(d.oi_usdt){
+    var oiB=coin==='BTC'?(d.oi/1e5).toFixed(2):coin==='ETH'?(d.oi/1e6).toFixed(2):(d.oi/1e6).toFixed(2);
+    html+='  <div class="chain-metric"><div class="label">未平仓合约 (OI)</div><div class="value" style="color:#e1e4e8;font-size:15px">$'+fmt(Math.round(d.oi_usdt))+'</div><div class="sub">'+oiB+' 万张</div></div>';
+  }else{
+    html+='  <div class="chain-metric"><div class="label">未平仓合约</div><div class="value" style="color:#888">—</div></div>';
+  }
+  
+  if(d.funding_rate!==undefined){
+    var frLabel=(d.funding_rate>=0?'+':'')+d.funding_rate.toFixed(4)+'%';
+    var frColor=d.funding_rate>0.01?'#f85149':d.funding_rate>0.005?'#d29922':'#8b949e';
+    html+='  <div class="chain-metric"><div class="label">资金费率</div><div class="value" style="color:'+frColor+'">'+frLabel+'</div></div>';
+  }else{
+    html+='  <div class="chain-metric"><div class="label">资金费率</div><div class="value" style="color:#888">—</div></div>';
+  }
+  
+  if(d.long_short_ratio){
+    var lsr=d.long_short_ratio;
+    var lsColor=lsr>1.5?'#f85149':lsr>1.2?'#d29922':'#8b949e';
+    var shortPct=(100-d.long_account_pct).toFixed(1);
+    html+='  <div class="chain-metric"><div class="label">多/空比</div><div class="value" style="color:'+lsColor+';font-size:15px">'+lsr.toFixed(2)+'</div><div class="sub">多'+(d.long_account_pct||'').toFixed(1)+'% / 空'+shortPct+'%</div></div>';
+  }else{
+    html+='  <div class="chain-metric"><div class="label">多/空比</div><div class="value" style="color:#888">—</div></div>';
+  }
+  
+  if(d.taker_bs_ratio){
+    var tbr=d.taker_bs_ratio;
+    var tbColor=tbr>1.1?'#3fb950':tbr<0.9?'#f85149':'#8b949e';
+    html+='  <div class="chain-metric"><div class="label">主动买/卖比</div><div class="value" style="color:'+tbColor+'">'+tbr.toFixed(2)+'</div></div>';
+  }else{
+    html+='  <div class="chain-metric"><div class="label">主动买/卖比</div><div class="value" style="color:#888">—</div></div>';
+  }
+  
+  if(d.top_ls_ratio){
+    html+='  <div class="chain-metric"><div class="label">大户多/空比</div><div class="value" style="color:#c9d1d9;font-size:15px">'+d.top_ls_ratio.toFixed(2)+'</div><div class="sub">多'+(d.top_long_pct||'').toFixed(1)+'% / 空'+(100-d.top_long_pct).toFixed(1)+'%</div></div>';
+  }else{
+    html+='  <div class="chain-metric"><div class="label">大户多/空比</div><div class="value" style="color:#888">—</div></div>';
+  }
+  
+  html+='</div>';
+  
+  // Signals
+  if(signals.length>0){
+    html+='<div class="chain-signals">';
+    signals.forEach(function(s){
+      var e='';
+      if(s.includes('📈'))e='📈';else if(s.includes('📉'))e='📉';else if(s.includes('🔥'))e='🔥';else if(s.includes('⚠️'))e='⚠️';else if(s.includes('🟢'))e='🟢';else if(s.includes('🔴'))e='🔴';else if(s.includes('💸'))e='💸';else if(s.includes('💰'))e='💰';else if(s.includes('👥'))e='👥';else if(s.includes('📊'))e='📊';else if(s.includes('⚪'))e='⚪';else if(s.includes('⚖️'))e='⚖️';else if(s.includes('➡️'))e='➡️';else if(s.includes('💤'))e='💤';else if(s.includes('😱')||s.includes('😰')||s.includes('🤑')||s.includes('😊'))e='😱';else e='📌';
+      html+='<div class="chain-signal"><span class="emoji">'+e+'</span><span>'+esc(s.replace(/^[📈📉🔥⚠️🟢🔴💸💰👥📊⚪⚖️➡️💤😱😰🤑😊📌]\s*/,''))+'</span></div>';
+    });
+    html+='</div>';
+  }
+  
+  // Fear & Greed
+  if(fg.value){
+    var fgColor=fg.value<=25?'#f85149':fg.value<=45?'#ff8c00':fg.value>=75?'#3fb950':'#8b949e';
+    html+='<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#121318;border:1px solid #1b1d23;border-radius:8px;margin:8px 0">';
+    html+='  <span style="font-size:14px">😱</span>';
+    html+='  <span style="flex:1;font-size:12px;color:#8b949e">恐惧与贪婪指数</span>';
+    html+='  <span style="font-size:16px;font-weight:700;color:'+fgColor+'">'+fg.value+' — '+fg.classification+'</span>';
+    html+='</div>';
+  }
+  
+  // Update timestamp
+  if(cd.time){
+    html+='<div style="font-size:10px;color:#484f58;text-align:center;padding:6px 0">数据来源: Binance API · 更新时间: '+esc(cd.time.slice(0,19))+'</div>';
+  }
+  
+  mb.innerHTML=html;
+}
+
+// Add click handler to coin pills to open chain panel
+function setupChainPills(){
+  setTimeout(function(){
+    document.querySelectorAll('.coin-pill').forEach(function(pill){
+      var txt=pill.textContent.trim();
+      if(['BTC','ETH','SOL'].indexOf(txt)>=0){
+        pill.style.cursor='pointer';
+        pill.title='点击查看'+txt+'链上数据';
+        pill.addEventListener('click',function(e){
+          openChainPanel(txt);
+        });
+      }
+    });
+  },500);
+}
+setupChainPills();

@@ -1,0 +1,37 @@
+Source: Bitcoin Magazine RSS
+URL: https://bitcoinmagazine.com/.rss/full/
+Fetched: 2026-07-11 12:42 CST
+Last Build: Fri, 10 Jul 2026 20:23:56 +0000
+
+Top Stories:
+1. U.S. Representatives Urge Senate to Vote on CLARITY Act in July, Address Ethics Concerns
+   - Rep. French Hill urges Senate vote before August recess
+   - CLARITY Act pairs with GENIUS Act for full crypto framework
+   - Polymarket puts passage odds at 39% (down from 74%)
+
+2. Circle (CRCL) Wins Final OCC Approval for National Trust Bank
+   - USDC issuer secured final OCC approval for national trust bank
+   - "Circle National Trust" provides fiduciary custody for digital assets
+   - CRCL shares up 5% on announcement
+
+3. Metaplanet Announces Joint Study to Bring Bitcoin-Backed Digital Credit to Japan
+   - Partners: JPYC, Progmat, Siiibo Securities
+   - Explores tokenized credit products backed by 43,000 BTC holdings
+   - Part of "Project Nova" — bitcoin-centric financial platform
+
+4. Bitcoin is "A Screaming Buy": Standard Chartered Backs $100K Target
+   - Geoff Kendrick maintains end-2026 $100K BTC price target
+   - Strategy's sell-off reflects communication issue, not weakening BTC outlook
+   - STRC over-collateralized, should trade back toward $100
+
+5. JPMorgan Says the Real Threat to Bitcoin Isn't Strategy — It's Private Blockchains
+   - Banks adopting permissioned blockchains over public networks
+   - Tokenized deposits could crowd out stablecoins
+   - Biggest long-term risk to crypto ecosystem
+
+6. Bitcoin's New Debt Machine is Facing Its First Major Test
+   - June was first major stress test for BTC-backed preferred shares
+   - STRC bottomed near $75, SATA near $97 (July 2 recovery)
+   - Combined STRC+SATA June trading topped $10B
+
+7. New Hampshire Council Rejects $100 Million Bitcoin-Backed Bond

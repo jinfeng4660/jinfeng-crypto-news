@@ -1,0 +1,37 @@
+Source: PANews
+URL: https://www.panewslab.com/
+Fetched: 2026-07-11 12:42 CST
+
+热搜:比特币 以太坊 稳定币 预测市场 特朗普 RWA USDT DeFi AI 美联储主席
+
+今日必读
+- 昨夜今晨重要资讯（7月10日-7月11日）
+- SemiAnalysis最新访谈：存储还有翻倍空间，短中期慎对CPO，CPU只是配角
+- 第一个吃到 Robinhood Chain 这波热度的，是涨近 20% 的 Arbitrum
+
+精选文章：
+1. SK海力士登陆纳斯达克，HBM霸主净利超英伟达
+2. ARB一周涨近20%，Robinhood Chain基于Arbitrum上线
+3. OpenAI预计于8月9日停止开发独立浏览器ChatGPT Atlas
+4. CoinShares：比特币正面临三大压力，市场处于脆弱筑底阶段
+5. 欧洲议会通过数字欧元推进决议
+6. Tether用其BTC储备地址向币安测试充值4枚BTC
+7. 剑桥研究：31%以太坊节点在美国
+8. SK海力士代币化股票通过xStocks在Telegram钱包开放交易
+9. 含CBDC禁令的住房法案将于当地时间周六凌晨自动生效
+10. Meta首席数据官：代理商业是"下一层级的业务"
+11. 现代汽车在Avalanche公链上线内部跨境汇款系统
+12. ZachXBT：一Solana早期巨鲸疑遭盗窃1.81万枚SOL
+13. 孙宇晨登榜胡润U35中国创业先锋
+14. 17家银行联手"革自己的命"：Swift区块链账本上线
+
+市场指标：
+- 总市值: $2.28T
+- BTC市值: $1.29T
+- ETH市值: $216.98B
+- ETH/BTC: 0.03
+- DeFi TVL: $137.36B
+- 恐惧贪婪指数: 26 (Fear)
+- ETH突破1800美元
+- BTC ETF净流入9044万美元
+- ETH ETF净流入1843万美元

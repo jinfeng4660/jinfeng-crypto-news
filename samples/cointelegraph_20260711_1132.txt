@@ -1,0 +1,65 @@
+Source: Web Fetch (cointelegraph.com/rss)
+Fetched at: 2026-07-11T03:32:15.410Z
+---
+Cointelegraph RSS Feed - Sat, 11 Jul 2026 03:28:44 +0000
+
+1. DOJ moves to dismiss charges against alleged $722M BitClub fraudster: Report
+   Matthew Goettsche was set to face trial in October for conspiracy to commit wire fraud and selling unregistered securities.
+
+2. Kraken to overhaul app with AI investing assistant
+   The redesigned app will use AI to recommend trades and tailor investing tools around users' financial goals.
+
+3. Senate Democrats call for hearings into Trump's ties to crypto amid CLARITY Act discussions
+   Five senators called for committee hearings to investigate Trump's policies potentially being influenced by crypto funding from UAE-linked entities.
+
+4. US CBDC ban to go into effect without Trump signoff on housing bill
+   Trump confirmed on social media he would not sign the 21st Century ROAD to Housing Act, which includes a ban on US CBDC until end of 2030.
+
+5. New Hampshire council votes down $100M Bitcoin bonds
+
+6. Backpack joins race for 24/7 stock markets with tokenized equities
+
+7. Bitcoin whales sent BTC price to $64K as Coinbase Premium broke key level: CryptoQuant
+
+8. A16z's Andreessen lands Federal Reserve role as AI reshapes policy debate
+   Fed named a16z co-founder Marc Andreessen to co-lead an AI productivity and jobs task force.
+
+9. MiCA licensing only the beginning as crypto custodians face scrutiny
+
+10. Will the crypto lobby's $189M campaign get CLARITY over the line?
+
+11. US charges prisoner over alleged laundering of seized Kraken crypto ($290K)
+
+12. Wall Street banks tighten prediction market rules for staff as insider fears spread
+
+13. USDC issuer Circle wins final approval for US national trust bank charter
+
+14. Japanese lender launches Bitcoin-backed loans of up to $6.2M
+
+15. TeraWulf eyes $3.5B debt raise for Anthropic-linked data center: Report
+
+16. Metaplanet explores Bitcoin-backed digital credit with JPYC in Japan
+
+17. Bitcoin returns to $64.3K with new 3-week BTC price highs imminent
+
+18. EU parliament passes 'chat control,' allowing private chat scans until 2028
+
+19. Robinhood Chain sees over $70M in ETH bridged during first week
+
+20. Zcash targets July 28 launch for Ironwood network upgrade
+
+21. Hackers tried to backdoor Injective NPM package to steal wallet keys
+
+22. DeFi may be 'quietly re-rating' given outperformance against Bitcoin: Bitwise
+
+23. Coinbase chief legal officer to transition to advisory role on July 31
+
+24. Bitdeer stock jumps 14% as company expands US mining hardware production
+
+25. White House says it received no Democratic response related to SEC, CFTC vacancies
+
+26. Phantom, Hyperliquid ask CFTC to modernize rules for onchain derivatives
+
+27. Bitcoin miners' AI pivot faces investor scrutiny over insider sales
+
+28. UK politicians mull permanent crypto donation ban in wake of Nigel Farage scandal
