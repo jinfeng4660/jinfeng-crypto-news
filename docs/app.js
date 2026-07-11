@@ -739,8 +739,14 @@ function renderChainPanel(mb,cd,coin){
     chartRange=chartMaxP-chartMinP||1;
     
     var leftPad=52,topPad=16,btmPad=16;  // px padding for labels
-    var chW=d.klines.length,chH=120;
+    var chW=400,chH=130;  // fixed viewBox width (400 virtual px) for proper text rendering
+    var klineCount=d.klines.length;
     var plotW=chW;
+    var plotH=chH-topPad-btmPad;
+    // Helper: kline index to x (scale from 0..klineCount-1 to 0..chW-1)
+    function px(i){return i/(klineCount-1)*(chW-1)};
+    // Helper: price to y (using expanded range)
+    function py(p){return topPad+plotH-((p-chartMinP)/chartRange*plotH)};
     var plotH=chH-topPad-btmPad;
     // Helper: price to y (using expanded range)
     function py(p){return topPad+plotH-((p-chartMinP)/chartRange*plotH)};
@@ -764,7 +770,7 @@ function renderChainPanel(mb,cd,coin){
     html+='  <span style="font-size:12px;color:'+lineColor+'"><span style="font-weight:700">'+(isUp?'+':'')+changePct+'%</span></span>';
     html+='</div>';
     
-    html+='<svg width="100%" height="'+chH+'" viewBox="0 0 '+chW+' '+chH+'" style="overflow:visible;display:block">';
+    html+='<svg width="100%" height="'+chH+'" viewBox="0 0 '+chW+' '+chH+'" preserveAspectRatio="none" style="overflow:visible;display:block;width:100%;vector-effect:non-scaling-stroke">';
     
     // ===== Horizontal lines + price labels for key points =====
     var gColor='rgba(255,255,255,0.06)';
@@ -778,22 +784,22 @@ function renderChainPanel(mb,cd,coin){
       else if(p===endP) label='现价';
       html+='<line x1="0" y1="'+y+'" x2="'+chW+'" y2="'+y+'" stroke="'+gColor+'" stroke-width="1"/>';
       // Left price + type tag
-      html+='<text x="0" y="'+y+'" fill="'+(label==='现价'?lineColor:tColor)+'" font-size="'+(label==='现价'?'9':'8')+'" font-family="monospace" dominant-baseline="central" font-weight="'+(label==='现价'?'bold':'normal')+'">'+f4(p)+(label?' '+label:'')+'</text>';
+      html+='<text x="2" y="'+y+'" fill="'+(label==='现价'?lineColor:tColor)+'" font-size="'+(label==='现价'?'10':'9')+'" font-family="monospace" dominant-baseline="central" font-weight="'+(label==='现价'?'bold':'normal')+'">'+f4(p)+(label?' '+label:'')+'</text>';
     });
     
     // ===== Area fill =====
     var areaPts=[];
     prices.forEach(function(p,i){
       var y=py(p);
-      areaPts.push(i+','+y);
+      areaPts.push(px(i)+','+y);
     });
-    var areaStr='0,'+chH+' '+areaPts.join(' ')+' '+(chW-1)+','+chH;
+    var areaStr='0,'+chH+' '+areaPts.join(' ')+' '+px(klineCount-1)+','+chH;
     html+='<polygon points="'+areaStr+'" fill="'+areaColor+'" stroke="none"/>';
     
     // ===== Price line =====
     var pts=[];
     prices.forEach(function(p,i){
-      pts.push(i+','+py(p));
+      pts.push(px(i)+','+py(p));
     });
     html+='<polyline points="'+pts.join(' ')+'" fill="none" stroke="'+lineColor+'" stroke-width="1.5" stroke-linejoin="round"/>';
     
@@ -801,18 +807,19 @@ function renderChainPanel(mb,cd,coin){
     var startY=py(prices[0]);
     var endY=py(prices[prices.length-1]);
     // Start dot (small)
-    html+='<circle cx="0" cy="'+startY+'" r="2.5" fill="'+lineColor+'" opacity="0.6"/>';
+    html+='<circle cx="'+px(0)+'" cy="'+startY+'" r="2.5" fill="'+lineColor+'" opacity="0.6"/>';
     // End dot (big)
-    html+='<circle cx="'+(chW-1)+'" cy="'+endY+'" r="4" fill="'+lineColor+'" stroke="#0d0e12" stroke-width="2"/>';
+    html+='<circle cx="'+px(klineCount-1)+'" cy="'+endY+'" r="4" fill="'+lineColor+'" stroke="#0d0e12" stroke-width="2"/>';
     
     // ===== Volume bars (thin, bottom 25%) =====
     var vols=d.klines.map(function(c){return c.v});
     var maxVol=Math.max.apply(null,vols);
     var volH=plotH*0.18; // 18% of plot height at bottom
     var volY=chH-1;      // bottom of chart
+    var barWidth=(chW/klineCount)*0.6;
     vols.forEach(function(v,i){
       var barH=(v/maxVol)*volH;
-      html+='<rect x="'+i+'" y="'+(volY-barH)+'" width="1" height="'+barH+'" fill="'+lineColor+'" opacity="0.15"/>';
+      html+='<rect x="'+(px(i)-barWidth/2)+'" y="'+(volY-barH)+'" width="'+barWidth+'" height="'+barH+'" fill="'+lineColor+'" opacity="0.15"/>';
     });
     
     html+='</svg></div>';
