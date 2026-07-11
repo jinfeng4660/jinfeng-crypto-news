@@ -540,14 +540,11 @@ def render_site_v05(articles, now_str):
         "votes": a.get("votes",{"bullish":0,"bearish":0,"important":0})
     } for i,a in enumerate(sorted_articles)], ensure_ascii=False)
     
-    # v0.5 SPA: 引用独立HTML + JS，仅嵌入数据
+    # v0.5 SPA: 引用独立HTML + JS，仅嵌入数据（覆盖重写以保证数据最新）
     docs_dir = os.path.join(BASE, "docs")
     html_path = os.path.join(docs_dir, "index.html")
-    js_path = os.path.join(docs_dir, "app.js")
     
-    # 如果index.html不存在，先从模板复制
-    if not os.path.exists(html_path):
-        html = f'''<!DOCTYPE html>
+    html = f'''<!DOCTYPE html>
 <html lang="zh-CN">
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>金峰策略 · 全球加密快讯</title>
@@ -729,23 +726,9 @@ body{{font-family:'Inter','Noto Sans SC',-apple-system,BlinkMacSystemFont,sans-s
 <script>var DATA = ''' + articles_json + '''; renderCards(DATA);</script>
 </body>
 </html>'''
-        with open(html_path, "w", encoding="utf-8") as f:
-            f.write(html)
-        print(f"\n✅ v0.5网站已生成: {html_path} ({len(html)/1024:.0f}KB)")
-    else:
-        # 已有HTML模板，只更新数据
-        with open(html_path, "r", encoding="utf-8") as f:
-            html = f.read()
-        # 替换DATA变量
-        import re
-        html = re.sub(
-            r'var DATA = .*?; renderCards\(DATA\);',
-            f'var DATA = {articles_json}; renderCards(DATA);',
-            html
-        )
-        with open(html_path, "w", encoding="utf-8") as f:
-            f.write(html)
-        print(f"\n✅ v0.5网站数据已更新: {html_path} ({len(html)/1024:.0f}KB)")
+    with open(html_path, "w", encoding="utf-8") as f:
+        f.write(html)
+    print(f"\n✅ v0.5网站已生成: {html_path} ({len(html)/1024:.0f}KB)")
     
     return html
 
@@ -939,10 +922,5 @@ if __name__ == "__main__":
         filtered = run(skip_push=True)
         if filtered:
             html = render_site_v05(filtered, now_str)
-            site_dir = os.path.join(BASE, "docs")
-            os.makedirs(site_dir, exist_ok=True)
-            with open(os.path.join(site_dir, "index.html"), "w", encoding="utf-8") as f:
-                f.write(html)
-            print(f"\n✅ 网站已生成: {os.path.join(site_dir, 'index.html')} ({len(html)/1024:.0f}KB)")
         else:
             print("\n⚠️ 无评分通过的资讯，网站未更新")
