@@ -716,45 +716,89 @@ function renderChainPanel(mb,cd,coin){
   
   // Mini price chart (SVG line chart from klines)
   if(d.klines && d.klines.length>10){
-    html+='<div class="chain-chart"><div class="label" style="margin-bottom:6px">📈 24h走势图（15分钟线）</div>';
-    html+='<svg width="100%" height="120" viewBox="0 0 '+d.klines.length+' 100" preserveAspectRatio="none" style="overflow:visible">';
     var prices=d.klines.map(function(c){return c.c});
     var minP=Math.min.apply(null,prices);
     var maxP=Math.max.apply(null,prices);
     var range=maxP-minP||1;
-    // Grid lines
-    var gridColors='rgba(255,255,255,0.06)';
-    html+='<line x1="0" y1="25" x2="'+d.klines.length+'" y2="25" stroke="'+gridColors+'" stroke-width="1"/>';
-    html+='<line x1="0" y1="50" x2="'+d.klines.length+'" y2="50" stroke="'+gridColors+'" stroke-width="1"/>';
-    html+='<line x1="0" y1="75" x2="'+d.klines.length+'" y2="75" stroke="'+gridColors+'" stroke-width="1"/>';
-    // Price labels on right
-    var fmtPrice=function(p){return '$'+p.toFixed(2)};
-    html+='<text x="'+(d.klines.length+4)+'" y="3" fill="#484f58" font-size="8">'+fmtPrice(maxP)+'</text>';
-    html+='<text x="'+(d.klines.length+4)+'" y="50" fill="#484f58" font-size="8" dominant-baseline="middle">'+fmtPrice((maxP+minP)/2)+'</text>';
-    html+='<text x="'+(d.klines.length+4)+'" y="97" fill="#484f58" font-size="8">'+fmtPrice(minP)+'</text>';
-    // Price line
-    var isUp=prices[prices.length-1]>=prices[0];
+    var startP=prices[0];
+    var endP=prices[prices.length-1];
+    var isUp=endP>=startP;
     var lineColor=isUp?'#3fb950':'#f85149';
     var areaColor=isUp?'rgba(63,185,80,0.12)':'rgba(248,81,73,0.12)';
-    var pts=[],areaPts=[];
-    prices.forEach(function(p,i){
-      var y=100-((p-minP)/range*90+5);
-      if(i===0)pts.push(i+','+y);
-      else pts.push(i+','+y);
+    var changePct=((endP-startP)/startP*100).toFixed(2);
+    var leftPad=52,topPad=16,btmPad=16;  // px padding for labels
+    var chW=d.klines.length,chH=120;
+    var plotW=chW;
+    var plotH=chH-topPad-btmPad;
+    // Helper: price to y
+    function py(p){return topPad+plotH-((p-minP)/range*plotH)};
+    // Format price
+    var f2=function(p){return '$'+p.toFixed(2)};
+    var f4=function(p){return p<1?'$'+p.toFixed(4):'$'+p.toFixed(2)};
+    var fp=function(p){return p<0.01?p.toFixed(6):p<1?p.toFixed(4):p.toFixed(2)};
+    // Grid levels — 5 horizontal lines
+    var levels=[0,0.25,0.50,0.75,1.0];
+    var levelLabels=[maxP,maxP-(maxP-minP)*0.25,maxP-(maxP-minP)*0.5,maxP-(maxP-minP)*0.75,minP];
+    
+    html+='<div class="chain-chart">';
+    html+='<div class="label" style="margin-bottom:6px;display:flex;justify-content:space-between;align-items:center">';
+    html+='  <span>📈 24h走势图（15分钟线）</span>';
+    html+='  <span style="font-size:12px;font-weight:600;color:'+lineColor+'">'+f2(startP)+' → '+f2(endP)+' <span style="font-weight:700">'+(isUp?'+':'')+changePct+'%</span></span>';
+    html+='</div>';
+    
+    html+='<svg width="100%" height="'+chH+'" viewBox="0 0 '+chW+' '+chH+'" preserveAspectRatio="none" style="overflow:visible;display:block">';
+    
+    // ===== Grid lines + price labels on LEFT =====
+    var gColor='rgba(255,255,255,0.06)';
+    var tColor='#8b949e';
+    levels.forEach(function(r,i){
+      var y=py(levelLabels[i]);
+      html+='<line x1="0" y1="'+y+'" x2="'+chW+'" y2="'+y+'" stroke="'+gColor+'" stroke-width="1"/>';
+      // Left label
+      html+='<text x="0" y="'+(y+3)+'" fill="'+tColor+'" font-size="9" font-family="monospace">'+f4(levelLabels[i])+'</text>';
     });
-    var polyline=pts.join(' ');
-    // Area fill
+    
+    // ===== Open price baseline (dashed) =====
+    var openY=py(startP);
+    html+='<line x1="0" y1="'+openY+'" x2="'+chW+'" y2="'+openY+'" stroke="'+lineColor+'" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.3"/>';
+    html+='<text x="'+(chW-2)+'" y="'+(openY+3)+'" fill="'+lineColor+'" font-size="7" text-anchor="end" opacity="0.5">开</text>';
+    
+    // ===== Area fill =====
     var areaPts=[];
     prices.forEach(function(p,i){
-      var y=100-((p-minP)/range*90+5);
+      var y=py(p);
       areaPts.push(i+','+y);
     });
-    var areaStr='0,95 '+areaPts.join(' ')+' '+(d.klines.length-1)+',95';
-    html+='<polygon points="'+areaStr+'" fill="'+areaColor+'"/>';
-    html+='<polyline points="'+polyline+'" fill="none" stroke="'+lineColor+'" stroke-width="1.5" stroke-linejoin="round"/>';
-    // Start dot and end dot
-    html+='<circle cx="0" cy="'+(100-((prices[0]-minP)/range*90+5))+'" r="2" fill="'+lineColor+'" opacity="0.5"/>';
-    html+='<circle cx="'+(d.klines.length-1)+'" cy="'+(100-((prices[prices.length-1]-minP)/range*90+5))+'" r="3" fill="'+lineColor+'"/>';
+    var areaStr='0,'+chH+' '+areaPts.join(' ')+' '+(chW-1)+','+chH;
+    html+='<polygon points="'+areaStr+'" fill="'+areaColor+'" stroke="none"/>';
+    
+    // ===== Price line =====
+    var pts=[];
+    prices.forEach(function(p,i){
+      pts.push(i+','+py(p));
+    });
+    html+='<polyline points="'+pts.join(' ')+'" fill="none" stroke="'+lineColor+'" stroke-width="1.5" stroke-linejoin="round"/>';
+    
+    // ===== Start/End dots + labels =====
+    var startY=py(prices[0]);
+    var endY=py(prices[prices.length-1]);
+    // Start
+    html+='<circle cx="0" cy="'+startY+'" r="2.5" fill="'+lineColor+'" opacity="0.6"/>';
+    html+='<text x="1" y="'+(startY-5)+'" fill="'+tColor+'" font-size="7" opacity="0.6">'+f4(startP)+'</text>';
+    // End
+    html+='<circle cx="'+(chW-1)+'" cy="'+endY+'" r="4" fill="'+lineColor+'" stroke="#0d0e12" stroke-width="2"/>';
+    html+='<text x="'+(chW-2)+'" y="'+(endY-7)+'" fill="'+lineColor+'" font-size="9" font-weight="bold" text-anchor="end">'+f4(endP)+'</text>';
+    
+    // ===== Volume bars (thin, bottom 25%) =====
+    var vols=d.klines.map(function(c){return c.v});
+    var maxVol=Math.max.apply(null,vols);
+    var volH=plotH*0.18; // 18% of plot height at bottom
+    var volY=chH-1;      // bottom of chart
+    vols.forEach(function(v,i){
+      var barH=(v/maxVol)*volH;
+      html+='<rect x="'+i+'" y="'+(volY-barH)+'" width="1" height="'+barH+'" fill="'+lineColor+'" opacity="0.15"/>';
+    });
+    
     html+='</svg></div>';
   }
   
