@@ -765,32 +765,23 @@ function renderChainPanel(mb,cd,coin){
     keyPrices=deduped;
     
     html+='<div class="chain-chart">';
-    html+='<div class="label" style="margin-bottom:6px;display:flex;justify-content:space-between;align-items:center">';
-    html+='  <span>📈 24h走势图（15分钟线）</span>';
-    html+='  <span style="font-size:12px;color:'+lineColor+'"><span style="font-weight:700">'+(isUp?'+':'')+changePct+'%</span></span>';
-    html+='</div>';
-    
-    // Use a container: SVG fills 100% width, price labels are positioned via CSS
-    html+='<div style="position:relative;width:100%">';
-    
-    // Price labels as HTML (not SVG) — unaffected by SVG scaling
-    html+='<div style="position:absolute;left:0;top:0;right:0;bottom:0;pointer-events:none;z-index:1">';
-    var gColor='rgba(255,255,255,0.06)';
-    var tColor='#8b949e';
+    // Title row with key prices on the right
+    var priceTags=[];
     keyPrices.forEach(function(p){
-      var y=py(p);
-      var yPct=((y-topPad)/plotH*100);
-      var label='';
-      if(p===chartMaxP) label='最高';
-      else if(p===chartMinP) label='最低';
-      else if(p===startP) label='开盘';
-      else if(p===endP) label='现价';
-      var clr=(label==='现价'?lineColor:tColor);
-      html+='<div style="position:absolute;left:0;top:'+yPct+'%;transform:translateY(-50%);font-size:11px;font-family:monospace;color:'+clr+';font-weight:'+(label==='现价'?'bold':'normal')+';white-space:nowrap">'+f4(p)+(label?' <span style="font-size:10px;opacity:0.7">'+label+'</span>':'')+'</div>';
+      var tag='';
+      if(p===chartMaxP) tag='最高';
+      else if(p===chartMinP) tag='最低';
+      else if(p===startP) tag='开盘';
+      else if(p===endP) tag='现价';
+      var clr=(tag==='现价'?lineColor:'#8b949e');
+      priceTags.push('<span style="color:'+clr+';font-weight:'+(tag==='现价'?'700':'400')+'">'+f4(p)+' '+tag+'</span>');
     });
+    html+='<div class="label" style="margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:4px">';
+    html+='  <span>📈 24h走势图（15分钟线）</span>';
+    html+='  <span style="font-size:11px;white-space:nowrap;display:flex;gap:8px;align-items:center"><span style="color:'+lineColor+';font-weight:700">'+(isUp?'+':'')+changePct+'%</span>'+priceTags.join('')+'</span>';
     html+='</div>';
     
-    // SVG only for lines/area — no text, preserveAspectRatio=none works fine
+    // SVG only for lines/area
     html+='<svg width="100%" height="'+chH+'" viewBox="0 0 '+chW+' '+chH+'" preserveAspectRatio="none" style="overflow:visible;display:block;width:100%">';
     
     // Horizontal lines
@@ -832,7 +823,7 @@ function renderChainPanel(mb,cd,coin){
       html+='<rect x="'+(px(i)-barWidth/2)+'" y="'+(volY-barH)+'" width="'+barWidth+'" height="'+barH+'" fill="'+lineColor+'" opacity="0.15"/>';
     });
     
-    html+='</svg></div></div>';  // close svg, relative container, chain-chart
+    html+='</svg></div>';  // close svg, chain-chart
   }
   
   // Update timestamp
