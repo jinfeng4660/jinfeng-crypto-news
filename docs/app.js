@@ -717,6 +717,8 @@ function renderChainPanel(mb,cd,coin){
   // Mini price chart (SVG line chart from klines)
   if(d.klines && d.klines.length>10){
     var prices=d.klines.map(function(c){return c.c});
+    var highs=d.klines.map(function(c){return c.h});
+    var lows=d.klines.map(function(c){return c.l});
     var minP=Math.min.apply(null,prices);
     var maxP=Math.max.apply(null,prices);
     var range=maxP-minP||1;
@@ -726,25 +728,35 @@ function renderChainPanel(mb,cd,coin){
     var lineColor=isUp?'#3fb950':'#f85149';
     var areaColor=isUp?'rgba(63,185,80,0.12)':'rgba(248,81,73,0.12)';
     var changePct=((endP-startP)/startP*100).toFixed(2);
+    // Expand range to include actual high/low in case start/end exceed close range
+    var chartMinP=Math.min(minP,startP,endP);
+    var chartMaxP=Math.max(maxP,startP,endP);
+    var chartRange=chartMaxP-chartMinP||1;
+    // Also expand by 5% margin for visual breathing room
+    var margin=(chartMaxP-chartMinP)*0.05;
+    chartMinP-=margin;
+    chartMaxP+=margin;
+    chartRange=chartMaxP-chartMinP||1;
+    
     var leftPad=52,topPad=16,btmPad=16;  // px padding for labels
     var chW=d.klines.length,chH=120;
     var plotW=chW;
     var plotH=chH-topPad-btmPad;
-    // Helper: price to y
-    function py(p){return topPad+plotH-((p-minP)/range*plotH)};
+    // Helper: price to y (using expanded range)
+    function py(p){return topPad+plotH-((p-chartMinP)/chartRange*plotH)};
     // Format price
     var f2=function(p){return '$'+p.toFixed(2)};
     var f4=function(p){return p<1?'$'+p.toFixed(4):'$'+p.toFixed(2)};
     var fp=function(p){return p<0.01?p.toFixed(6):p<1?p.toFixed(4):p.toFixed(2)};
-    // Key price points: high / open / end / low
-    var keyPrices=[];
-    var keyLabels={};
-    // Always include max, min, start, end
-    keyPrices.push(maxP);
-    keyPrices.push(minP);
-    if(startP!==maxP && startP!==minP) keyPrices.push(startP);
-    if(endP!==maxP && endP!==minP && endP!==startP) keyPrices.push(endP);
-    keyPrices.sort(function(a,b){return b-a}); // descending
+    // Key price points: always show high / open / current / low (deduplicated)
+    var keyPrices=[chartMaxP, startP, endP, chartMinP];
+    keyPrices.sort(function(a,b){return b-a});
+    var deduped=[];
+    keyPrices.forEach(function(p){
+      var r=Math.round(p*10000)/10000;
+      if(deduped.length===0 || Math.abs(deduped[deduped.length-1]-r)>0.0001) deduped.push(p);
+    });
+    keyPrices=deduped;
     
     html+='<div class="chain-chart">';
     html+='<div class="label" style="margin-bottom:6px;display:flex;justify-content:space-between;align-items:center">';
@@ -760,15 +772,15 @@ function renderChainPanel(mb,cd,coin){
     keyPrices.forEach(function(p){
       var y=py(p);
       var label='';
-      if(p===maxP) label='最高';
-      else if(p===minP) label='最低';
+      if(p===chartMaxP) label='最高';
+      else if(p===chartMinP) label='最低';
       else if(p===startP) label='开盘';
       else if(p===endP) label='现价';
       html+='<line x1="0" y1="'+y+'" x2="'+chW+'" y2="'+y+'" stroke="'+gColor+'" stroke-width="1"/>';
       // Left price
       html+='<text x="0" y="'+(y+3)+'" fill="'+tColor+'" font-size="9" font-family="monospace">'+f4(p)+'</text>';
       // Right label
-      html+='<text x="'+(chW-1)+'" y="'+(y-4)+'" fill="'+(label==='现价'?lineColor:tColor)+'" font-size="'+((label==='现价'||label==='最高'||label==='最低')?'8':'7')+'" text-anchor="end" font-weight="'+(label==='现价'?'bold':'normal')+'">'+label+'</text>';
+      html+='<text x="'+(chW-1)+'" y="'+(y-4)+'" fill="'+(label==='现价'?lineColor:tColor)+'" font-size="'+(label==='现价'?'9':'8')+'" text-anchor="end" font-weight="'+(label==='现价'?'bold':'normal')+'">'+label+'</text>';
     });
     
     // ===== Area fill =====
