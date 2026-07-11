@@ -777,10 +777,10 @@ function renderChainPanel(mb,cd,coin){
       else if(p===startP) label='开盘';
       else if(p===endP) label='现价';
       html+='<line x1="0" y1="'+y+'" x2="'+chW+'" y2="'+y+'" stroke="'+gColor+'" stroke-width="1"/>';
-      // Left price
-      html+='<text x="0" y="'+(y+3)+'" fill="'+tColor+'" font-size="9" font-family="monospace">'+f4(p)+'</text>';
-      // Right label
-      html+='<text x="'+(chW-1)+'" y="'+(y-4)+'" fill="'+(label==='现价'?lineColor:tColor)+'" font-size="'+(label==='现价'?'9':'8')+'" text-anchor="end" font-weight="'+(label==='现价'?'bold':'normal')+'">'+label+'</text>';
+      // Left price (on the line, left side)
+      html+='<text x="0" y="'+y+'" fill="'+tColor+'" font-size="9" font-family="monospace" dominant-baseline="central">'+f4(p)+'</text>';
+      // Right label (on the line, right side)
+      html+='<text x="'+(chW-1)+'" y="'+y+'" fill="'+(label==='现价'?lineColor:tColor)+'" font-size="'+(label==='现价'?'9':'8')+'" text-anchor="end" dominant-baseline="central" font-weight="'+(label==='现价'?'bold':'normal')+'">'+label+'</text>';
     });
     
     // ===== Area fill =====
