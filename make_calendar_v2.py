@@ -4,7 +4,7 @@ with open('docs/calendar.html', 'r', encoding='utf-8') as f:
     content = f.read()
 
 # --- Extract EVENTS_DATA JSON precisely ---
-data_start = content.index("var EVENTS_DATA = [") + len("var EVENTS_DATA = [")
+data_start = content.index("var EVENTS_DATA = [") + len("var EVENTS_DATA = ")
 data_end = content.index("];", data_start) + 1
 events_json = content[data_start:data_end]
 
@@ -73,7 +73,7 @@ body_html = '''<body>
 
 # --- New JS (NO f-strings, use string concat with .format for safety) ---
 js_template = '''
-var EVENTS_DATA = [{data}];
+var EVENTS_DATA = {data};
 
 var TITLE_CN = {{
   'Federal Funds Rate':'联邦基金利率', 'Official Bank Rate':'官方银行利率',
