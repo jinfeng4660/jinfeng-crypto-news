@@ -11,11 +11,10 @@ function startProgress(){var b=$('nprogress-bar');var w=15;b.style.width=w+'%';c
 function doneProgress(){clearInterval(npTimer);$('nprogress-bar').style.width='100%';setTimeout(function(){$('nprogress-bar').style.width='0%'},400)}
 
 // ===== State =====
-var currentLevel='ALL',currentCoin='ALL',currentSource='ALL',searchQuery='',currentTimeFilter='ALL',currentSort='latest',ARTICLES_DATA=[],PAGE_SIZE=25,currentPage=0;
+var currentLevel='ALL',currentCoin='ALL',searchQuery='',currentTimeFilter='ALL',currentSort='latest',ARTICLES_DATA=[];
 var voted={};
 
 // ===== Prices (now in GL override below) =====
-}
 setInterval(fetchPrices,60000);
 
 // ===== Gainers & Losers =====
@@ -201,56 +200,6 @@ function buildCards(){
   });
   renderRecentComments();
   doneProgress();
-  renderPagination(sorted);
-}
-
-// ===== Pagination / Load More =====
-function renderPagination(sorted){
-  var bar=$('pagination-bar');
-  if(!bar)return;
-  var total=sorted.length;
-  var totalPages=Math.ceil(total/PAGE_SIZE);
-  if(totalPages<=1){bar.innerHTML='';return}
-  
-  var visible=qsa('.card:not(.hidden)').length;
-  var shown=0;
-  sorted.forEach(function(a,i){
-    var card=qsa('.card')[i];
-    if(card&&!card.classList.contains('hidden'))shown++;
-  });
-  
-  if(shown>=total){bar.innerHTML='<div class="pm-end">— 已显示全部 ' + total + ' 条 —</div>';return}
-  
-  var remaining=total-shown;
-  var remainingPages=Math.ceil(remaining/PAGE_SIZE);
-  var showMore=remainingPages>1?PAGE_SIZE:remaining;
-  
-  bar.innerHTML='<button class="pm-btn" onclick="loadMore()">📖 加载更多 ('+showMore+'/'+remaining+')</button>';
-}
-
-function loadMore(){
-  var sorted=getSortedData();
-  var list=$('news-list');
-  var fragment=document.createDocumentFragment();
-  var count=qsa('.card').length;
-  var added=0;
-  
-  for(var i=count;i<sorted.length&&added<PAGE_SIZE;i++){
-    fragment.appendChild(createCard(sorted[i],i));
-    added++;
-  }
-  
-  list.appendChild(fragment);
-  
-  // Render comments for new cards
-  for(var j=count;j<count+added;j++){
-    var card=qsa('.card')[j];
-    if(card){renderComments(j,card);}
-  }
-  
-  applyFilterDOM();
-  renderPagination(sorted);
-  updateCount();
 }
 
 function getSortedData(){
@@ -292,12 +241,18 @@ function createCard(a,i){
   card.dataset.coins=JSON.stringify(a.coins||['ALL']);
   card.dataset.title=(a.title||'').toLowerCase();
   
-  var comHtml='<div class="comment-section" style="display:none"><div class="comment-list" id="comment-list-'+i+'"></div><form onsubmit="submitComment('+i+',event)" class="comment-form"><input id="comment-input-'+i+'" class="comment-input" placeholder="写评论…" maxlength="200"><button type="submit" class="comment-submit">发送</button></form></div>';\n  card.innerHTML=
+  var comHtml='<div class="comment-section" style="display:none"><div class="comment-list" id="comment-list-'+i+'"></div><form onsubmit="submitComment('+i+',event)" class="comment-form"><input id="comment-input-'+i+'" class="comment-input" placeholder="写评论…" maxlength="200"><button type="submit" class="comment-submit">发送</button></form></div>';
+  card.innerHTML=
     '<div class="left-border" style="background:'+leftColor+'"></div>'+
     '<div class="card-votes">'+
       '<button class="vote-btn up'+(voted[i+'-bullish']?' voted':'')+'" onclick="vote('+i+',\'bullish\',event)">▲<span class="vote-count">'+bullishV+'</span></button>'+
       '<button class="vote-btn imp'+(voted[i+'-important']?' voted':'')+'" onclick="vote('+i+',\'important\',event)">⚡<span class="vote-count">'+impV+'</span></button>'+
-      '<button class="vote-btn down'+(voted[i+'-bearish']?' voted':'')+'" onclick="vote('+i+',\'bearish\',event)">▼<span class="vote-count">'+bearishV+'</span></button>'+\n      '<button class="vote-btn lol'+(voted[i+'-lol']?' voted':'')+'" onclick="vote('+i+','lol',event)" title="哈哈">😂<span class="vote-count">'+lolV+'</span></button>'+\n      '<button class="vote-btn save'+(voted[i+'-save']?' voted':'')+'" onclick="vote('+i+','save",event)" title="收藏">📌<span class="vote-count">'+saveV+'</span></button>'+\n      '<button class="vote-btn toxic'+(voted[i+'-toxic']?' voted':'')+'" onclick="vote('+i+','toxic',event)" title="有毒">🤢<span class="vote-count">'+toxicV+'</span></button>'+\n      '<button class="vote-btn like'+(voted[i+'-like']?' voted':'')+'" onclick="vote('+i+','like',event)" title="赞">👍<span class="vote-count">'+likeV+'</span></button>'+\n      '<button class="vote-btn dislike'+(voted[i+'-dislike']?' voted':'')+'" onclick="vote('+i+','dislike',event)" title="踩">👎<span class="vote-count">'+dislikeV+'</span></button>'+
+      '<button class="vote-btn down'+(voted[i+'-bearish']?' voted':'')+'" onclick="vote('+i+',\'bearish\',event)">▼<span class="vote-count">'+bearishV+'</span></button>'+
+      '<button class="vote-btn lol'+(voted[i+'-lol']?' voted':'')+'" onclick="vote('+i+',\lol\',event)" title="哈哈">😂<span class="vote-count">'+lolV+'</span></button>'+
+      '<button class="vote-btn save'+(voted[i+'-save']?' voted':'')+'" onclick="vote('+i+',\save\',event)" title="收藏">📌<span class="vote-count">'+saveV+'</span></button>'+
+      '<button class="vote-btn toxic'+(voted[i+'-toxic']?' voted':'')+'" onclick="vote('+i+',\toxic\',event)" title="有毒">🤢<span class="vote-count">'+toxicV+'</span></button>'+
+      '<button class="vote-btn like'+(voted[i+'-like']?' voted':'')+'" onclick="vote('+i+',\like\',event)" title="赞">👍<span class="vote-count">'+likeV+'</span></button>'+
+      '<button class="vote-btn dislike'+(voted[i+'-dislike']?' voted':'')+'" onclick="vote('+i+',\dislike\',event)" title="踩">👎<span class="vote-count">'+dislikeV+'</span></button>'+
     '</div>'+
     '<div class="card-body">'+
       '<div class="card-header">'+
@@ -318,7 +273,8 @@ function createCard(a,i){
         '<div class="ai-strategy">'+esc(ai.strategy)+'</div>'+
       '</div>'+
       '<div class="card-footer">'+
-        '<button class="expand-btn" onclick="toggleExpand('+i+',event)"><span class="arrow">▾</span> AI分析</button>'+\n        '<button class="expand-btn comment-toggle" onclick="toggleCommentBox('+i+',event)"><span class="arrow">💬</span> 评论</button>'+
+        '<button class="expand-btn" onclick="toggleExpand('+i+',event)"><span class="arrow">▾</span> AI分析</button>'+
+        '<button class="expand-btn comment-toggle" onclick="toggleCommentBox('+i+',event)"><span class="arrow">💬</span> 评论</button>'+
       '</div>'+
     '</div>';
   
@@ -415,15 +371,10 @@ function updateTopics(){
     }
   });
   var topicSorted=Object.keys(topics).sort(function(a,b){return topics[b]-topics[a]}).slice(0,8);
-  var html='';topicSorted.forEach(function(t){html+='<span class="hot-topic" onclick="filterByCoin(\'+\n    comHtml+\n    '</div>';
+  var html='';topicSorted.forEach(function(t){html+='<span class="hot-topic" onclick="filterByCoin(\''+t+'\')"><span class="dot '+t.toLowerCase()+'"></span>'+esc(t)+'<span class="ht-count">'+topics[t]+'</span></span>'});
   if(!html)html='<span class="hot-topic">无活跃话题</span>';
   var ht=$('hot-topics');
   if(ht)ht.innerHTML=html;
-}
-
-function setSource(src){
-  currentSource=src||'ALL';
-  applyFilterDOM();
 }
 
 function updateSources(){
@@ -431,7 +382,7 @@ function updateSources(){
   ARTICLES_DATA.forEach(function(a){srcMap[a.source]=(srcMap[a.source]||0)+1});
   var srcSorted=Object.keys(srcMap).sort(function(a,b){return srcMap[b]-srcMap[a]});
   var srcMax=Math.max.apply(null,Object.values(srcMap))||1;
-  var html='';srcSorted.forEach(function(s){var p=Math.round(srcMap[s]/srcMax*100);html+='<div class="source-row" onclick="setSource(\''+esc(s)+'\')" style="cursor:pointer"><span class="src-name" style="color:'+(currentSource===s?'#ffd700':'')+'">'+esc(s)+'</span><div class="src-bar-wrap"><div class="src-bar-fill" style="width:'+p+'%"></div></div><span class="src-val">'+srcMap[s]+'</span></div>'});
+  var html='';srcSorted.forEach(function(s){var p=Math.round(srcMap[s]/srcMax*100);html+='<div class="source-row"><span class="src-name">'+esc(s)+'</span><div class="src-bar-wrap"><div class="src-bar-fill" style="width:'+p+'%"></div></div><span class="src-val">'+srcMap[s]+'</span></div>'});
   var sd=$('source-dist');
   if(sd)sd.innerHTML=html;
 }
@@ -450,27 +401,9 @@ function applyFilterDOM(){
       if(!tags.includes(currentCoin))show=false;
     }
     if(searchQuery&&!(a.title||'').toLowerCase().includes(searchQuery))show=false;
-    if(currentSource!=='ALL'&&(a.source||'')!==currentSource)show=false;
-    if(currentTimeFilter!=='ALL'){
-      var ts=Date.parse(a.published_at||a.created_at||a.time||'');
-      if(!ts)show=false;
-      else{
-        var now=Date.now();
-        var cutoff=currentTimeFilter==='1h'?now-3600000:currentTimeFilter==='6h'?now-21600000:currentTimeFilter==='24h'?now-86400000:0;
-        if(cutoff&&ts<cutoff)show=false;
-      }
-    }
     c.classList.toggle('hidden',!show);
   });
   updateCount();
-}
-
-function setTimeFilter(tf){
-  currentTimeFilter=tf||'ALL';
-  qsa('.tf-btn').forEach(function(b){b.classList.remove('active')});
-  if(tf&&tf!=='ALL'){qsa('.tf-btn').forEach(function(b){if(b.dataset.tf===tf)b.classList.add('active')})}
-  else{qsa('.tf-btn')[0].classList.add('active')}
-  applyFilterDOM();
 }
 
 function filterByLevel(lv){
@@ -512,45 +445,13 @@ function vote(idx,type,e){
   
   if(voted[key]){voted[key]=false;btns.forEach(function(b){b.classList.remove('voted')});return}
   
-  ['bullish','bearish','important','lol','save','toxic','like','dislike'].forEach(function(t){voted[idx+'-'+t]=false});
+  ['bullish','bearish','important'].forEach(function(t){voted[idx+'-'+t]=false});
   btns.forEach(function(b){b.classList.remove('voted')});
   
   voted[key]=true;
-  var btnMap={bullish:'up',bearish:'down',important:'imp',lol:'lol',save:'save',toxic:'toxic',like:'like',dislike:'dislike'};
+  var btnMap={bullish:'up',bearish:'down',important:'imp'};
   var cls=btnMap[type]||'';
   btns.forEach(function(b){if(b.classList.contains(cls))b.classList.add('voted')});
-}
-
-
-// ===== Comments =====
-function toggleCommentBox(i,e){
-  if(e)e.stopPropagation();
-  var card=qsa('.card')[parseInt(i)];
-  if(!card)return;
-  var box=card.querySelector('.comment-section');
-  if(box)box.style.display=box.style.display==='none'?'block':'none';
-}
-function submitComment(i,e){
-  if(e){e.stopPropagation();e.preventDefault()}
-  var textarea=document.querySelector('#comment-input-'+i);
-  if(!textarea)return;
-  var text=textarea.value.trim();
-  if(!text)return;
-  var comments=JSON.parse(localStorage.getItem('comments')||'{}');
-  if(!comments[i])comments[i]=[];
-  comments[i].push({text:text,time:Date.now()});
-  localStorage.setItem('comments',JSON.stringify(comments));
-  textarea.value='';
-  renderComments(i,qsa('.card')[parseInt(i)]);
-}
-function renderComments(i,card){
-  var container=card.querySelector('.comment-list');
-  if(!container)return;
-  var comments=JSON.parse(localStorage.getItem('comments')||'{}')[i];
-  if(!comments||!comments.length){container.innerHTML='<div class="comment-empty">暂无评论</div>';return}
-  var h='';
-  comments.slice(-5).reverse().forEach(function(c){h+='<div class="comment-item"><div class="comment-text">'+esc(c.text)+'</div><div class="comment-time">'+relTime(c.time)+'</div></div>'});
-  container.innerHTML=h;
 }
 
 // ===== Mobile =====
