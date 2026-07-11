@@ -499,9 +499,9 @@ def render_site_v05(articles, now_str):
     # 采集链上数据（BTC/ETH/SOL 合约数据+AI分析）
     try:
         from chain_data import fetch_all_chain_data, generate_chain_analysis
-        raw_chain = fetch_all_chain_data(["BTC", "ETH", "SOL"])
+        raw_chain = fetch_all_chain_data(["BTC", "ETH", "SOL", "SUI", "DOGE"])
         chain_analyses = {}
-        for coin in ["BTC", "ETH", "SOL"]:
+        for coin in ["BTC", "ETH", "SOL", "SUI", "DOGE"]:
             if coin in raw_chain:
                 analysis = generate_chain_analysis(raw_chain, coin)
                 if analysis:
@@ -513,7 +513,7 @@ def render_site_v05(articles, now_str):
             "fear_greed": raw_chain.get("_fear_greed"),
             "time": raw_chain.get("_time"),
         }, ensure_ascii=False)
-        print(f"[链上] 3条链上数据采集+AI分析完成")
+        print(f"[链上] 5条链上数据采集+AI分析完成")
     except Exception as e:
         print(f"[链上] 错误: {e}")
         chain_data_json = "null"
@@ -808,6 +808,8 @@ body{{font-family:'Inter','Noto Sans SC',-apple-system,BlinkMacSystemFont,sans-s
 .chain-summary{{background:#121318;border:1px solid #1b1d23;border-radius:8px;padding:12px;margin:12px 0;border-left:3px solid #ffd70044}}
 .chain-summary .label{{font-size:10px;color:#58a6ff;font-weight:600;margin-bottom:4px}}
 .chain-summary .text{{font-size:13px;color:#c9d1d9;line-height:1.6}}
+.chain-chart{{margin:12px 0;padding:10px;background:#121318;border:1px solid #1b1d23;border-radius:8px}}
+.chain-chart svg{{display:block}}
 .ticker-coin{{cursor:pointer;transition:background .15s}}
 .ticker-coin:hover{{background:#1b1d23}}
 @media(max-width:600px){{.chain-metrics{{grid-template-columns:1fr}}.chain-modal{{width:92vw}}}}
@@ -819,8 +821,8 @@ body{{font-family:'Inter','Noto Sans SC',-apple-system,BlinkMacSystemFont,sans-s
 <div class="ticker-item ticker-coin" onclick="openChainPanel('BTC')" title="点击查看BTC链上数据分析"><span class="ticker-symbol">BTC</span><span class="ticker-price" id="btc-price">—</span><span class="ticker-change" id="btc-change"></span></div>
 <div class="ticker-item ticker-coin" onclick="openChainPanel('ETH')" title="点击查看ETH链上数据分析"><span class="ticker-symbol">ETH</span><span class="ticker-price" id="eth-price">—</span><span class="ticker-change" id="eth-change"></span></div>
 <div class="ticker-item ticker-coin" onclick="openChainPanel('SOL')" title="点击查看SOL链上数据分析"><span class="ticker-symbol">SOL</span><span class="ticker-price" id="sol-price">—</span><span class="ticker-change" id="sol-change"></span></div>
-<div class="ticker-item"><span class="ticker-symbol">LINK</span><span class="ticker-price" id="link-price">—</span><span class="ticker-change" id="link-change"></span></div>
-<div class="ticker-item"><span class="ticker-symbol">DOGE</span><span class="ticker-price" id="doge-price">—</span><span class="ticker-change" id="doge-change"></span></div>
+<div class="ticker-item ticker-coin" onclick="openChainPanel('SUI')" title="点击查看SUI链上数据分析"><span class="ticker-symbol">SUI</span><span class="ticker-price" id="sui-price">—</span><span class="ticker-change" id="sui-change"></span></div>
+<div class="ticker-item ticker-coin" onclick="openChainPanel('DOGE')" title="点击查看DOGE链上数据分析"><span class="ticker-symbol">DOGE</span><span class="ticker-price" id="doge-price">—</span><span class="ticker-change" id="doge-change"></span></div>
 <div class="ticker-status"><span class="ticker-dot live"></span><span>实时</span></div>
 </div></div>
 <header class="header"><div class="header-inner"><div class="header-left"><div class="header-logo">金</div><h1>金峰策略 <span class="badge">v0.5</span></h1></div><span class="header-time" id="header-time">🕐 更新中…</span></div></header>

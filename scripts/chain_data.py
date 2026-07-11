@@ -13,6 +13,8 @@ SYMBOLS = {
     "BTC": "BTCUSDT",
     "ETH": "ETHUSDT",
     "SOL": "SOLUSDT",
+    "SUI": "SUIUSDT",
+    "DOGE": "DOGEUSDT",
 }
 
 PROXY = "http://127.0.0.1:10020"
@@ -103,6 +105,27 @@ def fetch_taker_ratio(symbol):
     return None
 
 
+def fetch_klines(symbol, interval="15m", limit=96):
+    """K线数据，用于走势图（默认96根15min = 24h）"""
+    try:
+        url = f"https://api.binance.com/api/v3/klines?symbol={symbol}&interval={interval}&limit={limit}"
+        d = _fetch(url)
+        candles = []
+        for c in d:
+            candles.append({
+                "t": c[0],       # open time
+                "o": float(c[1]), # open
+                "h": float(c[2]), # high
+                "l": float(c[3]), # low
+                "c": float(c[4]), # close
+                "v": float(c[5]), # volume
+            })
+        return candles
+    except Exception as e:
+        logger.warning(f"[{symbol}] K线采集失败: {e}")
+    return None
+
+
 def fetch_fear_greed():
     """恐惧与贪婪指数"""
     try:
@@ -184,6 +207,17 @@ def get_chain_data_for_symbol(coin):
             result["top_ls_ratio"] = top["top_long_short_ratio"]
     except Exception as e:
         logger.warning(f"[{coin}] 大户多空采集失败: {e}")
+
+    # K线数据（走势图用）
+    try:
+        klines = fetch_klines(symbol, interval="15m", limit=96)
+        if klines:
+            result["klines"] = klines
+            closes = [c["c"] for c in klines]
+            result["kline_high"] = max(closes)
+            result["kline_low"] = min(closes)
+    except Exception as e:
+        logger.warning(f"[{coin}] K线采集失败: {e}")
 
     return result
 
@@ -273,6 +307,20 @@ def generate_chain_analysis(chain_data, coin):
                 signals.append(f"💤 OI {oi:.0f}张，资金参与度偏低")
             else:
                 signals.append(f"📊 OI {oi:.0f}张，正常水平")
+        elif coin == "SUI":
+            if oi > 2e8:
+                signals.append(f"🔥 OI {oi:.1e}张，资金活跃")
+            elif oi < 5e7:
+                signals.append(f"💤 OI {oi:.1e}张，资金参与度偏低")
+            else:
+                signals.append(f"📊 OI {oi:.1e}张，正常水平")
+        elif coin == "DOGE":
+            if oi > 5e9:
+                signals.append(f"🔥 OI {oi:.1e}张，资金活跃")
+            elif oi < 1e9:
+                signals.append(f"💤 OI {oi:.1e}张，资金参与度偏低")
+            else:
+                signals.append(f"📊 OI {oi:.1e}张，正常水平")
 
     # 3. 资金费率判断多空情绪
     fr = d.get("funding_rate", 0)
@@ -401,12 +449,12 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format="%(message)s")
 
     # 测试采集
-    data = fetch_all_chain_data(["BTC", "ETH", "SOL"])
+    data = fetch_all_chain_data(["BTC", "ETH", "SOL", "SUI", "DOGE"])
     print("=" * 60)
     print("链上数据采集完成")
     print("=" * 60)
 
-    for coin in ["BTC", "ETH", "SOL"]:
+    for coin in ["BTC", "ETH", "SOL", "SUI", "DOGE"]:
         cd = data.get(coin, {})
         print(f"\n{'=' * 40}")
         print(f"  {coin}")

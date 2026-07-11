@@ -16,7 +16,7 @@ var voted={};
 
 // ===== Prices (Binance API — 无CORS) =====
 async function fetchPrices(){
-  var syms=['BTCUSDT','ETHUSDT','SOLUSDT','LINKUSDT','DOGEUSDT'];
+  var syms=['BTCUSDT','ETHUSDT','SOLUSDT','SUIUSDT','DOGEUSDT'];
   try{
     var r=await fetch('https://api.binance.com/api/v3/ticker/24hr?symbols='+JSON.stringify(syms));
     var d=await r.json();
@@ -714,6 +714,50 @@ function renderChainPanel(mb,cd,coin){
     html+='</div>';
   }
   
+  // Mini price chart (SVG line chart from klines)
+  if(d.klines && d.klines.length>10){
+    html+='<div class="chain-chart"><div class="label" style="margin-bottom:6px">📈 24h走势图（15分钟线）</div>';
+    html+='<svg width="100%" height="120" viewBox="0 0 '+d.klines.length+' 100" preserveAspectRatio="none" style="overflow:visible">';
+    var prices=d.klines.map(function(c){return c.c});
+    var minP=Math.min.apply(null,prices);
+    var maxP=Math.max.apply(null,prices);
+    var range=maxP-minP||1;
+    // Grid lines
+    var gridColors='rgba(255,255,255,0.06)';
+    html+='<line x1="0" y1="25" x2="'+d.klines.length+'" y2="25" stroke="'+gridColors+'" stroke-width="1"/>';
+    html+='<line x1="0" y1="50" x2="'+d.klines.length+'" y2="50" stroke="'+gridColors+'" stroke-width="1"/>';
+    html+='<line x1="0" y1="75" x2="'+d.klines.length+'" y2="75" stroke="'+gridColors+'" stroke-width="1"/>';
+    // Price labels on right
+    var fmtPrice=function(p){return '$'+p.toFixed(2)};
+    html+='<text x="'+(d.klines.length+4)+'" y="3" fill="#484f58" font-size="8">'+fmtPrice(maxP)+'</text>';
+    html+='<text x="'+(d.klines.length+4)+'" y="50" fill="#484f58" font-size="8" dominant-baseline="middle">'+fmtPrice((maxP+minP)/2)+'</text>';
+    html+='<text x="'+(d.klines.length+4)+'" y="97" fill="#484f58" font-size="8">'+fmtPrice(minP)+'</text>';
+    // Price line
+    var isUp=prices[prices.length-1]>=prices[0];
+    var lineColor=isUp?'#3fb950':'#f85149';
+    var areaColor=isUp?'rgba(63,185,80,0.12)':'rgba(248,81,73,0.12)';
+    var pts=[],areaPts=[];
+    prices.forEach(function(p,i){
+      var y=100-((p-minP)/range*90+5);
+      if(i===0)pts.push(i+','+y);
+      else pts.push(i+','+y);
+    });
+    var polyline=pts.join(' ');
+    // Area fill
+    var areaPts=[];
+    prices.forEach(function(p,i){
+      var y=100-((p-minP)/range*90+5);
+      areaPts.push(i+','+y);
+    });
+    var areaStr='0,95 '+areaPts.join(' ')+' '+(d.klines.length-1)+',95';
+    html+='<polygon points="'+areaStr+'" fill="'+areaColor+'"/>';
+    html+='<polyline points="'+polyline+'" fill="none" stroke="'+lineColor+'" stroke-width="1.5" stroke-linejoin="round"/>';
+    // Start dot and end dot
+    html+='<circle cx="0" cy="'+(100-((prices[0]-minP)/range*90+5))+'" r="2" fill="'+lineColor+'" opacity="0.5"/>';
+    html+='<circle cx="'+(d.klines.length-1)+'" cy="'+(100-((prices[prices.length-1]-minP)/range*90+5))+'" r="3" fill="'+lineColor+'"/>';
+    html+='</svg></div>';
+  }
+  
   // Update timestamp
   if(cd.time){
     html+='<div style="font-size:10px;color:#484f58;text-align:center;padding:6px 0">数据来源: Binance API · 更新时间: '+esc(cd.time.slice(0,19))+'</div>';
@@ -727,7 +771,7 @@ function setupChainPills(){
   setTimeout(function(){
     document.querySelectorAll('.coin-pill').forEach(function(pill){
       var txt=pill.textContent.trim();
-      if(['BTC','ETH','SOL'].indexOf(txt)>=0){
+      if(['BTC','ETH','SOL','SUI','DOGE'].indexOf(txt)>=0){
         pill.style.cursor='pointer';
         pill.title='点击查看'+txt+'链上数据';
         pill.addEventListener('click',function(e){
