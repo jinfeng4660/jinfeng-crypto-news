@@ -276,6 +276,7 @@ function updateSidebar(){
       })
     }
   });
+  var m=$('sidebar-mobile');
   if(m)m.innerHTML=$('sidebar-desktop').innerHTML;
 }
 
