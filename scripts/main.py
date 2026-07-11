@@ -533,6 +533,7 @@ def render_site_v05(articles, now_str):
         "title": a.get("display",a.get("title","")),
         "original": a.get("original",""),
         "source": a.get("source","?"),
+        "url": a.get("url",""),
         "sentiment": a.get("sentiment","neutral"),
         "analysis": a.get("analysis",""),
         "summary": a.get("summary",""),
@@ -543,6 +544,8 @@ def render_site_v05(articles, now_str):
     # v0.5 SPA: 引用独立HTML + JS，仅嵌入数据（覆盖重写以保证数据最新）
     docs_dir = os.path.join(BASE, "docs")
     html_path = os.path.join(docs_dir, "index.html")
+    
+    os.makedirs(docs_dir, exist_ok=True)
     
     html = f'''<!DOCTYPE html>
 <html lang="zh-CN">
