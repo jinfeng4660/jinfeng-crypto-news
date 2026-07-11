@@ -273,6 +273,97 @@ def fetch_investing_calendar(proxies=None):
 
 
 #####################
+# 历史回填（按月批量拉取）
+#####################
+
+def _backfill_historical_calendar(conn, proxies=None):
+    """按月份参数拉取过去2个月+未来1个月的完整日历数据（仅首次填充缺失事件）"""
+    from datetime import datetime
+    now = datetime.now()
+    months = []
+    for offset in [-2, -1, 0, 1]:
+        m = now.month + offset
+        y = now.year
+        while m < 1: m += 12; y -= 1
+        while m > 12: m -= 12; y += 1
+        months.append(f'{y}-{m:02d}')
+    
+    month_names = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec']
+    total_new = 0
+    total_upd = 0
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36',
+    }
+    
+    for month_key in months:
+        y, m = month_key.split('-')
+        mn = month_names[int(m)-1]
+        url = f'https://www.forexfactory.com/calendar?month={mn}.{y}'
+        try:
+            resp = requests.get(url, headers=headers, proxies=proxies, timeout=30)
+            if resp.status_code != 200:
+                continue
+            text = resp.text
+            idx = text.find('days: [')
+            if idx < 0:
+                continue
+            start = idx + 6
+            depth = 0; in_str = False; esc = False; end = start
+            for i in range(start, len(text)):
+                c = text[i]
+                if esc: esc = False; continue
+                if c == '\\' and in_str: esc = True; continue
+                if c == '"' and not esc: in_str = not in_str; continue
+                if not in_str:
+                    if c == '[': depth += 1
+                    elif c == ']': depth -= 1
+                    if depth == 0: end = i + 1; break
+            arr_js = text[start:end].replace('\\/', '/')
+            import json5
+            days = json5.loads(arr_js)
+            
+            added, updated = save_to_db(conn, _days_to_events(days))
+            total_new += added
+            total_upd += updated
+        except:
+            pass
+    
+    if total_new > 0 or total_upd > 0:
+        print(f'[日历-回填] 新增{total_new} 更新{total_upd} (过去2月+未来1月)')
+
+
+def _days_to_events(days):
+    """将FF的days数组转换为标准事件列表"""
+    from datetime import datetime
+    now = datetime.now()
+    today_ts = int(datetime(now.year, now.month, now.day).timestamp())
+    events = []
+    for day in days:
+        dl = day.get('dateline', 0)
+        if not dl: continue
+        dt = datetime.fromtimestamp(dl)
+        date_str = dt.strftime('%Y-%m-%d')
+        weekday_cn = ['一','二','三','四','五','六','七'][dt.weekday()]
+        for ev in day.get('events', []):
+            impact = ev.get('impactName', 'low')
+            if impact not in ('high', 'medium'): continue
+            tstr = ev.get('timeLabel', '') or ev.get('time', '') or ''
+            events.append({
+                'source': 'forexfactory',
+                'date': date_str,
+                'weekday': weekday_cn,
+                'time': tstr,
+                'impact': impact,
+                'currency': ev.get('currency', ''),
+                'title': ev.get('name', ''),
+                'actual': ev.get('actual', '') or '',
+                'previous': ev.get('previous', '') or '',
+                'forecast': ev.get('forecast', '') or '',
+            })
+    return events
+
+
+#####################
 # AI分析引擎
 #####################
 
@@ -388,8 +479,14 @@ def run_calendar_pipeline(proxies=None, save_db=True):
             conn = init_db()
             added, updated = save_to_db(conn, events)
             print(f'[日历-SQLite] 新增{added} 更新{updated} 条')
+            
+            # 每月首次采集时回填历史数据
+            _backfill_historical_calendar(conn, proxies)
+            
             # 也加载近期历史数据
             hist = load_historical_events(conn)
+            if hist:
+                events.extend(hist)
             if hist:
                 events.extend(hist)
             conn.close()
