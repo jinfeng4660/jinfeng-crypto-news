@@ -433,15 +433,17 @@ function showDetail(key){
 function $(id){return document.getElementById(id)}
 function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
 
-var todayStr=''' + today_str + ''';
+var todayStr=__TODAY_Q__2026-07-11__TODAY_Q__;
 
 // Init
 renderEventList();
-$('header-time').textContent='🕐 更新于 ' + new Date().toLocaleString('zh-CN',{{hour:'2-digit',minute:'2-digit'}});
+$('header-time').textContent='🕐 更新于 ' + new Date().toLocaleString('zh-CN',{hour:'2-digit',minute:'2-digit'});
 </script>
 </body>
 </html>'''
 
+    html = html.replace("__TODAY__", today_str)
+    html = html.replace("__TODAY_Q__", "'")
     path = os.path.join(docs_dir, "calendar.html")
     with open(path, "w", encoding="utf-8") as f:
         f.write(html)

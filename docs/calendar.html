@@ -355,11 +355,11 @@ function showDetail(key){
 function $(id){return document.getElementById(id)}
 function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
 
-var todayStr=2026-07-11;
+var todayStr='2026-07-11';
 
 // Init
 renderEventList();
-$('header-time').textContent='🕐 更新于 ' + new Date().toLocaleString('zh-CN',{{hour:'2-digit',minute:'2-digit'}});
+$('header-time').textContent='🕐 更新于 ' + new Date().toLocaleString('zh-CN',{hour:'2-digit',minute:'2-digit'});
 </script>
 </body>
 </html>
