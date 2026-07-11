@@ -438,24 +438,48 @@ function renderCalendar(){
   var cp=$('calendar-panel');
   if(!cp)return;
   var cd=typeof CALENDAR_DATA!=='undefined'?CALENDAR_DATA:[];
-  if(!cd||!cd.length){return} // HTML skeleton is already in index.html
+  if(!cd||!cd.length){return}
   
-  // Update stats in skeleton
+  // Stats summary
   var hiCount=cd.filter(function(ev){return ev.impact==='high'}).length;
-  var dateCount={};
-  cd.forEach(function(ev){if(ev.date)dateCount[ev.date]=1});
-  var totalDays=Object.keys(dateCount).length;
-  if($('cal-total'))$('cal-total').innerHTML='<span style="color:#e1e4e8;font-weight:700">'+cd.length+'</span> 条事件';
-  if($('cal-days'))$('cal-days').innerHTML='<span style="color:#e1e4e8">'+totalDays+'</span> 天';
-  if($('cal-high'))$('cal-high').innerHTML='<span style="color:#f85149">'+hiCount+'</span> 条高影响';
-  
-  // Next upcoming event
   var todayStr=new Date().toISOString().slice(0,10);
-  var upcoming=cd.filter(function(ev){return ev.date&&ev.date>=todayStr}).sort(function(a,b){return a.date.localeCompare(b.date)||(a.time||'').localeCompare(b.time||'')});
-  if(upcoming.length && $('cal-next-title')){
-    var ev=upcoming[0];
-    $('cal-next-title').textContent=ev.currency+' '+ev.title+(ev.time?' '+ev.time:'');
+  
+  // Get upcoming high-impact events (today onwards)
+  var upcoming=cd.filter(function(ev){
+    return ev.date&&ev.date>=todayStr
+  }).sort(function(a,b){
+    return a.date.localeCompare(b.date)||(a.time||'').localeCompare(b.time||'')
+  });
+  
+  // Pick top events: up to 5 (mix of high + medium, closest first)
+  var topEvents=upcoming.slice(0,8);
+  // If not enough upcoming, also show today's events that already passed
+  if(topEvents.length<3){
+    var todayEvents=cd.filter(function(ev){return ev.date===todayStr}).slice(0,8);
+    topEvents=todayEvents.concat(topEvents).slice(0,8);
   }
+  
+  // Render
+  var html='';
+  // Stats row
+  html+='<div class="cal-stats" style="font-size:11px;color:#8b949e;line-height:1.6;padding:0 0 8px;border-bottom:1px solid #1b1d23;margin-bottom:6px">';
+  html+='<span style="color:#e1e4e8;font-weight:700">'+cd.length+'</span> 条事件 · <span style="color:#f85149">'+hiCount+'</span> 条高影响';
+  html+='</div>';
+  
+  // Event cards
+  topEvents.forEach(function(ev){
+    html+=renderCalEvent(ev);
+  });
+  
+  // If more events
+  if(upcoming.length>8){
+    html+='<div style="text-align:center;padding:6px 0;font-size:10px;color:#484f58">还有 '+(upcoming.length-8)+' 条待发布事件 →</div>';
+  }
+  
+  // Link to full calendar
+  html+='<div style="margin-top:6px;text-align:center"><a href="./calendar.html" class="cal-open-full" style="color:#58a6ff;text-decoration:none;font-size:11px" target="_blank">📊 打开完整日历 →</a></div>';
+  
+  cp.innerHTML=html;
 }
 
 function renderCalEvent(ev){
