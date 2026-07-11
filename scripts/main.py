@@ -496,6 +496,22 @@ def render_site_v05(articles, now_str):
     """v0.5 SPA模式：生成数据JSON + 引用独立的前端app.js"""
     import random
     
+    # 采集财经日历
+    try:
+        from calendar_fetcher import fetch_forex_factory_calendar
+        # 用quickq代理（硬编码，与config保持一致）
+        proxy = 'http://127.0.0.1:10020'
+        cal_events, cal_err = fetch_forex_factory_calendar(proxies={'http': proxy, 'https': proxy})
+        if cal_err:
+            print(f"[日历] {cal_err}")
+            calendar_json = "[]"
+        else:
+            print(f"[日历] 采集到 {len(cal_events)} 条事件")
+            calendar_json = json.dumps(cal_events, ensure_ascii=False)
+    except Exception as e:
+        print(f"[日历] 错误: {e}")
+        calendar_json = "[]"
+    
     # 为每个文章补充AI分析数据
     for a in articles:
         if not a.get("sentiment"):
@@ -695,6 +711,20 @@ body{{font-family:'Inter','Noto Sans SC',-apple-system,BlinkMacSystemFont,sans-s
 .card-fast{{animation:cardIn .15s ease forwards;opacity:0;transform:translateY(6px)}}
 .card.hidden{{display:none!important}}
 .vote-count{{font-size:8px;display:block;line-height:1;margin-top:1px;color:#484f58;font-weight:600}}
+/* ===== 财经日历样式 ===== */
+.cal-date-group{{margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid #1b1d23}}
+.cal-date-group:last-child{{border-bottom:none;margin-bottom:0}}
+.cal-date-hdr{{font-size:11px;font-weight:600;color:#8b949e;margin-bottom:6px;letter-spacing:.3px}}
+.cal-today .cal-date-hdr{{color:#ffd700}}
+.cal-ev{{padding:4px 6px;margin-bottom:3px;border-radius:4px;font-size:10px;line-height:1.4;background:#121318}}
+.cal-ev.imp-hi{{border-left:2px solid #f85149}}
+.cal-ev.imp-md{{border-left:2px solid #d29922}}
+.cal-tm{{color:#484f58;margin-right:4px;font-family:monospace;font-size:9px}}
+.cal-ccy{{display:inline-block;padding:0 3px;border-radius:2px;background:#1b1d23;color:#ffd700;font-size:9px;font-weight:600;margin-right:4px}}
+.cal-tl{{color:#c9d1d9}}
+.cal-det{{font-size:9px;color:#484f58;margin-top:2px}}
+.cal-empty{{text-align:center;color:#484f58;padding:12px 0;font-size:11px}}
+@media(max-width:900px){{.cal-ev{{font-size:11px}}.cal-det{{font-size:10px}}}}
 </style>
 </head>
 <body>
@@ -734,13 +764,14 @@ body{{font-family:'Inter','Noto Sans SC',-apple-system,BlinkMacSystemFont,sans-s
 <div class="sidebar-section"><h3>🔥 热门话题</h3><div id="hot-topics"></div></div>
 <div class="sidebar-section"><h3>📡 数据源分布</h3><div id="source-dist"></div></div>
 <div class="sidebar-section"><h3>🔗 更多资源</h3><p><a href="https://cryptopanic.com" target="_blank">→ CryptoPanic</a><br><a href="https://www.panewslab.com" target="_blank">→ PANews</a><br><a href="https://cointelegraph.com" target="_blank">→ Cointelegraph</a><br><a href="https://bitcoinmagazine.com" target="_blank">→ Bitcoin Magazine</a></p></div>
+<div class="sidebar-section"><h3>📅 财经日历</h3><div id="calendar-panel">加载中…</div></div>
 </aside></div>
 <button class="sidebar-toggle-mobile" id="sidebar-toggle" onclick="toggleMobileSidebar()">📊</button>
 <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleMobileSidebar()"></div>
 <div class="sidebar-mobile" id="sidebar-mobile"></div>
 <footer class="footer"><p>金峰策略 · 全球加密快讯 · 仅供研究参考 · 不构成投资建议</p><div class="update-badge" id="footer-update">🕐 更新于 —</div></footer>
 <script src="app.js?v=1783743833"></script>
-<script>var DATA = ''' + articles_json + '''; renderCards(DATA);</script>
+<script>var DATA = ''' + articles_json + '''; var CALENDAR_DATA = ''' + calendar_json + '''; renderCards(DATA);</script>
 </body>
 </html>'''
     with open(html_path, "w", encoding="utf-8") as f:

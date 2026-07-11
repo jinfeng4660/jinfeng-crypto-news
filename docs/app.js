@@ -268,6 +268,7 @@ function updateCount(){
 function updateSidebar(){
   updateSentiment();
   updateTopics();
+  renderCalendar();
   var topics={};
   ARTICLES_DATA.forEach(function(a){
     if(a.coins){
@@ -430,4 +431,44 @@ if(typeof window!=='undefined'){
       if(typeof ARTICLES_DATA!=='undefined'&&typeof renderCards==='function')renderCards(ARTICLES_DATA);
     });
   }
+}
+
+// ===== Calendar =====
+function renderCalendar(){
+  var cp=$('calendar-panel');
+  if(!cp)return;
+  var cd=typeof CALENDAR_DATA!=='undefined'?CALENDAR_DATA:[];
+  if(!cd||!cd.length){cp.innerHTML='<div class="cal-empty">暂无财经日历数据</div>';return}
+  
+  // Group by date
+  var groups={};
+  cd.forEach(function(ev){
+    var d=ev.date;
+    if(!groups[d])groups[d]={weekday:ev.weekday,isToday:!!ev.isToday,events:[]};
+    groups[d].events.push(ev);
+  });
+  
+  var dates=Object.keys(groups).sort();
+  var html='';
+  dates.forEach(function(ds){
+    var g=groups[ds];
+    var tc=g.isToday?' cal-today':'';
+    html+='<div class="cal-date-group'+tc+'">';
+    html+='<div class="cal-date-hdr">'+esc(ds)+' 周'+g.weekday+'</div>';
+    g.events.forEach(function(ev){
+      var ic=ev.impact==='high'?'hi':'md';
+      html+='<div class="cal-ev imp-'+ic+'">';
+      html+='<span class="cal-tm">'+esc(ev.time||'--:--')+'</span>';
+      html+='<span class="cal-ccy">'+esc(ev.currency)+'</span>';
+      html+='<span class="cal-tl">'+esc(ev.title)+'</span>';
+      var det=[];
+      if(ev.actual)det.push('实: '+ev.actual);
+      if(ev.previous)det.push('前: '+ev.previous);
+      if(ev.forecast)det.push('预: '+ev.forecast);
+      if(det.length)html+='<div class="cal-det">'+det.join(' | ')+'</div>';
+      html+='</div>';
+    });
+    html+='</div>';
+  });
+  cp.innerHTML=html;
 }
