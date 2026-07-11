@@ -764,7 +764,7 @@ function renderChainPanel(mb,cd,coin){
     html+='  <span style="font-size:12px;color:'+lineColor+'"><span style="font-weight:700">'+(isUp?'+':'')+changePct+'%</span></span>';
     html+='</div>';
     
-    html+='<svg width="100%" height="'+chH+'" viewBox="0 0 '+chW+' '+chH+'" preserveAspectRatio="none" style="overflow:visible;display:block">';
+    html+='<svg width="100%" height="'+chH+'" viewBox="0 0 '+chW+' '+chH+'" style="overflow:visible;display:block">';
     
     // ===== Horizontal lines + price labels for key points =====
     var gColor='rgba(255,255,255,0.06)';
