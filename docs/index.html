@@ -101,6 +101,7 @@ body{font-family:'Inter','Noto Sans SC',-apple-system,BlinkMacSystemFont,sans-se
 .rc-item{padding:6px 0;border-bottom:1px solid #1b1d23;line-height:1.4}.rc-item:last-child{border-bottom:none}.rc-text{font-size:10px;color:#c9d1d9;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.rc-meta{font-size:8px;color:#484f58;margin-top:2px}.rc-title{color:#58a6ff;font-weight:500}
 .tf-btn{background:none;border:1px solid #1b1d23;border-radius:6px;padding:4px 8px;font-size:10px;color:#484f58;cursor:pointer;transition:all .15s;white-space:nowrap}.tf-btn:hover{border-color:#30363d;color:#8b949e}.tf-btn.active{border-color:#58a6ff55;color:#58a6ff;background:#58a6ff10}
 .rc-item{padding:6px 0;border-bottom:1px solid #1b1d23;line-height:1.4}.rc-item:last-child{border-bottom:none}.rc-text{font-size:10px;color:#c9d1d9;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.rc-meta{font-size:8px;color:#484f58;margin-top:2px}.rc-title{color:#58a6ff;font-weight:500}
+#pagination-bar{text-align:center;padding:16px 0}.pm-btn{background:#121318;border:1px solid #1b1d23;border-radius:8px;padding:10px 24px;font-size:12px;color:#c9d1d9;cursor:pointer;transition:all .2s;min-width:200px}.pm-btn:hover{background:#1b1d23;border-color:#30363d;color:#ffd700}.pm-end{font-size:10px;color:#484f58;text-align:center;padding:8px}
 .gl-table{width:100%;border-collapse:collapse;font-size:10px}
 .gl-table th{text-align:left;color:#484f58;font-weight:600;padding:2px 4px;font-size:9px;letter-spacing:.5px;border-bottom:1px solid #1b1d23}
 .gl-table td{padding:4px 4px;border-bottom:1px solid #1b1d2308}
@@ -289,7 +290,8 @@ body{font-family:'Inter','Noto Sans SC',-apple-system,BlinkMacSystemFont,sans-se
 <button class="coin-pill" onclick="filterByCoin('HYPE')"><span class="dot hype"></span>HYPE</button>
 <button class="coin-pill" onclick="filterByCoin('SUI')"><span class="dot sui"></span>SUI</button>
 </div>
-<div class="main-layout"><div class="news-feed"><div class="news-feed-header"><h2>📰 快讯 <span class="count" id="feed-count"></span></h2><span id="update-status"></span></div><div id="news-list"></div></div>
+<div class="main-layout"><div class="news-feed"><div class="news-feed-header"><h2>📰 快讯 <span class="count" id="feed-count"></span></h2><span id="update-status"></span></div><div id="news-list"></div>
+<div id="pagination-bar"></div></div>
 <aside class="sidebar" id="sidebar-desktop">
 <div class="sidebar-section"><h3>😱 恐惧与贪婪</h3><div class="fng-display" id="fng-value">加载中…</div></div>
 <div class="sidebar-section"><h3>📊 情绪分布</h3><div class="sentiment-bar" id="sentiment-bar"><div class="seg bullish" style="width:0%"></div><div class="seg bearish" style="width:0%"></div><div class="seg neutral" style="width:0%"></div></div><div id="sentiment-stats"></div></div>

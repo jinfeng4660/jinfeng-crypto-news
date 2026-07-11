@@ -11,7 +11,7 @@ function startProgress(){var b=$('nprogress-bar');var w=15;b.style.width=w+'%';c
 function doneProgress(){clearInterval(npTimer);$('nprogress-bar').style.width='100%';setTimeout(function(){$('nprogress-bar').style.width='0%'},400)}
 
 // ===== State =====
-var currentLevel='ALL',currentCoin='ALL',searchQuery='',currentTimeFilter='ALL',currentSort='latest',ARTICLES_DATA=[];
+var currentLevel='ALL',currentCoin='ALL',searchQuery='',currentTimeFilter='ALL',currentSort='latest',ARTICLES_DATA=[],PAGE_SIZE=25,currentPage=0;
 var voted={};
 
 // ===== Prices (now in GL override below) =====
@@ -186,9 +186,10 @@ function buildCards(){
   updateSidebar();
   
   var sorted=getSortedData();
-  sorted.forEach(function(a,i){
-    fragment.appendChild(createCard(a,i));
-  });
+  var showCount=Math.min(PAGE_SIZE,sorted.length);
+  for(var i=0;i<showCount;i++){
+    fragment.appendChild(createCard(sorted[i],i));
+  }
   
   list.appendChild(fragment);
   updateCount();
@@ -200,6 +201,56 @@ function buildCards(){
   });
   renderRecentComments();
   doneProgress();
+  renderPagination(sorted);
+}
+
+// ===== Pagination / Load More =====
+function renderPagination(sorted){
+  var bar=$('pagination-bar');
+  if(!bar)return;
+  var total=sorted.length;
+  var totalPages=Math.ceil(total/PAGE_SIZE);
+  if(totalPages<=1){bar.innerHTML='';return}
+  
+  var visible=qsa('.card:not(.hidden)').length;
+  var shown=0;
+  sorted.forEach(function(a,i){
+    var card=qsa('.card')[i];
+    if(card&&!card.classList.contains('hidden'))shown++;
+  });
+  
+  if(shown>=total){bar.innerHTML='<div class="pm-end">— 已显示全部 ' + total + ' 条 —</div>';return}
+  
+  var remaining=total-shown;
+  var remainingPages=Math.ceil(remaining/PAGE_SIZE);
+  var showMore=remainingPages>1?PAGE_SIZE:remaining;
+  
+  bar.innerHTML='<button class="pm-btn" onclick="loadMore()">📖 加载更多 ('+showMore+'/'+remaining+')</button>';
+}
+
+function loadMore(){
+  var sorted=getSortedData();
+  var list=$('news-list');
+  var fragment=document.createDocumentFragment();
+  var count=qsa('.card').length;
+  var added=0;
+  
+  for(var i=count;i<sorted.length&&added<PAGE_SIZE;i++){
+    fragment.appendChild(createCard(sorted[i],i));
+    added++;
+  }
+  
+  list.appendChild(fragment);
+  
+  // Render comments for new cards
+  for(var j=count;j<count+added;j++){
+    var card=qsa('.card')[j];
+    if(card){renderComments(j,card);}
+  }
+  
+  applyFilterDOM();
+  renderPagination(sorted);
+  updateCount();
 }
 
 function getSortedData(){
