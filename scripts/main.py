@@ -1,4 +1,4 @@
-"""
+﻿"""
 Signal - 全自动运行入口
 采集→解析→去重→四层评分→智能分析→翻译→推送
 
@@ -492,21 +492,13 @@ def flush_batch_safe(now_str):
 
 # ==================== 网站渲染 ====================
 
-def render_site(articles, now_str):
-    """生成CryptoPanic风格完整资讯网站（SPA + AI分析标签 + 投票 + 币种筛选）"""
+def render_site_v05(articles, now_str):
+    """v0.5 SPA模式：生成数据JSON + 引用独立的前端app.js"""
     import random
-    lv_emoji = {"S":"🔴","A":"🟠","B":"⚡","C":"💡"}
-    lv_name = {"S":"交易级","A":"重要趋势","B":"辅助参考","C":"一般资讯"}
-    lv_color = {"S":"#ff4444","A":"#ff8c00","B":"#f0c040","C":"#888"}
-    sentiment_icons = {"bullish":"📈","bearish":"📉","neutral":"➡️"}
-    sentiment_color = {"bullish":"#3fb950","bearish":"#f85149","neutral":"#8b949e"}
     
-    # 为每个文章生成AI见解（如果没有的话）
+    # 为每个文章补充AI分析数据
     for a in articles:
-        if not a.get("analysis"):
-            a["analysis"] = "市场关注度提升，需结合技术面综合判断"
         if not a.get("sentiment"):
-            # 分析引擎的方向标签
             sig = a.get("signal_label","")
             if "偏多" in sig:
                 a["sentiment"] = "bullish"
@@ -515,8 +507,7 @@ def render_site(articles, now_str):
             else:
                 a["sentiment"] = "neutral"
         if not a.get("summary"):
-            a["summary"] = a.get("analysis","市场关注度高，等待更多信息")[:100]
-        # 随机评分和投票数据（模拟社区互动）
+            a["summary"] = a.get("analysis","")[:150] or ""
         a.setdefault("votes", {
             "bullish": random.randint(10,50),
             "bearish": random.randint(5,30),
@@ -531,20 +522,10 @@ def render_site(articles, now_str):
                 coins.add(sym)
         a["coins"] = list(coins)[:3] if coins else ["ALL"]
 
-    # 按级别排序
     lv_order = {"S":0,"A":1,"B":2,"C":3}
     sorted_articles = sorted(articles, key=lambda x: (lv_order.get(x.get("level","C"),9), -x.get("score_num",0)))
     
-    # 统计
-    lv_stats = {"S":0,"A":0,"B":0,"C":0}
-    src_stats = {}
-    for a in sorted_articles:
-        lv = a.get("level","C")
-        lv_stats[lv] = lv_stats.get(lv, 0) + 1
-        src = a.get("source","?")
-        src_stats[src] = src_stats.get(src, 0) + 1
-    
-    # JSON数据（嵌入页面，供前端筛选/投票）
+    # JSON数据
     articles_json = json.dumps([{
         "id": i,
         "level": a.get("level","C"),
@@ -559,510 +540,213 @@ def render_site(articles, now_str):
         "votes": a.get("votes",{"bullish":0,"bearish":0,"important":0})
     } for i,a in enumerate(sorted_articles)], ensure_ascii=False)
     
-    # 生成新闻卡片
-    cards_html = ""
-    for i, a in enumerate(sorted_articles):
-        lv = a.get("level","C")
-        emoji = lv_emoji.get(lv, "💡")
-        title = a.get("display", a.get("title", ""))
-        sentiment = a.get("sentiment", "neutral")
-        analysis = a.get("analysis", "")
-        summary = a.get("summary", "")
-        source = a.get("source", "?")
-        color = lv_color.get(lv, "#888")
-        sc = sentiment_color.get(sentiment, "#8b949e")
-        si = sentiment_icons.get(sentiment, "➡️")
-        sn = {"bullish":"看涨","bearish":"看跌","neutral":"中性"}.get(sentiment, "中性")
-        votes = a.get("votes", {"bullish":0,"bearish":0,"important":0})
-        coins_tag = "".join(f'<span class="coin-tag coin-{c.lower()}">{c}</span>' for c in a.get("coins",["ALL"]))
-        
-        cards_html += f"""
-        <div class="card level-{lv}" style="border-left-color: {color};" data-index="{i}">
-            <div class="card-votes">
-                <button class="vote-btn up" onclick="vote({i},'bullish')">▲</button>
-                <button class="vote-btn" onclick="vote({i},'important')">⚡</button>
-                <button class="vote-btn down" onclick="vote({i},'bearish')">▼</button>
-            </div>
-            <div class="card-body">
-                <div class="card-header">
-                    <span class="level-badge" style="background:{color}20;color:{color}">{emoji} {lv_name.get(lv,'')}</span>
-                    <span class="sentiment-badge" style="background:{sc}15;color:{sc}">{si} {sn}</span>
-                    <span class="source-badge">{source}</span>
-                    {coins_tag}
-                </div>
-                <div class="card-title">{title}</div>
-                <div class="card-analysis">💡 {analysis}</div>
-                <div class="card-summary">{summary[:200]}</div>
-                <div class="card-footer">
-                    <span class="vote-info" id="vote-bullish-{i}">👍 {votes.get("bullish",0)}</span>
-                    <span class="vote-info" id="vote-bearish-{i}">👎 {votes.get("bearish",0)}</span>
-                    <span class="vote-info" id="vote-important-{i}">⚡ {votes.get("important",0)}</span>
-                </div>
-            </div>
-        </div>"""
+    # v0.5 SPA: 引用独立HTML + JS，仅嵌入数据
+    docs_dir = os.path.join(BASE, "docs")
+    html_path = os.path.join(docs_dir, "index.html")
+    js_path = os.path.join(docs_dir, "app.js")
     
-    total = len(sorted_articles)
-    s_count = lv_stats.get("S", 0)
-    a_count = lv_stats.get("A", 0)
-    b_count = lv_stats.get("B", 0)
-    c_count = lv_stats.get("C", 0)
-    
-    # 数据源行
-    src_rows = "".join(f'<span style="display:inline-block;margin-right:12px;font-size:13px;color:#8b949e;">{src}: <b style="color:#c9d1d9;">{cnt}</b></span>' for src,cnt in sorted(src_stats.items(),key=lambda x:-x[1]))
-    
-    html = f"""<!DOCTYPE html>
+    # 如果index.html不存在，先从模板复制
+    if not os.path.exists(html_path):
+        html = f'''<!DOCTYPE html>
 <html lang="zh-CN">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>金峰策略 · 全球加密快讯</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 <style>
-* {{ margin:0; padding:0; box-sizing:border-box; }}
-body {{ font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:#0d1117; color:#c9d1d9; }}
-::selection {{ background:#ffd70040; }}
-
-/* Price Ticker */
-.ticker {{ background:#161b22; border-bottom:1px solid #30363d; padding:8px 20px; overflow-x:auto; white-space:nowrap; }}
-.ticker-inner {{ max-width:1100px; margin:0 auto; display:flex; gap:24px; }}
-.ticker-item {{ display:inline-flex; align-items:center; gap:6px; font-size:13px; }}
-.ticker-symbol {{ font-weight:700; color:#e6edf3; }}
-.ticker-price {{ color:#c9d1d9; }}
-.ticker-change {{ font-weight:600; }}
-.ticker-change.up {{ color:#3fb950; }}
-.ticker-change.down {{ color:#f85149; }}
-
-/* Header */
-.header {{ background:linear-gradient(135deg,#161b22,#0d1117); border-bottom:1px solid #30363d; padding:20px 20px 16px; position:sticky; top:0; z-index:100; backdrop-filter:blur(12px); }}
-.header-inner {{ max-width:1100px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; }}
-.header h1 {{ font-size:20px; font-weight:700; color:#ffd700; }}
-.header h1 span {{ color:#8b949e; font-weight:400; }}
-.header-time {{ font-size:12px; color:#8b949e; }}
-
-/* Search */
-.search-bar {{ max-width:1100px; margin:12px auto 0; padding:0 20px; }}
-.search-bar input {{ width:100%; background:#0d1117; border:1px solid #30363d; border-radius:8px; padding:10px 14px; color:#c9d1d9; font-size:14px; outline:none; }}
-.search-bar input:focus {{ border-color:#58a6ff; }}
-
-/* Stats */
-.stats-bar {{ max-width:1100px; margin:16px auto; padding:0 20px; display:flex; gap:10px; flex-wrap:wrap; }}
-.stat-item {{ background:#161b22; border:1px solid #30363d; border-radius:8px; padding:10px 14px; flex:1; min-width:80px; cursor:pointer; transition:all .15s; }}
-.stat-item:hover {{ border-color:#58a6ff; }}
-.stat-item.active {{ border-color:#ffd700; box-shadow:0 0 0 1px #ffd70040; }}
-.stat-item .stat-num {{ font-size:22px; font-weight:700; }}
-.stat-item .stat-label {{ font-size:11px; color:#8b949e; margin-top:2px; }}
-.stat-s .stat-num {{ color:#ff4444; }}
-.stat-a .stat-num {{ color:#ff8c00; }}
-.stat-b .stat-num {{ color:#f0c040; }}
-.stat-c .stat-num {{ color:#888; }}
-
-/* Coin Filter */
-.coin-bar {{ max-width:1100px; margin:0 auto 16px; padding:0 20px; display:flex; gap:6px; flex-wrap:wrap; }}
-.coin-btn {{ background:#161b22; border:1px solid #30363d; border-radius:20px; padding:6px 14px; color:#8b949e; font-size:13px; cursor:pointer; transition:all .15s; }}
-.coin-btn:hover {{ border-color:#58a6ff; color:#58a6ff; }}
-.coin-btn.active {{ border-color:#ffd700; color:#ffd700; background:#ffd70010; }}
-
-/* Layout */
-.main-layout {{ max-width:1100px; margin:0 auto; padding:0 20px 60px; display:grid; grid-template-columns:1fr 280px; gap:24px; }}
-.news-feed {{ min-width:0; }}
-.news-feed-header {{ display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }}
-.news-feed-header h2 {{ font-size:15px; color:#8b949e; font-weight:500; }}
-.news-feed-header span {{ font-size:12px; color:#484f58; }}
-
-/* Card */
-.card {{ background:#161b22; border:1px solid #30363d; border-radius:10px; margin-bottom:10px; padding:14px; display:flex; gap:12px; border-left:3px solid; transition:all .15s; }}
-.card:hover {{ background:#1c2128; }}
-.card-votes {{ display:flex; flex-direction:column; align-items:center; gap:4px; min-width:36px; }}
-.vote-btn {{ background:none; border:1px solid #30363d; border-radius:6px; color:#8b949e; cursor:pointer; font-size:11px; padding:3px 7px; transition:all .15s; line-height:1; }}
-.vote-btn:hover {{ border-color:#58a6ff; color:#58a6ff; background:#1f6feb20; }}
-.vote-btn.up.voted {{ border-color:#3fb950; color:#3fb950; background:#3fb95020; }}
-.vote-btn.down.voted {{ border-color:#f85149; color:#f85149; background:#f8514920; }}
-.vote-btn.imp.voted {{ border-color:#ffd700; color:#ffd700; background:#ffd70020; }}
-.card-body {{ flex:1; min-width:0; }}
-.card-header {{ display:flex; align-items:center; gap:6px; margin-bottom:6px; flex-wrap:wrap; }}
-.level-badge {{ font-size:10px; padding:2px 8px; border-radius:10px; font-weight:600; }}
-.sentiment-badge {{ font-size:10px; padding:2px 8px; border-radius:10px; font-weight:500; }}
-.source-badge {{ font-size:10px; color:#8b949e; background:#21262d; padding:2px 8px; border-radius:10px; }}
-.coin-tag {{ font-size:9px; padding:1px 6px; border-radius:8px; font-weight:600; background:#21262d; color:#58a6ff; }}
-.coin-btc {{ color:#f0c040; }}
-.coin-eth {{ color:#8b9dc0; }}
-.coin-sol {{ color:#9945ff; }}
-.card-title {{ font-size:14px; font-weight:600; line-height:1.4; margin-bottom:6px; color:#e6edf3; }}
-.card-analysis {{ font-size:12px; color:#8b949e; line-height:1.5; margin-bottom:4px; }}
-.card-summary {{ font-size:11px; color:#484f58; line-height:1.4; }}
-.card-footer {{ display:flex; gap:12px; margin-top:8px; }}
-.vote-info {{ font-size:11px; color:#484f58; }}
-
-/* Sidebar */
-.sidebar {{ position:sticky; top:100px; align-self:start; }}
-.sidebar-section {{ background:#161b22; border:1px solid #30363d; border-radius:10px; padding:14px; margin-bottom:12px; }}
-.sidebar-section h3 {{ font-size:13px; color:#c9d1d9; margin-bottom:10px; font-weight:600; }}
-.sidebar-section p {{ font-size:12px; color:#8b949e; line-height:1.8; }}
-.sidebar-section a {{ color:#58a6ff; text-decoration:none; }}
-.sidebar-section a:hover {{ text-decoration:underline; }}
-.hot-topic {{ display:inline-block; background:#21262d; border:1px solid #30363d; border-radius:14px; padding:4px 10px; font-size:11px; color:#c9d1d9; margin:2px; cursor:pointer; }}
-.hot-topic:hover {{ border-color:#58a6ff; }}
-
-/* Footer */
-.footer {{ text-align:center; padding:24px 20px; border-top:1px solid #30363d; max-width:1100px; margin:0 auto; }}
-.footer p {{ font-size:11px; color:#484f58; }}
-
-/* Bookmark */
-.bookmark-btn {{ background:none; border:none; color:#484f58; cursor:pointer; font-size:14px; margin-left:auto; transition:color .15s; }}
-.bookmark-btn:hover {{ color:#ffd700; }}
-.bookmark-btn.bookmarked {{ color:#ffd700; }}
-
-/* Animation */
-@keyframes fadeIn {{ from {{ opacity:0;transform:translateY(8px); }} to {{ opacity:1;transform:translateY(0); }} }}
-.card {{ animation:fadeIn .3s ease; }}
-
-/* Responsive */
-@media (max-width:768px) {{
-    .main-layout {{ grid-template-columns:1fr; }}
-    .sidebar {{ position:static; }}
-    .card {{ padding:10px; gap:8px; }}
-    .card-votes {{ min-width:30px; gap:3px; }}
-    .vote-btn {{ font-size:10px; padding:2px 6px; }}
-    .stats-bar {{ gap:6px; }}
-    .stat-item {{ padding:8px 10px; min-width:60px; }}
-    .stat-item .stat-num {{ font-size:18px; }}
-    .header h1 {{ font-size:16px; }}
-    .header h1 span {{ display:none; }}
-    .ticker {{ padding:6px 12px; }}
-    .ticker-inner {{ gap:12px; }}
-    .ticker-item {{ font-size:11px; }}
-    .coin-bar {{ justify-content:center; gap:4px; }}
-    .coin-btn {{ font-size:11px; padding:4px 10px; }}
-    .card-title {{ font-size:13px; }}
-    .card-analysis {{ font-size:11px; }}
-    .card-header {{ gap:4px; }}
-    .sidebar-section {{ padding:10px; }}
-    #fgi-box {{ flex-direction:column; }}
-    .search-bar input {{ font-size:13px; padding:8px 12px; }}
-}}
-
-.hidden {{ display:none !important; }}
+*,*::before,*::after{{margin:0;padding:0;box-sizing:border-box}}
+html{{font-size:16px;-webkit-font-smoothing:antialiased}}
+body{{font-family:'Inter','Noto Sans SC',-apple-system,BlinkMacSystemFont,sans-serif;background:#0a0b0e;color:#e1e4e8;min-height:100vh;overflow-x:hidden}}
+::selection{{background:#ffd70033}}
+::-webkit-scrollbar{{width:6px;height:6px}}
+::-webkit-scrollbar-track{{background:transparent}}
+::-webkit-scrollbar-thumb{{background:#2d3139;border-radius:3px}}
+#nprogress{{position:fixed;top:0;left:0;right:0;z-index:9999;height:2px}}
+#nprogress .bar{{height:100%;background:linear-gradient(90deg,#ffd700,#ff8c00);transition:width .3s;box-shadow:0 0 6px #ffd70066}}
+.ticker{{background:linear-gradient(180deg,#0d0e12,#0a0b0e);border-bottom:1px solid #1b1d23;overflow:hidden}}
+.ticker-inner{{max-width:1120px;margin:0 auto;display:flex;align-items:stretch;overflow-x:auto;scrollbar-width:none}}
+.ticker-item{{display:flex;align-items:center;gap:8px;padding:10px 20px;border-right:1px solid #1b1d23;min-width:170px;flex-shrink:0}}
+.ticker-symbol{{font-size:12px;font-weight:700;color:#8b949e}}
+.ticker-price{{font-size:14px;font-weight:700;color:#e1e4e8;font-variant-numeric:tabular-nums}}
+.ticker-change{{font-size:11px;font-weight:600;padding:2px 6px;border-radius:4px}}
+.ticker-change.up{{color:#3fb950;background:#3fb95012}}
+.ticker-change.down{{color:#f85149;background:#f8514912}}
+.ticker-status{{margin-left:auto;padding:0 20px;display:flex;align-items:center;gap:6px;font-size:11px;color:#484f58;flex-shrink:0}}
+.ticker-dot{{width:6px;height:6px;border-radius:50%}}
+.ticker-dot.live{{background:#3fb950;animation:pulse-dot 2s infinite}}
+@keyframes pulse-dot{{0%,100%{{opacity:1}}50%{{opacity:.4}}}}
+.header{{background:#0d0e12;border-bottom:1px solid #1b1d23;position:sticky;top:0;z-index:100}}
+.header-inner{{max-width:1120px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 20px}}
+.header-left{{display:flex;align-items:center;gap:12px}}
+.header-logo{{width:32px;height:32px;background:linear-gradient(135deg,#ffd700,#ff8c00);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;color:#0a0b0e;flex-shrink:0}}
+.header h1{{font-size:18px;font-weight:800;color:#fff;display:flex;align-items:center;gap:8px}}
+.header h1 .badge{{font-size:9px;font-weight:600;padding:2px 6px;border-radius:4px;background:#ffd70020;color:#ffd700}}
+.header-time{{font-size:12px;color:#484f58}}
+.filter-bar{{max-width:1120px;margin:0 auto;padding:10px 20px 0;display:flex;gap:8px;align-items:center;flex-wrap:wrap}}
+.search-wrap{{flex:1;min-width:180px;position:relative}}
+.search-wrap input{{width:100%;background:#121318;border:1px solid #1b1d23;border-radius:8px;padding:9px 14px 9px 34px;color:#e1e4e8;font-size:13px;outline:none;transition:border .2s}}
+.search-wrap input:focus{{border-color:#ffd700}}
+.search-icon{{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#484f58;font-size:13px;pointer-events:none}}
+.sort-btn{{background:none;border:1px solid #1b1d23;border-radius:6px;padding:6px 12px;font-size:12px;color:#484f58;cursor:pointer;transition:all .15s}}
+.sort-btn:hover{{border-color:#30363d;color:#8b949e}}
+.sort-btn.active{{border-color:#ffd70044;color:#ffd700}}
+.stats-bar{{max-width:1120px;margin:0 auto;padding:8px 20px 0;display:flex;gap:6px;flex-wrap:wrap}}
+.stat-card{{flex:1;min-width:90px;background:#0d0e12;border:1px solid #1b1d23;border-radius:10px;padding:10px 12px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}}
+.stat-card:hover{{border-color:#30363d}}
+.stat-card.active{{border-color:#ffd70044;background:#ffd70008}}
+.stat-card .num{{font-size:20px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.2}}
+.stat-card .label{{font-size:11px;color:#484f58;margin-top:2px}}
+.stat-card .bar-bg{{position:absolute;bottom:0;left:0;right:0;height:2px;background:#1b1d23;overflow:hidden}}
+.stat-card .bar-fill{{height:100%;transition:width .5s}}
+.stat-s .num{{color:#ff4444}}.stat-s .bar-fill{{background:#ff4444}}
+.stat-a .num{{color:#ff8c00}}.stat-a .bar-fill{{background:#ff8c00}}
+.stat-b .num{{color:#f0c040}}.stat-b .bar-fill{{background:#f0c040}}
+.stat-c .num{{color:#888}}.stat-c .bar-fill{{background:#888}}
+.coin-bar{{max-width:1120px;margin:0 auto;padding:8px 20px 0;display:flex;gap:5px;flex-wrap:wrap;overflow-x:auto;scrollbar-width:none}}
+.coin-pill{{background:#121318;border:1px solid #1b1d23;border-radius:16px;padding:5px 12px;font-size:12px;font-weight:500;color:#8b949e;cursor:pointer;transition:all .15s;white-space:nowrap;display:flex;align-items:center;gap:4px}}
+.coin-pill:hover{{border-color:#30363d;color:#e1e4e8}}
+.coin-pill.active{{border-color:#ffd70044;color:#ffd700;background:#ffd70008}}
+.coin-pill .dot{{width:6px;height:6px;border-radius:50%}}
+.coin-pill .dot.btc{{background:#f0c040}}.coin-pill .dot.eth{{background:#8b9dc0}}.coin-pill .dot.sol{{background:#9945ff}}
+.coin-pill .dot.bnb{{background:#f3ba2f}}.coin-pill .dot.doge{{background:#c2a633}}.coin-pill .dot.xrp{{background:#00aae4}}
+.coin-pill .dot.hype{{background:#ff6b6b}}.coin-pill .dot.sui{{background:#6fbcf0}}
+.main-layout{{max-width:1120px;margin:0 auto;padding:12px 20px 60px;display:grid;grid-template-columns:1fr 280px;gap:20px}}
+@media(max-width:900px){{.main-layout{{grid-template-columns:1fr}}.sidebar{{display:none}}}}
+.news-feed{{min-width:0}}
+.news-feed-header{{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}}
+.news-feed-header h2{{font-size:13px;color:#8b949e;font-weight:500}}
+.news-feed-header .count{{font-size:11px;color:#484f58}}
+#update-status{{font-size:10px;color:#484f58;opacity:0;transition:opacity .5s}}
+#update-status.show{{opacity:1}}
+.card{{background:#0d0e12;border:1px solid #1b1d23;border-radius:12px;margin-bottom:8px;display:flex;overflow:hidden;transition:all .2s;animation:cardIn .3s ease forwards;opacity:0;transform:translateY(8px)}}
+@keyframes cardIn{{to{{opacity:1;transform:translateY(0)}}}}
+.card:hover{{border-color:#30363d}}
+.card.level-s{{background:linear-gradient(180deg,#ff444408,transparent)}}
+.card.level-a{{background:linear-gradient(180deg,#ff8c0008,transparent)}}
+.card.level-b{{background:linear-gradient(180deg,#f0c04004,transparent)}}
+.card .left-border{{width:4px;flex-shrink:0;border-radius:12px 0 0 12px}}
+.card-votes{{display:flex;flex-direction:column;align-items:center;gap:2px;padding:12px 4px 12px 10px;min-width:28px}}
+.vote-btn{{background:none;border:none;color:#484f58;cursor:pointer;font-size:11px;padding:3px 5px;border-radius:4px;transition:all .15s;line-height:1}}
+.vote-btn.up:hover,.vote-btn.up.voted{{color:#3fb950}}
+.vote-btn.down:hover,.vote-btn.down.voted{{color:#f85149}}
+.vote-btn.imp:hover,.vote-btn.imp.voted{{color:#ffd700}}
+.card-body{{flex:1;padding:12px 12px 12px 4px;min-width:0}}
+.card-header{{display:flex;align-items:center;gap:4px;margin-bottom:5px;flex-wrap:wrap}}
+.level-badge{{font-size:9px;font-weight:700;padding:2px 7px;border-radius:4px}}
+.source-badge{{font-size:10px;color:#8b949e;padding:1px 6px;border-radius:4px}}
+.coin-tag{{font-size:9px;font-weight:600;padding:1px 5px;border-radius:3px;background:#1b1d23;color:#58a6ff}}
+.time-tag{{font-size:10px;color:#484f58;margin-left:auto;white-space:nowrap}}
+.card-title{{font-size:14px;font-weight:600;line-height:1.45;color:#e1e4e8;margin-bottom:4px}}
+.card-summary{{font-size:11px;color:#8b949e;line-height:1.5;margin-bottom:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}}
+.ai-block{{margin-top:8px;background:#121318;border:1px solid #1b1d23;border-radius:8px;padding:10px 12px;display:none}}
+.card.expanded .ai-block{{display:block}}
+.ai-header{{display:flex;align-items:center;gap:6px;margin-bottom:6px}}
+.ai-header .label{{font-size:9px;font-weight:700;padding:1px 6px;border-radius:3px;background:linear-gradient(135deg,#ffd700,#ff8c00);color:#0a0b0e}}
+.ai-tags{{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}}
+.ai-tag{{font-size:10px;padding:2px 8px;border-radius:4px;font-weight:500}}
+.ai-tag.impact-high{{background:#ff444415;color:#ff4444}}
+.ai-tag.impact-mid{{background:#ff8c0015;color:#ff8c00}}
+.ai-tag.impact-low{{background:#88815;color:#888}}
+.ai-tag.dir-bullish{{background:#3fb95015;color:#3fb950}}
+.ai-tag.dir-bearish{{background:#f8514915;color:#f85149}}
+.ai-tag.dir-neutral{{background:#8b949e15;color:#8b949e}}
+.ai-reason{{font-size:11px;color:#8b949e;line-height:1.6}}
+.ai-strategy{{font-size:11px;line-height:1.5;margin-top:6px;padding:6px 8px;background:#1b1d23;border-radius:6px;border-left:2px solid #ffd70044;color:#f0c040}}
+.card-footer{{display:flex;align-items:center;gap:10px;margin-top:6px}}
+.expand-btn{{background:none;border:none;font-size:11px;color:#484f58;cursor:pointer;display:flex;align-items:center;gap:4px;transition:color .15s;padding:2px 0}}
+.expand-btn:hover{{color:#ffd700}}
+.expand-btn .arrow{{display:inline-block;transition:transform .2s}}
+.card.expanded .expand-btn .arrow{{transform:rotate(180deg)}}
+.sidebar{{position:sticky;top:120px;align-self:start}}
+.sidebar-section{{background:#0d0e12;border:1px solid #1b1d23;border-radius:12px;padding:14px;margin-bottom:10px}}
+.sidebar-section h3{{font-size:11px;color:#8b949e;font-weight:600;margin-bottom:10px;text-transform:uppercase;letter-spacing:1px}}
+.sidebar-section p{{font-size:12px;color:#8b949e;line-height:1.8}}
+.sidebar-section a{{color:#58a6ff;text-decoration:none}}
+.sidebar-section a:hover{{text-decoration:underline}}
+.sentiment-bar{{display:flex;height:6px;border-radius:3px;overflow:hidden;margin-bottom:8px}}
+.sentiment-bar .seg{{transition:width .5s}}
+.sentiment-bar .bullish{{background:#3fb950}}.sentiment-bar .bearish{{background:#f85149}}.sentiment-bar .neutral{{background:#8b949e}}
+.sentiment-row{{display:flex;justify-content:space-between;font-size:11px;color:#8b949e;margin-bottom:2px}}
+.sentiment-row .val{{font-weight:600;color:#e1e4e8}}
+.hot-topic{{display:inline-flex;align-items:center;gap:4px;background:#121318;border:1px solid #1b1d23;border-radius:14px;padding:4px 10px;font-size:11px;color:#8b949e;margin:2px;cursor:pointer}}
+.hot-topic:hover{{border-color:#58a6ff}}
+.hot-topic .ht-count{{font-size:9px;background:#1b1d23;padding:0 4px;border-radius:3px;line-height:14px}}
+.source-row{{display:flex;justify-content:space-between;align-items:center;padding:3px 0;font-size:11px;color:#8b949e}}
+.source-row .src-bar-wrap{{flex:1;margin:0 8px;height:3px;background:#1b1d23;border-radius:2px;overflow:hidden}}
+.source-row .src-bar-fill{{height:100%;background:#ffd700;border-radius:2px}}
+.source-row .src-val{{color:#e1e4e8;font-weight:600;font-size:10px}}
+.sidebar-toggle-mobile{{display:none;position:fixed;bottom:20px;right:20px;z-index:99;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#ffd700,#ff8c00);border:none;color:#0a0b0e;font-size:18px;cursor:pointer;box-shadow:0 4px 16px #ffd70033}}
+.sidebar-overlay{{display:none;position:fixed;inset:0;z-index:199;background:#00000088}}
+.sidebar-mobile{{display:none;position:fixed;top:0;right:0;bottom:0;width:300px;z-index:200;background:#0a0b0e;border-left:1px solid #1b1d23;overflow-y:auto;padding:20px;transform:translateX(100%);transition:transform .3s}}
+.sidebar-mobile.open{{transform:translateX(0)}}
+@media(max-width:900px){{.sidebar-toggle-mobile{{display:flex;align-items:center;justify-content:center}}.sidebar-overlay.open{{display:block}}.sidebar-mobile.open{{display:block}}}}
+.footer{{text-align:center;padding:24px 20px;border-top:1px solid #1b1d23;max-width:1120px;margin:0 auto}}
+.footer p{{font-size:11px;color:#484f58}}
+.footer .update-badge{{display:inline-flex;align-items:center;gap:4px;margin-top:6px;padding:4px 10px;background:#121318;border:1px solid #1b1d23;border-radius:20px;font-size:10px;color:#8b949e}}
+.empty-state{{text-align:center;padding:60px 20px;color:#484f58}}
 </style>
 </head>
 <body>
-
-<!-- 价格行情条 -->
-<div class="ticker">
-    <div class="ticker-inner" id="ticker-bar">
-        <span class="ticker-item"><span class="ticker-symbol">BTC</span> <span class="ticker-price" id="btc-price">—</span> <span class="ticker-change" id="btc-change"></span></span>
-        <span class="ticker-item"><span class="ticker-symbol">ETH</span> <span class="ticker-price" id="eth-price">—</span> <span class="ticker-change" id="eth-change"></span></span>
-        <span class="ticker-item"><span class="ticker-symbol">SOL</span> <span class="ticker-price" id="sol-price">—</span> <span class="ticker-change" id="sol-change"></span></span>
-    </div>
-</div>
-
-<header class="header">
-<div class="header-inner">
-    <h1>金峰策略 <span>· 全球加密快讯</span></h1>
-    <span class="header-time" id="header-time">🕐 {now_str}</span>
-</div>
-<div class="search-bar">
-    <input type="text" id="search-input" placeholder="🔍 搜索新闻标题..." oninput="doSearch(this.value)">
-</div>
-</header>
-
+<div id="nprogress"><div class="bar" id="nprogress-bar"></div></div>
+<div class="ticker"><div class="ticker-inner" id="ticker-bar">
+<div class="ticker-item"><span class="ticker-symbol">BTC</span><span class="ticker-price" id="btc-price">—</span><span class="ticker-change" id="btc-change"></span></div>
+<div class="ticker-item"><span class="ticker-symbol">ETH</span><span class="ticker-price" id="eth-price">—</span><span class="ticker-change" id="eth-change"></span></div>
+<div class="ticker-item"><span class="ticker-symbol">SOL</span><span class="ticker-price" id="sol-price">—</span><span class="ticker-change" id="sol-change"></span></div>
+<div class="ticker-status"><span class="ticker-dot live"></span><span>实时</span></div>
+</div></div>
+<header class="header"><div class="header-inner"><div class="header-left"><div class="header-logo">金</div><h1>金峰策略 <span class="badge">v0.5</span></h1></div><span class="header-time" id="header-time">🕐 更新中…</span></div></header>
+<div class="filter-bar"><div class="search-wrap"><span class="search-icon">🔍</span><input type="text" id="search-input" placeholder="搜索新闻标题或关键词..."></div>
+<div class="filter-actions"><button class="sort-btn active" id="sort-latest">🕐 最新</button><button class="sort-btn" id="sort-hot">🔥 最热</button></div></div>
 <div class="stats-bar" id="stats-bar">
-    <div class="stat-item stat-s" onclick="filterByLevel('ALL')"><div class="stat-num">{total}</div><div class="stat-label">📰 全部</div></div>
-    <div class="stat-item stat-s" onclick="filterByLevel('S')"><div class="stat-num">{s_count}</div><div class="stat-label">🔴 S交易级</div></div>
-    <div class="stat-item stat-a" onclick="filterByLevel('A')"><div class="stat-num">{a_count}</div><div class="stat-label">🟠 A重要趋势</div></div>
-    <div class="stat-item stat-b" onclick="filterByLevel('B')"><div class="stat-num">{b_count}</div><div class="stat-label">⚡ B辅助参考</div></div>
-    <div class="stat-item stat-c" onclick="filterByLevel('C')"><div class="stat-num">{c_count}</div><div class="stat-label">💡 C资讯</div></div>
+<div class="stat-card stat-s" onclick="filterByLevel('ALL')"><div class="num" id="stat-all">0</div><div class="label">📰 全部</div><div class="bar-bg"><div class="bar-fill" id="bar-all" style="width:100%"></div></div></div>
+<div class="stat-card stat-s" onclick="filterByLevel('S')"><div class="num" id="stat-s">0</div><div class="label">🔴 交易级</div><div class="bar-bg"><div class="bar-fill" id="bar-s"></div></div></div>
+<div class="stat-card stat-a" onclick="filterByLevel('A')"><div class="num" id="stat-a">0</div><div class="label">🟠 重要趋势</div><div class="bar-bg"><div class="bar-fill" id="bar-a"></div></div></div>
+<div class="stat-card stat-b" onclick="filterByLevel('B')"><div class="num" id="stat-b">0</div><div class="label">⚡ 辅助参考</div><div class="bar-bg"><div class="bar-fill" id="bar-b"></div></div></div>
+<div class="stat-card stat-c" onclick="filterByLevel('C')"><div class="num" id="stat-c">0</div><div class="label">💡 一般资讯</div><div class="bar-bg"><div class="bar-fill" id="bar-c"></div></div></div></div>
+<div class="coin-bar">
+<button class="coin-pill active" onclick="filterByCoin('ALL')">🌟 全部</button>
+<button class="coin-pill" onclick="filterByCoin('BTC')"><span class="dot btc"></span>BTC</button>
+<button class="coin-pill" onclick="filterByCoin('ETH')"><span class="dot eth"></span>ETH</button>
+<button class="coin-pill" onclick="filterByCoin('SOL')"><span class="dot sol"></span>SOL</button>
+<button class="coin-pill" onclick="filterByCoin('BNB')"><span class="dot bnb"></span>BNB</button>
+<button class="coin-pill" onclick="filterByCoin('DOGE')"><span class="dot doge"></span>DOGE</button>
+<button class="coin-pill" onclick="filterByCoin('XRP')"><span class="dot xrp"></span>XRP</button>
+<button class="coin-pill" onclick="filterByCoin('HYPE')"><span class="dot hype"></span>HYPE</button>
+<button class="coin-pill" onclick="filterByCoin('SUI')"><span class="dot sui"></span>SUI</button>
 </div>
-
-<div class="coin-bar" id="coin-bar">
-    <button class="coin-btn active" onclick="filterByCoin('ALL')">ALL</button>
-    <button class="coin-btn" onclick="filterByCoin('BTC')">BTC</button>
-    <button class="coin-btn" onclick="filterByCoin('ETH')">ETH</button>
-    <button class="coin-btn" onclick="filterByCoin('SOL')">SOL</button>
-    <button class="coin-btn" onclick="filterByCoin('HYPE')">HYPE</button>
-    <button class="coin-btn" onclick="filterByCoin('SUI')">SUI</button>
-    <button class="coin-btn" onclick="filterByCoin('DOGE')">DOGE</button>
-    <button class="coin-btn" onclick="filterByCoin('XRP')">XRP</button>
-    <button class="coin-btn" onclick="filterByCoin('BNB')">BNB</button>
-</div>
-
-<div class="main-layout">
-<div class="news-feed">
-    <div class="news-feed-header">
-        <h2>📰 快讯列表</h2>
-        <span id="feed-count">{total} 条</span>
-    </div>
-    <div id="news-list">
-        {cards_html}
-    </div>
-</div>
-
-<aside class="sidebar">
-    <div class="sidebar-section">
-        <h3>📊 情绪分布</h3>
-        <div id="sentiment-chart" style="font-size:13px;color:#8b949e;line-height:1.8;"></div>
-    </div>
-    <div class="sidebar-section">
-        <h3>😱 恐惧与贪婪指数</h3>
-        <div id="fgi-box" style="display:flex;align-items:center;gap:12px;">
-            <div id="fgi-gauge" style="width:60px;height:60px;border-radius:50%;border:4px solid #30363d;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:#c9d1d9;flex-shrink:0;"></div>
-            <div id="fgi-text" style="font-size:13px;color:#8b949e;line-height:1.5;"></div>
-        </div>
-        <p style="font-size:11px;color:#484f58;margin-top:8px;">📡 数据来源: Alternative.me</p>
-    </div>
-    <div class="sidebar-section">
-        <h3>🔥 热门话题</h3>
-        <div id="hot-topics">
-            <span class="hot-topic">BTC</span>
-            <span class="hot-topic">ETF</span>
-            <span class="hot-topic">加息</span>
-            <span class="hot-topic">监管</span>
-            <span class="hot-topic">DeFi</span>
-            <span class="hot-topic">Layer2</span>
-            <span class="hot-topic">AI</span>
-            <span class="hot-topic">山寨币</span>
-            <span class="hot-topic">矿工</span>
-        </div>
-    </div>
-    <div class="sidebar-section">
-        <h3>📡 数据源分布</h3>
-        <p>{src_rows}</p>
-    </div>
-    <div class="sidebar-section">
-        <h3>🔗 更多资源</h3>
-        <p>
-            <a href="https://cryptopanic.com" target="_blank">→ CryptoPanic</a><br>
-            <a href="https://www.panewslab.com" target="_blank">→ PANews</a><br>
-            <a href="https://cointelegraph.com" target="_blank">→ Cointelegraph</a><br>
-            <a href="https://bitcoinmagazine.com" target="_blank">→ Bitcoin Magazine</a>
-        </p>
-    </div>
-</aside>
-</div>
-
-<footer class="footer">
-    <p>金峰策略 · 全球加密快讯 · 仅供研究参考 · 不构成投资建议</p>
-    <p style="margin-top:4px;">🕐 {now_str} · 采集频率: 每30分钟更新</p>
-</footer>
-
-<script>
-// ========== 数据 ==========
-const ARTICLES = {articles_json};
-
-let currentLevel = 'ALL';
-let currentCoin = 'ALL';
-let searchQuery = '';
-
-// ========== 价格行情 ==========
-async function fetchPrices() {{
-    try {{
-        const r = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana&vs_currencies=usd&include_24hr_change=true');
-        const d = await r.json();
-        const updateTicker = (id, elId, changeId) => {{
-            const p = d[id]?.usd;
-            const c = d[id]?.usd_24h_change;
-            if (p) document.getElementById(elId).textContent = '$' + p.toLocaleString();
-            if (c) {{
-                const el = document.getElementById(changeId);
-                el.textContent = (c > 0 ? '+' : '') + c.toFixed(2) + '%';
-                el.className = 'ticker-change ' + (c > 0 ? 'up' : 'down');
-            }}
-        }};
-        updateTicker('bitcoin','btc-price','btc-change');
-        updateTicker('ethereum','eth-price','eth-change');
-        updateTicker('solana','sol-price','sol-change');
-    }} catch(e) {{}}
-}}
-fetchPrices();
-setInterval(fetchPrices, 60000);
-
-// ========== 表情价额统计 ==========
-(function() {{
-    let bullish=0, bearish=0, neutral=0;
-    ARTICLES.forEach(a => {{
-        if(a.sentiment==='bullish') bullish++;
-        else if(a.sentiment==='bearish') bearish++;
-        else neutral++;
-    }});
-    document.getElementById('sentiment-chart').innerHTML =
-        '📈 看涨: ' + bullish + '条 (' + Math.round(bullish/ARTICLES.length*100) + '%)<br>' +
-        '📉 看跌: ' + bearish + '条 (' + Math.round(bearish/ARTICLES.length*100) + '%)<br>' +
-        '➡️ 中性: ' + neutral + '条 (' + Math.round(neutral/ARTICLES.length*100) + '%)';
-}})();
-
-// ========== 更新显示计数 ==========
-function updateCount() {{
-    const visible = document.querySelectorAll('.card:not(.hidden)').length;
-    document.getElementById('feed-count').textContent = visible + ' / ' + ARTICLES.length + ' 条';
-}}
-
-// ========== 级别筛选 ==========
-function filterByLevel(lv) {{
-    const btns = document.querySelectorAll('.stat-item');
-    btns.forEach(b => b.classList.remove('active'));
-    if(lv !== 'ALL') {{
-        btns.forEach(b => {{
-            if(b.classList.contains('stat-'+lv)) b.classList.add('active');
-        }});
-    }} else btns[0].classList.add('active');
-    currentLevel = lv;
-    applyFilters();
-}}
-
-// ========== 币种筛选 ==========
-function filterByCoin(coin) {{
-    const btns = document.querySelectorAll('.coin-btn');
-    btns.forEach(b => b.classList.remove('active'));
-    btns.forEach(b => {{
-        if(b.textContent === coin) b.classList.add('active');
-    }});
-    currentCoin = coin;
-    applyFilters();
-}}
-
-// ========== 搜索 ==========
-function doSearch(q) {{
-    searchQuery = q.toLowerCase();
-    applyFilters();
-}}
-
-// ========== 综合筛选 ==========
-function applyFilters() {{
-    const cards = document.querySelectorAll('.card');
-    cards.forEach(c => {{
-        const idx = parseInt(c.dataset.index);
-        const a = ARTICLES[idx];
-        let show = true;
-        if(currentLevel !== 'ALL' && a.level !== currentLevel) show = false;
-        if(currentCoin !== 'ALL' && !a.coins.includes(currentCoin) && !a.coins.includes('ALL')) show = false;
-        if(searchQuery && !a.title.toLowerCase().includes(searchQuery)) show = false;
-        c.classList.toggle('hidden', !show);
-    }});
-    updateCount();
-}}
-
-// ========== 投票 ==========
-const voted = {{}};
-function vote(idx, type) {{
-    const key = idx + '-' + type;
-    const el = document.getElementById('vote-' + type + '-' + idx);
-    if(!el) return;
-    const btnMap = {{'bullish':'up','bearish':'down','important':'imp'}};
-    
-    if(voted[key]) {{
-        voted[key] = false;
-        let cur = parseInt(el.textContent.split(' ')[1]);
-        el.textContent = el.textContent.split(' ')[0] + ' ' + (cur - 1);
-        const cards = document.querySelectorAll('.card');
-        const btns = cards[idx].querySelectorAll('.vote-btn');
-        btns.forEach(b => b.classList.remove('voted'));
-        return;
-    }}
-    
-    voted[key] = true;
-    // 清除同篇文章其他投票
-    ['bullish','bearish','important'].forEach(t => {{
-        const k = idx + '-' + t;
-        if(k !== key && voted[k]) {{ voted[k] = false; }}
-    }});
-    
-    let cur = parseInt(el.textContent.split(' ')[1]);
-    el.textContent = el.textContent.split(' ')[0] + ' ' + (cur + 1);
-    
-    const cards = document.querySelectorAll('.card');
-    const btns = cards[idx].querySelectorAll('.vote-btn');
-    btns.forEach(b => b.classList.remove('voted'));
-    // 标记当前按钮
-    const className = btnMap[type] || '';
-    cards[idx].querySelectorAll('.vote-btn').forEach(b => {{
-        if(b.classList.contains(className)) b.classList.add('voted');
-    }});
-    
-    // 动画闪烁
-    el.style.color = type === 'bullish' ? '#3fb950' : type === 'bearish' ? '#f85149' : '#ffd700';
-    setTimeout(() => el.style.color = '', 600);
-    saveVotes();
-}}
-
-// ========== 投票持久化（localStorage） ==========
-function saveVotes() {{
-    try {{ localStorage.setItem('signal_votes_' + location.pathname, JSON.stringify(voted)); }} catch(e) {{}}
-}}
-function loadVotes() {{
-    try {{
-        const data = JSON.parse(localStorage.getItem('signal_votes_' + location.pathname));
-        if(data) Object.assign(voted, data);
-        // 恢复按钮状态
-        Object.keys(voted).forEach(k => {{
-            if(voted[k]) {{
-                const [idx, type] = k.split('-');
-                const btnMap = {{'bullish':'up','bearish':'down','important':'imp'}};
-                const cards = document.querySelectorAll('.card');
-                const className = btnMap[type] || '';
-                cards[idx]?.querySelectorAll('.vote-btn').forEach(b => {{
-                    if(b.classList.contains(className)) b.classList.add('voted');
-                }});
-            }}
-        }});
-    }} catch(e) {{}}
-}}
-loadVotes();
-
-// ========== 收藏功能（localStorage持久化） ==========
-function toggleBookmark(idx) {{
-    let bookmarks = JSON.parse(localStorage.getItem('signal_bookmarks') || '[]');
-    const btn = document.getElementById('bookmark-' + idx);
-    if(bookmarks.includes(idx)) {{
-        bookmarks = bookmarks.filter(i => i !== idx);
-        btn.classList.remove('bookmarked');
-    }} else {{
-        bookmarks.push(idx);
-        btn.classList.add('bookmarked');
-    }}
-    localStorage.setItem('signal_bookmarks', JSON.stringify(bookmarks));
-}}
-// 恢复收藏状态
-(function() {{
-    const bookmarks = JSON.parse(localStorage.getItem('signal_bookmarks') || '[]');
-    bookmarks.forEach(idx => {{
-        const btn = document.getElementById('bookmark-' + idx);
-        if(btn) btn.classList.add('bookmarked');
-    }});
-}})();
-
-// ========== 恐惧与贪婪指数 ==========
-async function fetchFGI() {{
-    try {{
-        const r = await fetch('https://api.alternative.me/fng/?limit=1');
-        const d = await r.json();
-        const val = parseInt(d.data[0].value);
-        const classification = d.data[0].value_classification;
-        const gauge = document.getElementById('fgi-gauge');
-        const text = document.getElementById('fgi-text');
-        gauge.textContent = val;
-        // 渐变颜色
-        let color;
-        if(val <= 25) {{ color = '#f85149'; }}      // 极度恐惧
-        else if(val <= 45) {{ color = '#f0883e'; }}  // 恐惧
-        else if(val <= 55) {{ color = '#f0c040'; }}  // 中性
-        else if(val <= 75) {{ color = '#3fb950'; }}  // 贪婪
-        else {{ color = '#2ea043'; }}                // 极度贪婪
-        gauge.style.borderColor = color;
-        gauge.style.color = color;
-        text.innerHTML = `<b style="color:${{color}}">${{classification}}</b><br><span style="font-size:11px;color:#484f58;">最新指数</span>`;
-    }} catch(e) {{
-        document.getElementById('fgi-text').textContent = '数据暂不可用';
-    }}
-}}
-fetchFGI();
-
-// ========== 自动刷新 ==========
-setTimeout(() => {{
-    location.reload();
-}}, 1800000); // 30分钟自动刷新页面
-</script>
-
+<div class="main-layout"><div class="news-feed"><div class="news-feed-header"><h2>📰 快讯 <span class="count" id="feed-count"></span></h2><span id="update-status"></span></div><div id="news-list"></div></div>
+<aside class="sidebar" id="sidebar-desktop">
+<div class="sidebar-section"><h3>📊 情绪分布</h3><div class="sentiment-bar" id="sentiment-bar"><div class="seg bullish" style="width:0%"></div><div class="seg bearish" style="width:0%"></div><div class="seg neutral" style="width:0%"></div></div><div id="sentiment-stats"></div></div>
+<div class="sidebar-section"><h3>🔥 热门话题</h3><div id="hot-topics"></div></div>
+<div class="sidebar-section"><h3>📡 数据源分布</h3><div id="source-dist"></div></div>
+<div class="sidebar-section"><h3>🔗 更多资源</h3><p><a href="https://cryptopanic.com" target="_blank">→ CryptoPanic</a><br><a href="https://www.panewslab.com" target="_blank">→ PANews</a><br><a href="https://cointelegraph.com" target="_blank">→ Cointelegraph</a><br><a href="https://bitcoinmagazine.com" target="_blank">→ Bitcoin Magazine</a></p></div>
+</aside></div>
+<button class="sidebar-toggle-mobile" id="sidebar-toggle" onclick="toggleMobileSidebar()">📊</button>
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleMobileSidebar()"></div>
+<div class="sidebar-mobile" id="sidebar-mobile"></div>
+<footer class="footer"><p>金峰策略 · 全球加密快讯 · 仅供研究参考 · 不构成投资建议</p><div class="update-badge" id="footer-update">🕐 更新于 —</div></footer>
+<script src="app.js"></script>
+<script>var DATA = ''' + articles_json + '''; renderCards(DATA);</script>
 </body>
-</html>"""
+</html>'''
+        with open(html_path, "w", encoding="utf-8") as f:
+            f.write(html)
+        print(f"\n✅ v0.5网站已生成: {html_path} ({len(html)/1024:.0f}KB)")
+    else:
+        # 已有HTML模板，只更新数据
+        with open(html_path, "r", encoding="utf-8") as f:
+            html = f.read()
+        # 替换DATA变量
+        import re
+        html = re.sub(
+            r'var DATA = .*?; renderCards\(DATA\);',
+            f'var DATA = {articles_json}; renderCards(DATA);',
+            html
+        )
+        with open(html_path, "w", encoding="utf-8") as f:
+            f.write(html)
+        print(f"\n✅ v0.5网站数据已更新: {html_path} ({len(html)/1024:.0f}KB)")
+    
     return html
 
 def run(panews_raw="", cryptopanic_raw="", cointelegraph_raw="", bitcoinmag_raw="", coindesk_raw="", decrypt_raw="", skip_push=False):
@@ -1254,7 +938,7 @@ if __name__ == "__main__":
         # 默认模式：采集→评分→生成网站（不推送）
         filtered = run(skip_push=True)
         if filtered:
-            html = render_site(filtered, now_str)
+            html = render_site_v05(filtered, now_str)
             site_dir = os.path.join(BASE, "docs")
             os.makedirs(site_dir, exist_ok=True)
             with open(os.path.join(site_dir, "index.html"), "w", encoding="utf-8") as f:

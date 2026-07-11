@@ -1,0 +1,904 @@
+﻿<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	xmlns:media="http://search.yahoo.com/mrss/" >
+
+<channel>
+	<title>Bitcoin Magazine</title>
+	<atom:link href="http://bitcoinmagazine.com/feed" rel="self" type="application/rss+xml" />
+	<link>https://bitcoinmagazine.com</link>
+	<description>Bitcoin News, Articles and Expert Insights</description>
+	<lastBuildDate>Fri, 10 Jul 2026 20:23:56 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=7.0</generator>
+
+<image>
+	<url>https://bitcoinmagazine.com/wp-content/uploads/2024/09/cropped-Bitcoin-Magazine-glyph-black-01-32x32.png</url>
+	<title>Bitcoin Magazine</title>
+	<link>https://bitcoinmagazine.com</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>U.S. Representatives Urge Senate to Vote on CLARITY Act in July, Address Ethics Concerns</title>
+		<link>https://bitcoinmagazine.com/news/u-s-house-urge-senate-vote-clarity-act</link>
+		
+		<dc:creator><![CDATA[Micah Zimmerman]]></dc:creator>
+		<pubDate>Fri, 10 Jul 2026 20:23:50 +0000</pubDate>
+				<category><![CDATA[NEWS]]></category>
+		<category><![CDATA[CLARITY Act]]></category>
+		<category><![CDATA[House]]></category>
+		<category><![CDATA[Senate]]></category>
+		<guid isPermaLink="false">https://bitcoinmagazine.com/?p=53269</guid>
+
+					<description><![CDATA[<p><a rel="nofollow" href="https://bitcoinmagazine.com">Bitcoin Magazine</a><br />
+<img src="https://bitcoinmagazine.com/wp-content/uploads/2026/07/U.S.-Representatives-Urge-Senate-to-Vote-on-CLARITY-Act-in-July-Address-Ethics-Concerns.jpg" style="display: block; margin: 1em auto"><br />
+<a rel="nofollow" href="https://bitcoinmagazine.com/news/u-s-house-urge-senate-vote-clarity-act">U.S. Representatives Urge Senate to Vote on CLARITY Act in July, Address Ethics Concerns</a></p>
+<p>Rep. French Hill urged the Senate to vote on the CLARITY Act before the August recess, arguing the bill would establish a transparent crypto market framework that addresses ethics concerns surrounding President Trump's digital asset ventures.</p>
+<p>This post <a rel="nofollow" href="https://bitcoinmagazine.com/news/u-s-house-urge-senate-vote-clarity-act">U.S. Representatives Urge Senate to Vote on CLARITY Act in July, Address Ethics Concerns</a> first appeared on <a rel="nofollow" href="https://bitcoinmagazine.com">Bitcoin Magazine</a> and is written by <a rel="nofollow" href="https://bitcoinmagazine.com/authors/micahzimmerman">Micah Zimmerman</a>.</p>
+]]></description>
+										<content:encoded><![CDATA[<p><a rel="nofollow" href="https://bitcoinmagazine.com">Bitcoin Magazine</a><br />
+<img src="https://bitcoinmagazine.com/wp-content/uploads/2026/07/U.S.-Representatives-Urge-Senate-to-Vote-on-CLARITY-Act-in-July-Address-Ethics-Concerns.jpg" style="display: block; margin: 1em auto"><br />
+<a rel="nofollow" href="https://bitcoinmagazine.com/news/u-s-house-urge-senate-vote-clarity-act">U.S. Representatives Urge Senate to Vote on CLARITY Act in July, Address Ethics Concerns</a></p>
+<div id="bsf_rt_marker"></div>
+<p class="wp-block-paragraph">Rep. French Hill wants a deadline.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">One year after the House <a href="https://bitcoinmagazine.com/news/us-house-passes-bitcoin-crypto-market-structure-bill-the-clarity-act">passed</a> the Digital Asset Market CLARITY Act, the Arkansas Republican who chairs the House Financial Services Committee used a Fox Business <a href="https://www.youtube.com/watch?v=611P3Q26Za0" target="_blank" rel="noopener">interview</a> with anchor Maria Bartiromo to press Senate leaders for a floor vote before the August recess.</p>
+
+
+
+<p class="wp-block-paragraph">&#8220;I&#8217;ve encouraged Senate leadership to put it on the floor,&#8221; Hill said. &#8220;I think if you schedule a floor date here in the month of July, that will cause these final meetings, these final discussions to take place. You&#8217;ve got to have a deadline in Congress to get people to move and find consensus.&#8221;&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">Hill thanked Senators Kirsten Gillibrand, Cynthia Lummis, John Boozman and Tim Scott for working toward a deal, and pointed to the 78 Democrats who backed the House measure a year ago.</p>
+
+
+
+<p class="wp-block-paragraph">Hill&#8217;s central argument is that the CLARITY Act would resolve the ethics concerns now used to block it, rather than deepen them.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">Critics point to President Trump&#8217;s crypto ventures, including $TRUMP meme coin licensing and World Liberty Financial token sales, which a July 1 financial <a href="https://bitcoinmagazine.com/news/president-donald-trump-50-million-bitcoin">disclosure</a> tied to about $1.4 billion in 2025 income.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">Hill contends a market framework offers the transparency those critics want.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">&#8220;If we passed the CLARITY Act last summer, many of the things that people are expressing concern about — meme coin issuance, co-investment, use of exchange, investing in exchanges — all that would be under a market framework of regulation with clarity, no pun intended, and that would provide a lot of transparency to people that are concerned about the Trump family&#8217;s investments,&#8221; he said.</p>
+
+
+
+<figure class="wp-block-embed is-type-rich is-provider-x wp-block-embed-x"><div class="wp-block-embed__wrapper">
+<blockquote class="twitter-tweet" data-width="550" data-dnt="true"><p lang="en" dir="ltr">JUST IN: <img src="https://s.w.org/images/core/emoji/17.0.2/72x72/1f1fa-1f1f8.png" alt="🇺🇸" class="wp-smiley" style="height: 1em; max-height: 1em;" /> Congressman French Hill says lawmakers are going to have a field hearing for the Clarity Act in New York next week <img src="https://s.w.org/images/core/emoji/17.0.2/72x72/1f440.png" alt="👀" class="wp-smiley" style="height: 1em; max-height: 1em;" /><br><br>&quot;We’ve got to get this market framework in place to be combined with the GENIUS Act&quot; <img src="https://s.w.org/images/core/emoji/17.0.2/72x72/1f680.png" alt="🚀" class="wp-smiley" style="height: 1em; max-height: 1em;" /> <a href="https://t.co/F1b9QpSdQT">pic.twitter.com/F1b9QpSdQT</a></p>&mdash; Bitcoin Magazine (@BitcoinMagazine) <a href="https://x.com/BitcoinMagazine/status/2075588649589100710?ref_src=twsrc%5Etfw">July 10, 2026</a></blockquote><script async src="https://platform.x.com/widgets.js" charset="utf-8"></script>
+</div></figure>
+
+
+
+<h2 class="wp-block-heading">Clarity Act pairs with the GENIUS Act</h2>
+
+
+
+<p class="wp-block-paragraph">Hill framed the bill as the missing half of a system that pairs it with the GENIUS Act, the stablecoin law enacted last year.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">&#8220;Stablecoin is like a cell phone not connected to a cell phone network,&#8221; he said, &#8220;and the market framework is in fact that network that we need.&#8221; To keep the pressure on, Hill plans a field hearing in New York next week, led by digital assets subcommittee chair Rep. Bryan Steil, to make the case for a market structure.</p>
+
+
+
+<p class="wp-block-paragraph">His push drew support from two other voices in the same Bartiromo appearance. CFTC Chairman Michael Selig warned of &#8220;mission creep beyond what&#8217;s really critical here&#8221; and cautioned that a stalled bill leaves the rules to regulators.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">Coinbase Vice Chair Ryan VanGrack, a former SEC official, described the measure as &#8220;on the one-yard line,&#8221; with senators from both parties &#8220;working around the clock to get this across the finish line.&#8221;</p>
+
+
+
+<figure class="wp-block-embed is-type-rich is-provider-x wp-block-embed-x"><div class="wp-block-embed__wrapper">
+<blockquote class="twitter-tweet" data-width="550" data-dnt="true"><p lang="en" dir="ltr">JUST IN: <img src="https://s.w.org/images/core/emoji/17.0.2/72x72/1f1fa-1f1f8.png" alt="🇺🇸" class="wp-smiley" style="height: 1em; max-height: 1em;" /> Coinbase Vice Chair says Clarity Act has bipartisan support <img src="https://s.w.org/images/core/emoji/17.0.2/72x72/1f440.png" alt="👀" class="wp-smiley" style="height: 1em; max-height: 1em;" /><br><br>&quot;Democratic and Republican senators are working around the clock to get this across the finish line.&quot; <img src="https://s.w.org/images/core/emoji/17.0.2/72x72/1f680.png" alt="🚀" class="wp-smiley" style="height: 1em; max-height: 1em;" /> <a href="https://t.co/OvKPU3SHuC">pic.twitter.com/OvKPU3SHuC</a></p>&mdash; Bitcoin Magazine (@BitcoinMagazine) <a href="https://x.com/BitcoinMagazine/status/2075619419137400836?ref_src=twsrc%5Etfw">July 10, 2026</a></blockquote><script async src="https://platform.x.com/widgets.js" charset="utf-8"></script>
+</div></figure>
+
+
+
+<p class="wp-block-paragraph">The Senate returns July 13 with about three weeks before recess. Prediction market Polymarket prices Clarity Act 2026 passage near 39%, a fall from the prior month&#8217;s 74%.</p>
+<p>This post <a rel="nofollow" href="https://bitcoinmagazine.com/news/u-s-house-urge-senate-vote-clarity-act">U.S. Representatives Urge Senate to Vote on CLARITY Act in July, Address Ethics Concerns</a> first appeared on <a rel="nofollow" href="https://bitcoinmagazine.com">Bitcoin Magazine</a> and is written by <a rel="nofollow" href="https://bitcoinmagazine.com/authors/micahzimmerman">Micah Zimmerman</a>.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Circle (CRCL) Wins Final OCC Approval for National Trust Bank</title>
+		<link>https://bitcoinmagazine.com/news/circle-crcl-wins-final-occ-approval</link>
+		
+		<dc:creator><![CDATA[Micah Zimmerman]]></dc:creator>
+		<pubDate>Fri, 10 Jul 2026 16:43:52 +0000</pubDate>
+				<category><![CDATA[NEWS]]></category>
+		<category><![CDATA[Circle]]></category>
+		<category><![CDATA[OCC]]></category>
+		<category><![CDATA[stablecoin]]></category>
+		<guid isPermaLink="false">https://bitcoinmagazine.com/?p=53264</guid>
+
+					<description><![CDATA[<p><a rel="nofollow" href="https://bitcoinmagazine.com">Bitcoin Magazine</a><br />
+<img src="https://bitcoinmagazine.com/wp-content/uploads/2026/07/Circle-CRCL-Wins-Final-OCC-Approval-for-National-Trust-Bank.jpg" style="display: block; margin: 1em auto"><br />
+<a rel="nofollow" href="https://bitcoinmagazine.com/news/circle-crcl-wins-final-occ-approval">Circle (CRCL) Wins Final OCC Approval for National Trust Bank</a></p>
+<p>Circle won final OCC approval to establish a national trust bank, allowing it to place USDC reserves under federal oversight and expanding its regulated digital asset custody business.</p>
+<p>This post <a rel="nofollow" href="https://bitcoinmagazine.com/news/circle-crcl-wins-final-occ-approval">Circle (CRCL) Wins Final OCC Approval for National Trust Bank</a> first appeared on <a rel="nofollow" href="https://bitcoinmagazine.com">Bitcoin Magazine</a> and is written by <a rel="nofollow" href="https://bitcoinmagazine.com/authors/micahzimmerman">Micah Zimmerman</a>.</p>
+]]></description>
+										<content:encoded><![CDATA[<p><a rel="nofollow" href="https://bitcoinmagazine.com">Bitcoin Magazine</a><br />
+<img src="https://bitcoinmagazine.com/wp-content/uploads/2026/07/Circle-CRCL-Wins-Final-OCC-Approval-for-National-Trust-Bank.jpg" style="display: block; margin: 1em auto"><br />
+<a rel="nofollow" href="https://bitcoinmagazine.com/news/circle-crcl-wins-final-occ-approval">Circle (CRCL) Wins Final OCC Approval for National Trust Bank</a></p>
+<div id="bsf_rt_marker"></div>
+<p class="wp-block-paragraph">Circle Internet Group secured final approval from the U.S. Office of the Comptroller of the Currency today, to establish a national trust bank, a milestone that sent the stablecoin issuer&#8217;s shares higher and deepened its ties to the federal banking system.</p>
+
+
+
+<p class="wp-block-paragraph">The regulator <a href="https://www.circle.com/pressroom/circle-receives-final-occ-approval-to-establish-national-trust-bank" target="_blank" rel="noopener">cleared</a> Circle to charter First National Digital Currency Bank, N.A., which will operate under the name Circle National Trust.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">The company, which trades on the New York Stock Exchange under the ticker CRCL, said the charter places the new entity under direct federal oversight by the OCC, the primary supervisor for national banks and national trust banks.</p>
+
+
+
+<p class="wp-block-paragraph">Circle National Trust will provide fiduciary custody services for digital assets held by Circle and its affiliates. Under the business plan the OCC approved, the bank could extend custody services to a limited set of institutional customers, with a focus on banks and regulated derivatives organizations.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">The charter opens a path for the bank to manage the reserve backing USDC, the largest regulated stablecoin, which would bring that multibillion-dollar pool under federal supervision.</p>
+
+
+
+<p class="wp-block-paragraph">National trust banks <a href="https://bitcoinmagazine.com/news/five-crypto-firms-win-occ-approvals">differ from traditional lenders.</a> They safeguard client assets and provide fiduciary services, and they do not take deposits or issue loans. The structure aligns its digital-asset infrastructure with a long-standing model for holding client assets under strict fiduciary standards.</p>
+
+
+
+<p class="wp-block-paragraph">&#8220;OCC approval to establish Circle National Trust marks a defining step in bringing blockchain technology and digital assets into the core of the U.S. financial system,&#8221; said Jeremy Allaire, co-founder, chairman, and chief executive of Circle. He said federal oversight of the trust bank &#8220;sets a new standard for transparency, governance, and scale&#8221; and unlocks a phase of adoption in which large financial institutions can build on public blockchains with confidence.</p>
+
+
+
+<p class="wp-block-paragraph">Investors welcomed the decision. CRCL shares climbed as much as 14% on the day of the announcement, a rebound from a three-month low. Other crypto-linked names, including Coinbase and Strategy, posted gains near 5% this morning as bitcoin bounced.</p>
+
+
+
+<p class="wp-block-paragraph">CRCL shares have since settled to 5% gains.</p>
+
+
+
+<h2 class="wp-block-heading">Circle&#8217;s federal framework</h2>
+
+
+
+<p class="wp-block-paragraph">The approval caps a process that began when Circle filed its application on June 30, 2025. The OCC <a href="https://bitcoinmagazine.com/news/five-crypto-firms-win-occ-approvals">granted</a> conditional approval in December 2025, alongside peers such as Ripple, BitGo, Fidelity Digital Assets, and Paxos.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">The final decision <a href="https://bitcoinmagazine.com/news/trump-signs-genius-act-into-law-will-make-america-the-crypto-capital-of-the-world">arrives</a> as the GENIUS Act, the federal stablecoin law enacted in July 2025, moves toward full implementation in early 2027.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">That statute requires OCC supervision of large stablecoin issuers, and the trust charter positions Circle to meet the mandate while bringing USDC reserves into a federal framework.</p>
+
+
+
+<p class="wp-block-paragraph">Circle has built a record of regulatory engagement across markets. It received a BitLicense from New York in 2015, <a href="https://bitcoinmagazine.com/business/circles-usdc-stablecoin-begins-trading">became</a> the first global stablecoin issuer to comply with the European Union&#8217;s Markets in Crypto-Assets framework in 2024, and holds licenses in the United Kingdom, Singapore, Bermuda, and Abu Dhabi.</p>
+
+
+
+<p class="wp-block-paragraph">The charter strengthens USDC&#8217;s role as regulated digital-dollar infrastructure for payments, settlement, and capital markets, Circle said.</p>
+<p>This post <a rel="nofollow" href="https://bitcoinmagazine.com/news/circle-crcl-wins-final-occ-approval">Circle (CRCL) Wins Final OCC Approval for National Trust Bank</a> first appeared on <a rel="nofollow" href="https://bitcoinmagazine.com">Bitcoin Magazine</a> and is written by <a rel="nofollow" href="https://bitcoinmagazine.com/authors/micahzimmerman">Micah Zimmerman</a>.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Metaplanet Announces Joint Study to Bring Bitcoin-Backed Digital Credit to Japan</title>
+		<link>https://bitcoinmagazine.com/news/metaplanet-announces-joint-study-bitcoin</link>
+		
+		<dc:creator><![CDATA[Micah Zimmerman]]></dc:creator>
+		<pubDate>Fri, 10 Jul 2026 15:14:13 +0000</pubDate>
+				<category><![CDATA[NEWS]]></category>
+		<category><![CDATA[bitcoin backed credit]]></category>
+		<category><![CDATA[Digital Credit]]></category>
+		<category><![CDATA[Japan]]></category>
+		<category><![CDATA[Metaplanet]]></category>
+		<guid isPermaLink="false">https://bitcoinmagazine.com/?p=53260</guid>
+
+					<description><![CDATA[<p><a rel="nofollow" href="https://bitcoinmagazine.com">Bitcoin Magazine</a><br />
+<img src="https://bitcoinmagazine.com/wp-content/uploads/2026/06/Metaplanet-Acquires-Siiibo-Securities-in-Push-to-Build-Bitcoin-Financial-Ecosystem.jpg" style="display: block; margin: 1em auto"><br />
+<a rel="nofollow" href="https://bitcoinmagazine.com/news/metaplanet-announces-joint-study-bitcoin">Metaplanet Announces Joint Study to Bring Bitcoin-Backed Digital Credit to Japan</a></p>
+<p>Metaplanet is taking its Bitcoin strategy beyond treasury accumulation, launching a study to explore tokenized, Bitcoin-backed credit products that could reshape Japan's debt market.</p>
+<p>This post <a rel="nofollow" href="https://bitcoinmagazine.com/news/metaplanet-announces-joint-study-bitcoin">Metaplanet Announces Joint Study to Bring Bitcoin-Backed Digital Credit to Japan</a> first appeared on <a rel="nofollow" href="https://bitcoinmagazine.com">Bitcoin Magazine</a> and is written by <a rel="nofollow" href="https://bitcoinmagazine.com/authors/micahzimmerman">Micah Zimmerman</a>.</p>
+]]></description>
+										<content:encoded><![CDATA[<p><a rel="nofollow" href="https://bitcoinmagazine.com">Bitcoin Magazine</a><br />
+<img src="https://bitcoinmagazine.com/wp-content/uploads/2026/06/Metaplanet-Acquires-Siiibo-Securities-in-Push-to-Build-Bitcoin-Financial-Ecosystem.jpg" style="display: block; margin: 1em auto"><br />
+<a rel="nofollow" href="https://bitcoinmagazine.com/news/metaplanet-announces-joint-study-bitcoin">Metaplanet Announces Joint Study to Bring Bitcoin-Backed Digital Credit to Japan</a></p>
+<div id="bsf_rt_marker"></div>
+<p class="wp-block-paragraph">Metaplanet wants to turn its bitcoin pile into a credit market. On Friday, Japan&#8217;s largest corporate bitcoin holder said it has opened a joint study with three partners to build tokenized credit products backed by bitcoin, a step that pushes the company past simple treasury accumulation and toward the role of a financial platform.</p>
+
+
+
+<p class="wp-block-paragraph">The study group brings together Metaplanet, the yen stablecoin issuer JPYC, the regulated security token platform Progmat, and Siiibo Securities, the licensed brokerage Metaplanet <a href="https://bitcoinmagazine.com/news/metaplanet-acquires-siiibo-securities">bought last month</a> for 2.1 billion yen, or about $13 million. Siiibo becomes Metaplanet Securities on July 13.</p>
+
+
+
+<p class="wp-block-paragraph">The four firms <a href="https://contents.xj-storage.jp/xcontents/33500/ddfdd13d/13de/4c43/85b1/2ed05ef6a3e7/140120260710591291.pdf?utm_source=chatgpt.com" target="_blank" rel="noopener">will examine</a> whether bitcoin can serve as collateral for credit instruments that pay interest each day. Metaplanet frames this as a product that exists in the United States but not in Japan.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">Digitization, the company said, would allow trading and settlement of these instruments around the clock, 24 hours a day, 365 days a year, with rights management at the holder level, pro-rata interest math handled in software, and redemptions recorded on a public ledger.</p>
+
+
+
+<p class="wp-block-paragraph">Bitcoin-backed credit is a <a href="https://bitcoinmagazine.com/markets/bitcoins-new-debt-machine-is-facing">young product class</a>. Public companies that hold bitcoin use the asset as core collateral for debt offerings, and those offerings pay dividends or interest. The design takes a static coin balance and turns it into an instrument that throws off cash.</p>
+
+
+
+<p class="wp-block-paragraph">Metaplanet was blunt about how early this is. &#8220;The four companies will examine issues in product design, the need for proof-of-concept initiatives, and the possibility of future issuance,&#8221; the company said. &#8220;At this time, nothing has been determined regarding issuance timing, terms, yield, product details, distribution methods, or the form of collaboration.&#8221;&nbsp;</p>
+
+
+
+<h2 class="wp-block-heading">Why Japan?</h2>
+
+
+
+<p class="wp-block-paragraph">The pitch rests on a gap in Japan&#8217;s debt market. That market <a href="https://pitchbook.com/news/articles/japanese-pe-is-booming-but-japanese-companies-are-still-wary" target="_blank" rel="noopener">favors</a> large corporations that can float public bonds. Mid-sized and growth companies face steep costs and heavy operational load around issuance, sales, investor management, interest payments, and redemptions. Many of them stay shut out.</p>
+
+
+
+<p class="wp-block-paragraph">Digital credit, in Metaplanet&#8217;s telling, could open the door to those smaller firms. Onchain infrastructure would bridge traditional capital markets and blockchain rails, cut the manual work, and give issuers a path to raise money that a public bond sale did not offer them. If it works, a growth company in Tokyo could raise debt on a system that settles at any hour and tracks every holder in code.</p>
+
+
+
+<p class="wp-block-paragraph">Each partner brings one piece. Metaplanet and its securities arm will design the products that fuse bitcoin with credit, sell them to investors, field customer questions, and manage the instruments after issuance.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">JPYC will test whether its yen-pegged stablecoin can move payments and redemptions through the system. Progmat will supply the regulated tokenization layer, which tracks ownership, processes transfers, and wires the whole thing to the stablecoin payment system.</p>
+
+
+
+<p class="wp-block-paragraph">The division of labor maps onto a full stack: an issuer and distributor with a license, a settlement asset, and a token platform.</p>
+
+
+
+<h2 class="wp-block-heading">Metaplanet’s bigger plan</h2>
+
+
+
+<p class="wp-block-paragraph">The study fits a strategy the company <a href="https://x.com/gerovich/status/2065350567774527524">calls</a> Project Nova, its plan to build a bitcoin-centric financial platform in Japan. The Siiibo purchase gave Metaplanet a Type I Financial Instruments Business Operator registration, the license Japan requires to structure and sell financial products to retail investors.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">Siiibo, founded in 2019, runs an online platform for private-placement corporate bonds and has backed more than 40 issuers across 100-plus offerings. Metaplanet gains that track record, plus a shareholder base of about 250,000 investors to sell into.</p>
+
+
+
+<p class="wp-block-paragraph">Simon Gerovich, Metaplanet&#8217;s president and CEO, has cast the shift in stark terms. &#8220;We view Bitcoin not as a treasury reserve asset, but as the foundation of the next generation of financial ecosystems,&#8221; he said when the Siiibo deal was announced.</p>
+
+
+
+<p class="wp-block-paragraph">Metaplanet holds 43,000 BTC, worth about $2.47 billion. <a href="https://bitcoinmagazine.com/tags/strategy">Strategy</a> and Twenty One Capital are the two public holders ranked above it.</p>
+
+
+
+<p class="wp-block-paragraph">For the moment, the digital credit plan is a set of questions and four companies willing to study them. Whether it becomes a product depends on the proof-of-concept work that remains. But the direction is clear: Metaplanet wants its bitcoin to do more than sit on a balance sheet. It wants the coin to underwrite a market.</p>
+<p>This post <a rel="nofollow" href="https://bitcoinmagazine.com/news/metaplanet-announces-joint-study-bitcoin">Metaplanet Announces Joint Study to Bring Bitcoin-Backed Digital Credit to Japan</a> first appeared on <a rel="nofollow" href="https://bitcoinmagazine.com">Bitcoin Magazine</a> and is written by <a rel="nofollow" href="https://bitcoinmagazine.com/authors/micahzimmerman">Micah Zimmerman</a>.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Bitcoin is &#8220;A Screaming Buy&#8221;: Standard Chartered Backs $100,000 Target, Shrugs Off Strategy (MSTR) Sell-Off</title>
+		<link>https://bitcoinmagazine.com/news/bitcoin-screaming-buy-standard-chartered</link>
+		
+		<dc:creator><![CDATA[Micah Zimmerman]]></dc:creator>
+		<pubDate>Fri, 10 Jul 2026 13:49:38 +0000</pubDate>
+				<category><![CDATA[NEWS]]></category>
+		<category><![CDATA[analyst]]></category>
+		<category><![CDATA[bitcoin price]]></category>
+		<category><![CDATA[Standard Chartered]]></category>
+		<category><![CDATA[Strategy]]></category>
+		<guid isPermaLink="false">https://bitcoinmagazine.com/?p=53256</guid>
+
+					<description><![CDATA[<p><a rel="nofollow" href="https://bitcoinmagazine.com">Bitcoin Magazine</a><br />
+<img src="https://bitcoinmagazine.com/wp-content/uploads/2026/07/Bitcoin-is-22A-Screaming-Buy22-Standard-Chartered-Backs-100000-Target-Shrugs-Off-Strategy-MSTR-Sell-Off.jpg" style="display: block; margin: 1em auto"><br />
+<a rel="nofollow" href="https://bitcoinmagazine.com/news/bitcoin-screaming-buy-standard-chartered">Bitcoin is &#8220;A Screaming Buy&#8221;: Standard Chartered Backs $100,000 Target, Shrugs Off Strategy (MSTR) Sell-Off</a></p>
+<p>Standard Chartered reaffirmed its $100,000 end-2026 Bitcoin price target, calling Bitcoin "a screaming buy" and arguing that Strategy's recent sell-off reflects a communication issue around its new monetization strategy rather than a weakening Bitcoin outlook.</p>
+<p>This post <a rel="nofollow" href="https://bitcoinmagazine.com/news/bitcoin-screaming-buy-standard-chartered">Bitcoin is &#8220;A Screaming Buy&#8221;: Standard Chartered Backs $100,000 Target, Shrugs Off Strategy (MSTR) Sell-Off</a> first appeared on <a rel="nofollow" href="https://bitcoinmagazine.com">Bitcoin Magazine</a> and is written by <a rel="nofollow" href="https://bitcoinmagazine.com/authors/micahzimmerman">Micah Zimmerman</a>.</p>
+]]></description>
+										<content:encoded><![CDATA[<p><a rel="nofollow" href="https://bitcoinmagazine.com">Bitcoin Magazine</a><br />
+<img src="https://bitcoinmagazine.com/wp-content/uploads/2026/07/Bitcoin-is-22A-Screaming-Buy22-Standard-Chartered-Backs-100000-Target-Shrugs-Off-Strategy-MSTR-Sell-Off.jpg" style="display: block; margin: 1em auto"><br />
+<a rel="nofollow" href="https://bitcoinmagazine.com/news/bitcoin-screaming-buy-standard-chartered">Bitcoin is &#8220;A Screaming Buy&#8221;: Standard Chartered Backs $100,000 Target, Shrugs Off Strategy (MSTR) Sell-Off</a></p>
+<div id="bsf_rt_marker"></div>
+<p class="wp-block-paragraph">Standard Chartered maintained its end-2026 Bitcoin price forecast of $100,000 in a <a href="https://www.investing.com/news/cryptocurrency-news/bitcoin-outlook-hinges-on-clarity-around-strategys-new-approach-analyst-4786114" data-type="link" data-id="https://www.investing.com/news/cryptocurrency-news/bitcoin-outlook-hinges-on-clarity-around-strategys-new-approach-analyst-4786114" target="_blank" rel="noopener">note</a> to investors on Friday, arguing that the recent weakness reflects a failure by <a href="https://bitcoinmagazine.com/tags/strategy">Strategy</a> to explain a strategic shift rather than any deterioration in the company&#8217;s balance sheet.</p>
+
+
+
+<p class="wp-block-paragraph">Geoffrey Kendrick, the bank&#8217;s global head of digital assets research, wrote that Strategy — the largest corporate holder of Bitcoin, with 843,775 coins, more than 4% of the 21 million that will ever exist — &#8220;appears to be pivoting from its &#8216;never sell Bitcoin&#8217; mantra to a more complex approach.&#8221;&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">Clear communication of that pivot, he wrote, will determine how fast the pressure on BTC lifts.</p>
+
+
+
+<p class="wp-block-paragraph">Between 2020 and mid-2025, Strategy&#8217;s <a href="https://bitcoinmagazine.com/glossary/what-is-mnav">mNAV</a> — enterprise value divided by the value of its Bitcoin — traded above 1.0. That premium lets the company issue shares, buy Bitcoin, and grow its value by more than the value of the new stock. Convincing the market it would never sell was the load-bearing part of the model.</p>
+
+
+
+<p class="wp-block-paragraph">With mNAV near 1.0, that arithmetic no longer works. Kendrick said Strategy is pivoting toward holding Bitcoin as backing for STRC, its perpetual preferred stock, which functions as a credit product.</p>
+
+
+
+<figure class="wp-block-embed is-type-rich is-provider-x wp-block-embed-x"><div class="wp-block-embed__wrapper">
+<blockquote class="twitter-tweet" data-width="550" data-dnt="true"><p lang="en" dir="ltr">JUST IN: Standard Chartered Bank says it still predicts Bitcoin to hit $100,000 this year, calling BTC &quot;a screaming buy.&quot; <img src="https://s.w.org/images/core/emoji/17.0.2/72x72/1f680.png" alt="🚀" class="wp-smiley" style="height: 1em; max-height: 1em;" /> <a href="https://t.co/zDgF66jvxf">pic.twitter.com/zDgF66jvxf</a></p>&mdash; Bitcoin Magazine (@BitcoinMagazine) <a href="https://x.com/BitcoinMagazine/status/2075566893906137185?ref_src=twsrc%5Etfw">July 10, 2026</a></blockquote><script async src="https://platform.x.com/widgets.js" charset="utf-8"></script>
+</div></figure>
+
+
+
+<h2 class="wp-block-heading">The STRC feedback loop</h2>
+
+
+
+<p class="wp-block-paragraph">STRC pays a 12% annual dividend, settled twice a month in cash, with the rate reset each month to keep the security near its $100 par value. It has about $10 billion notional outstanding, the largest of the instruments Strategy has deployed.</p>
+
+
+
+<p class="wp-block-paragraph">A negative feedback loop took hold once STRC broke from par, hitting an intraday low of $71.25 on June 26. The divergence began after the June 1 disclosure that Strategy had sold 32 BTC the prior week. STRC still trades near $90, according to Standard Chartered. The USD reserve for STRC dividends stands at $2.55 billion, or 17.4 months of coverage.</p>
+
+
+
+<h2 class="wp-block-heading">Bitcoin is a ‘screaming buy’</h2>
+
+
+
+<p class="wp-block-paragraph">The problem with &#8220;never sell,&#8221; Kendrick argued, is that it constrains how Bitcoin gets perceived. Strategy has <a href="https://bitcoinmagazine.com/news/strategy-mstr-strc-dividend-authorizes-2b">announced</a> a monetization program that lets it sell BTC from time to time, including up to $1.25 billion in proceeds for the reserve.</p>
+
+
+
+<p class="wp-block-paragraph">Given its Bitcoin backing, STRC is over-collateralized and should trade back toward $100, the note said. Kendrick compared the mechanism to a central bank promising to do &#8220;whatever it takes&#8221; and, through credibility, never having to act.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">Effective signaling, he wrote, should remove the need for Strategy to sell any Bitcoin. Kendrick treats the episode as noise rather than a signal about BTC&#8217;s medium-term direction. At $64,000, he calls the coin &#8220;a screaming buy.&#8221;</p>
+
+
+
+<p class="wp-block-paragraph">Strategy <a href="https://bitcoinmagazine.com/news/strategy-mstr-sells-3588-bitcoin">sold 3,588 BTC</a> for about $216 million last week, its largest disposal to date, using the proceeds to fund preferred stock distributions and refill the reserve. JPMorgan analysts <a href="https://bitcoinmagazine.com/news/jpmorgan-says-the-real-threat-to-bitcoin">said</a> the formal sale policy introduces &#8220;avoidable two-way risk&#8221; by making Strategy both buyer and seller.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">Strategy&#8217;s stock trades near $98 on Thursday. BTC traded above $64,400 on Friday.</p>
+<p>This post <a rel="nofollow" href="https://bitcoinmagazine.com/news/bitcoin-screaming-buy-standard-chartered">Bitcoin is &#8220;A Screaming Buy&#8221;: Standard Chartered Backs $100,000 Target, Shrugs Off Strategy (MSTR) Sell-Off</a> first appeared on <a rel="nofollow" href="https://bitcoinmagazine.com">Bitcoin Magazine</a> and is written by <a rel="nofollow" href="https://bitcoinmagazine.com/authors/micahzimmerman">Micah Zimmerman</a>.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>JPMorgan Says the Real Threat to Bitcoin Isn&#8217;t Strategy (MSTR) — It&#8217;s Private Blockchains</title>
+		<link>https://bitcoinmagazine.com/news/jpmorgan-says-the-real-threat-to-bitcoin</link>
+		
+		<dc:creator><![CDATA[Micah Zimmerman]]></dc:creator>
+		<pubDate>Thu, 09 Jul 2026 20:33:56 +0000</pubDate>
+				<category><![CDATA[NEWS]]></category>
+		<category><![CDATA[Jpmorgan]]></category>
+		<category><![CDATA[MSTR]]></category>
+		<category><![CDATA[Strategy]]></category>
+		<category><![CDATA[tokenization]]></category>
+		<guid isPermaLink="false">https://bitcoinmagazine.com/?p=53253</guid>
+
+					<description><![CDATA[<p><a rel="nofollow" href="https://bitcoinmagazine.com">Bitcoin Magazine</a><br />
+<img src="https://bitcoinmagazine.com/wp-content/uploads/2026/07/JPMorgan-Says-the-Real-Threat-to-Bitcoin-Isnt-Strategy-MSTR-—-Its-Private-Blockchains.jpg" style="display: block; margin: 1em auto"><br />
+<a rel="nofollow" href="https://bitcoinmagazine.com/news/jpmorgan-says-the-real-threat-to-bitcoin">JPMorgan Says the Real Threat to Bitcoin Isn&#8217;t Strategy (MSTR) — It&#8217;s Private Blockchains</a></p>
+<p>JPMorgan says Strategy's Bitcoin sales are a short-term concern, but the bigger long-term risk is that banks and institutions adopt private blockchains over public networks, reducing activity and capital flows across the broader crypto ecosystem.</p>
+<p>This post <a rel="nofollow" href="https://bitcoinmagazine.com/news/jpmorgan-says-the-real-threat-to-bitcoin">JPMorgan Says the Real Threat to Bitcoin Isn&#8217;t Strategy (MSTR) — It&#8217;s Private Blockchains</a> first appeared on <a rel="nofollow" href="https://bitcoinmagazine.com">Bitcoin Magazine</a> and is written by <a rel="nofollow" href="https://bitcoinmagazine.com/authors/micahzimmerman">Micah Zimmerman</a>.</p>
+]]></description>
+										<content:encoded><![CDATA[<p><a rel="nofollow" href="https://bitcoinmagazine.com">Bitcoin Magazine</a><br />
+<img src="https://bitcoinmagazine.com/wp-content/uploads/2026/07/JPMorgan-Says-the-Real-Threat-to-Bitcoin-Isnt-Strategy-MSTR-—-Its-Private-Blockchains.jpg" style="display: block; margin: 1em auto"><br />
+<a rel="nofollow" href="https://bitcoinmagazine.com/news/jpmorgan-says-the-real-threat-to-bitcoin">JPMorgan Says the Real Threat to Bitcoin Isn&#8217;t Strategy (MSTR) — It&#8217;s Private Blockchains</a></p>
+<div id="bsf_rt_marker"></div>
+<p class="wp-block-paragraph">Strategy&#8217;s recent bitcoin sales and its formal monetization program have rattled investors, but JPMorgan analysts see a bigger danger to bitcoin: blockchain adoption that routes around public networks and the tokens that ride on them.</p>
+
+
+
+<p class="wp-block-paragraph">In a report led by managing director Nikolaos Panigirtzoglou and <a href="https://www.theblock.co/post/407776/jpmorgan-bitcoin-risk-strategy-blockchain-tokens-crypto" target="_blank" rel="noopener">reported</a> by <em>The Block,</em> the bank argued that Strategy is not the main structural threat to the asset.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">The company <a href="https://bitcoinmagazine.com/news/strategy-mstr-sells-3588-bitcoin">sold 3,588 bitcoin for $216 million</a> in early July to cover preferred dividends, its largest disposal on record, and such sales can add bursts of selling pressure. The deeper concern, the analysts said, is <em>where</em> <a href="https://bitcoinmagazine.com/tags/tokenization">tokenization</a>, payments and settlement end up.</p>
+
+
+
+<p class="wp-block-paragraph">Should that activity settle on permissioned rails rather than public chains, the crypto ecosystem could face a structural de-rating — thinner liquidity, weaker capital flows and slower on-chain volume — a drag that would reach bitcoin in time.</p>
+
+
+
+<p class="wp-block-paragraph">Institutions have leaned toward permissioned blockchains, which offer privacy, know-your-customer and anti-money-laundering controls, governance, throughput, legal accountability and regulatory certainty.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">That preference, per JPMorgan, creates a competitive problem for public networks like Ethereum.</p>
+
+
+
+<p class="wp-block-paragraph">The analysts cited the Bank for International Settlements, which has warned against public permissionless chains for systemic financial infrastructure and has pushed instead for &#8220;unified ledgers&#8221; that hold tokenized central bank money, bank deposits and assets inside regulated walls.</p>
+
+
+
+<h2 class="wp-block-heading">Tokenization as a real-world use case</h2>
+
+
+
+<p class="wp-block-paragraph">Banks are building to that spec. Tokenized deposits — digital claims on bank balances, backed by banking regulation and deposit insurance — stand out as the clearest case. Should such deposits spread in the non-transferable forms regulators favor, they could crowd out stablecoins in institutional payments.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">SWIFT&#8217;s blockchain project and central bank digital currency efforts such as the digital euro and digital yuan would reinforce that regulated lane.</p>
+
+
+
+<p class="wp-block-paragraph">Real-world asset tokenization tells a similar story. The market sits near $50 billion, much of it on Ethereum for now, though the analysts read that as early experimentation rather than a settled structure.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">As adoption matures, issuance, custody and settlement could migrate to private infrastructure, leaving public chains for distribution and interoperability. DTCC and Securitize show the pattern in motion, and the analysts questioned whether public settlement is even the most efficient model for regulated firms, given the capital savings of deferred, netted settlement.</p>
+
+
+
+<h2 class="wp-block-heading">What could prove JPMorgan wrong</h2>
+
+
+
+<p class="wp-block-paragraph"><a href="https://bitcoinmagazine.com/news/jpmorgan-backs-u-s-crypto-bill">The Clarity Act</a>, even should it pass this year, might not lift the threat; it could embolden bank-issued deposit tokens at the expense of public stablecoins.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">The analysts flagged three ways their thesis breaks: a hybrid model where both chain types matter, stronger stablecoin adoption under friendly rules, or bitcoin holding its role as <a href="https://bitcoinmagazine.com/markets/bitcoin-as-digital-gold">&#8220;digital gold&#8221;</a> and a debasement hedge whatever happens across the rest of crypto.</p>
+<p>This post <a rel="nofollow" href="https://bitcoinmagazine.com/news/jpmorgan-says-the-real-threat-to-bitcoin">JPMorgan Says the Real Threat to Bitcoin Isn&#8217;t Strategy (MSTR) — It&#8217;s Private Blockchains</a> first appeared on <a rel="nofollow" href="https://bitcoinmagazine.com">Bitcoin Magazine</a> and is written by <a rel="nofollow" href="https://bitcoinmagazine.com/authors/micahzimmerman">Micah Zimmerman</a>.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Bitcoin&#8217;s New Debt Machine is Facing Its First Major Test</title>
+		<link>https://bitcoinmagazine.com/markets/bitcoins-new-debt-machine-is-facing</link>
+		
+		<dc:creator><![CDATA[Micah Zimmerman]]></dc:creator>
+		<pubDate>Thu, 09 Jul 2026 17:47:23 +0000</pubDate>
+				<category><![CDATA[MARKETS]]></category>
+		<category><![CDATA[bitcointreasuries.net]]></category>
+		<category><![CDATA[Strategy]]></category>
+		<category><![CDATA[Strive Asset Management]]></category>
+		<guid isPermaLink="false">https://bitcoinmagazine.com/?p=53250</guid>
+
+					<description><![CDATA[<p><a rel="nofollow" href="https://bitcoinmagazine.com">Bitcoin Magazine</a><br />
+<img src="https://bitcoinmagazine.com/wp-content/uploads/2026/07/Bitcoins-New-Debt-Machine-is-Facing-Its-First-Major-Test.jpg" style="display: block; margin: 1em auto"><br />
+<a rel="nofollow" href="https://bitcoinmagazine.com/markets/bitcoins-new-debt-machine-is-facing">Bitcoin&#8217;s New Debt Machine is Facing Its First Major Test</a></p>
+<p>BitcoinTreasuries.net says June marked the first major stress test for Bitcoin-backed preferred shares, with Strategy's STRC and Strive's SATA rebounding after a sharp sell-off, reinforcing confidence in the growing corporate Bitcoin financing model.</p>
+<p>This post <a rel="nofollow" href="https://bitcoinmagazine.com/markets/bitcoins-new-debt-machine-is-facing">Bitcoin&#8217;s New Debt Machine is Facing Its First Major Test</a> first appeared on <a rel="nofollow" href="https://bitcoinmagazine.com">Bitcoin Magazine</a> and is written by <a rel="nofollow" href="https://bitcoinmagazine.com/authors/micahzimmerman">Micah Zimmerman</a>.</p>
+]]></description>
+										<content:encoded><![CDATA[<p><a rel="nofollow" href="https://bitcoinmagazine.com">Bitcoin Magazine</a><br />
+<img src="https://bitcoinmagazine.com/wp-content/uploads/2026/07/Bitcoins-New-Debt-Machine-is-Facing-Its-First-Major-Test.jpg" style="display: block; margin: 1em auto"><br />
+<a rel="nofollow" href="https://bitcoinmagazine.com/markets/bitcoins-new-debt-machine-is-facing">Bitcoin&#8217;s New Debt Machine is Facing Its First Major Test</a></p>
+<div id="bsf_rt_marker"></div>
+<p class="wp-block-paragraph">Public companies kept stacking Bitcoin in June, but the month&#8217;s real story played out in a corner of the market that did not exist a couple of years ago: the preferred shares that treasury firms now use to fund their coin purchases.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">A new <a href="https://bitcointreasuries.net/news" target="_blank" rel="noopener">report</a> from BitcoinTreasuries.net calls June the first true stress test for this &#8220;digital credit&#8221; market, and the results offer a mixed but telling verdict on where corporate Bitcoin adoption goes next.</p>
+
+
+
+<p class="wp-block-paragraph">First, the buying. Public treasuries added close to 9,000 BTC before sales in June, or about 7,300 BTC on a net basis, worth some $427 million at the month-end price of $58,398. That counts as moderate growth, and two names did most of the work.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">Michael Saylor&#8217;s <a href="https://bitcoinmagazine.com/tags/strategy">Strategy</a> added 3,625 BTC net, and Strive added 3,364, with each company spending in the neighborhood of $200 million.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">Strip out those two and the rest of the field bought about 2,000 BTC. For the full second quarter, the report estimates 110,000 BTC in net additions, a pace that beat the two quarters before it.</p>
+
+
+
+<p class="wp-block-paragraph">The context matters here. Bitcoin sat well below its October 2025 <a href="https://bitcoinmagazine.com/markets/bitcoin-price-skyrockets-to-all-time-high-of-125750-what-comes-next">peak</a> near $126,000 and dipped under $60,000 during the month. That backdrop set the stage for the drama in digital credit.</p>
+
+
+
+<h2 class="wp-block-heading">Preferred shares to fuel bitcoin</h2>
+
+
+
+<p class="wp-block-paragraph">To understand why that drama matters, it helps to know how the model works. Companies such as Strategy no longer rely on their own cash to buy Bitcoin. They issue <a href="https://bitcoinmagazine.com/news/preferred-stock-is-becoming-bitcoin">preferred shares</a> that promise investors a fixed or variable dividend, sell them near a $100 par value, and route the proceeds into coins.</p>
+
+
+
+<p class="wp-block-paragraph">Strategy&#8217;s flagship product, <a href="https://bitcoinmagazine.com/news/strategy-strc-1-billion-volume-day">STRC</a>, and Strive&#8217;s version, <a href="https://bitcoinmagazine.com/news/strive-bitcoin-backed-dividend-preferred">SATA</a>, became the two biggest of these instruments. For a stretch, they traded in a tight band around par, and investors treated them as a place to park money at a healthy yield.</p>
+
+
+
+<p class="wp-block-paragraph">That calm bred risk. As the report explains, a long run near par let leverage build inside STRC as buyers borrowed to amplify the trade. When Bitcoin&#8217;s price slid, that leverage turned into a trigger.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">Starting June 18, STRC and SATA fell below their $100 par. Leveraged holders got margin-called, forced sales pushed prices down, and STRC bottomed near $75. SATA weakened from a mix of its own pressures and spillover from STRC.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">This was not a crisis of the underlying dividends, which kept flowing, but a crisis of positioning, the report framed.</p>
+
+
+
+<p class="wp-block-paragraph">The recovery came fast enough to reassure the faithful. By July 2, STRC changed hands near $87 and SATA near $97, prices that held into the report&#8217;s July 9 publication. Neither Strategy nor Strive missed a dividend.&nbsp;</p>
+
+
+
+<h2 class="wp-block-heading">Strategy’s bitcoin holdings</h2>
+
+
+
+<p class="wp-block-paragraph">The report notes that Strategy held 847,363 BTC at an average cost near $75,651 and had a $1.1 billion dollar reserve in mid-June, while Strive kept an 18-month dividend reserve. The pitch: these are cash-flow questions, not solvency questions.</p>
+
+
+
+<p class="wp-block-paragraph">Strategy did not sit still. Saylor&#8217;s firm <a href="https://bitcoinmagazine.com/news/strategy-mstr-strc-dividend-authorizes-2b">rolled out</a> share and digital-credit buybacks, raised STRC dividends, and set up a dollar reserve, a package meant to steady prices while it keeps buying coins. Saylor framed it as a balance between commitment to Bitcoin and the &#8220;liquidity, discipline, and active capital management&#8221; the credit strategy demands.</p>
+
+
+
+<p class="wp-block-paragraph">Since then, Strategy has <a href="https://bitcoinmagazine.com/news/strategy-mstr-sells-3588-bitcoin">sold</a> $3,588 and now <a href="https://www.strategy.com/purchases" target="_blank" rel="noopener">holds</a> 843,775 bitcoin.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">The market voted with volume. Combined STRC and SATA trading topped $10 billion in June, a monthly record for each, and that came without new at-the-market share sales feeding the pipeline. Demand for the paper, in other words, did not vanish when the price broke.</p>
+
+
+
+<p class="wp-block-paragraph">BitcoinTreasuries.net polled its readers, an audience it concedes leans pro-digital-credit, and found more optimism than fear. A slim majority, 52%, did not see the price drop as a major problem. Most holders sat tight, and 52% of all respondents bought STRC or SATA after June 18.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">At the same time, three-quarters expect price swings to recur, so nobody is calling the risk gone. Looking ahead, 77.8% expect the digital-credit supply to grow by the end of 2027, and about a fifth expect it to clear $50 billion.</p>
+<p>This post <a rel="nofollow" href="https://bitcoinmagazine.com/markets/bitcoins-new-debt-machine-is-facing">Bitcoin&#8217;s New Debt Machine is Facing Its First Major Test</a> first appeared on <a rel="nofollow" href="https://bitcoinmagazine.com">Bitcoin Magazine</a> and is written by <a rel="nofollow" href="https://bitcoinmagazine.com/authors/micahzimmerman">Micah Zimmerman</a>.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>New Hampshire Council Rejects $100 Million Bitcoin-Backed Bond</title>
+		<link>https://bitcoinmagazine.com/news/new-hampshire-council-rejects-100-million</link>
+		
+		<dc:creator><![CDATA[Micah Zimmerman]]></dc:creator>
+		<pubDate>Thu, 09 Jul 2026 15:28:30 +0000</pubDate>
+				<category><![CDATA[NEWS]]></category>
+		<category><![CDATA[Bitcoin]]></category>
+		<category><![CDATA[bitcoin loan]]></category>
+		<category><![CDATA[Bitcoin-backed Loan]]></category>
+		<category><![CDATA[New Hampshire]]></category>
+		<guid isPermaLink="false">https://bitcoinmagazine.com/?p=53236</guid>
+
+					<description><![CDATA[<p><a rel="nofollow" href="https://bitcoinmagazine.com">Bitcoin Magazine</a><br />
+<img src="https://bitcoinmagazine.com/wp-content/uploads/2026/07/New-Hampshire-Council-Rejects-100-Million-Bitcoin-Backed-Bond.jpg" style="display: block; margin: 1em auto"><br />
+<a rel="nofollow" href="https://bitcoinmagazine.com/news/new-hampshire-council-rejects-100-million">New Hampshire Council Rejects $100 Million Bitcoin-Backed Bond</a></p>
+<p>New Hampshire's Executive Council voted 3-2 to reject a proposed $100 million Bitcoin-backed municipal bond, shelving what supporters said would have been the world's first such issuance despite arguments that it posed no risk to taxpayers.</p>
+<p>This post <a rel="nofollow" href="https://bitcoinmagazine.com/news/new-hampshire-council-rejects-100-million">New Hampshire Council Rejects $100 Million Bitcoin-Backed Bond</a> first appeared on <a rel="nofollow" href="https://bitcoinmagazine.com">Bitcoin Magazine</a> and is written by <a rel="nofollow" href="https://bitcoinmagazine.com/authors/micahzimmerman">Micah Zimmerman</a>.</p>
+]]></description>
+										<content:encoded><![CDATA[<p><a rel="nofollow" href="https://bitcoinmagazine.com">Bitcoin Magazine</a><br />
+<img src="https://bitcoinmagazine.com/wp-content/uploads/2026/07/New-Hampshire-Council-Rejects-100-Million-Bitcoin-Backed-Bond.jpg" style="display: block; margin: 1em auto"><br />
+<a rel="nofollow" href="https://bitcoinmagazine.com/news/new-hampshire-council-rejects-100-million">New Hampshire Council Rejects $100 Million Bitcoin-Backed Bond</a></p>
+<div id="bsf_rt_marker"></div>
+<p class="wp-block-paragraph">The New Hampshire Executive Council rejected a plan on Wednesday to authorize a $100 million bond backed by Bitcoin, killing a proposal that state officials had cast as a first-in-the-nation bid to draw digital finance to the Granite State.</p>
+
+
+
+<p class="wp-block-paragraph">The New Hampshire councilors voted 3-2 against it, according to <a href="https://www.bostonglobe.com/2026/07/09/metro/nh-bitcoin-bond-rejected/" target="_blank" rel="noopener">reporting</a> from <em>The Boston Globe</em>.</p>
+
+
+
+<p class="wp-block-paragraph">The New Hampshire Business Finance Authority and Governor Kelly Ayotte had promoted the bond as &#8220;groundbreaking&#8221; and &#8220;historic.&#8221; The deal <a href="https://bitcoinmagazine.com/markets/new-hampshire-first-bitcoin-bond">would have stood</a> as the world&#8217;s first Bitcoin-backed municipal bond. The plan had cleared <a href="https://bitcoinmagazine.com/news/new-hampshires-bitcoin-municipal-bond">Moody&#8217;s ratings</a> and reached the Executive Council for its <a href="https://bitcoinmagazine.com/news/new-hampshires-100-million-bitcoin-backed">final vote</a> before issuance.</p>
+
+
+
+<p class="wp-block-paragraph">The council did not share that enthusiasm. Karen Liot Hill, the lone Democrat, framed her opposition as caution rather than hostility.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">&#8220;I&#8217;m not opposed to Bitcoin or cryptocurrency in general,&#8221; she told <em>The Boston Globe</em>. &#8220;But I do think that we are being asked as a state to lend a kind of legitimacy to a financial transaction, which is from … an emerging asset class that has been shown to be very volatile.&#8221;</p>
+
+
+
+<h2 class="wp-block-heading">Bitcoin is ‘emerged’</h2>
+
+
+
+<p class="wp-block-paragraph">James Key-Wallace, executive director of the Business Finance Authority, disputed the framing. &#8220;The only quibble I would have is … I wouldn&#8217;t call them &#8217;emerging,'&#8221; he said. &#8220;They&#8217;ve &#8217;emerged.&#8217; They&#8217;re here.&#8221;</p>
+
+
+
+<p class="wp-block-paragraph">Key-Wallace stressed that the bond carried zero risk for New Hampshire taxpayers. The loan agreement would create a conduit between private investors and a private borrower, with cryptocurrency as collateral.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">The state would owe nothing, even in a Bitcoin crash. Should Bitcoin climb across the three-year term, the authority could collect millions in fees for small business, child care, housing, and economic development programs. He said the deal could lead to &#8220;several more.&#8221;</p>
+
+
+
+<p class="wp-block-paragraph">Ayotte, who last year signed a law giving the state treasurer discretion to invest in Bitcoin and made New Hampshire the <a href="https://bitcoinmagazine.com/news/new-hampshire-becomes-first-state-to-pass-strategic-bitcoin-reserve-bill-into-law">first state to pass a strategic Bitcoin reserve into law</a>, defended the value of moving first.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">&#8220;I think it&#8217;s something that we really need to think about,&#8221; she said, &#8220;because our state continues to thrive when we are continuing to be innovative — and especially if we can do so in a way that protects the taxpayers.&#8221;</p>
+
+
+
+<p class="wp-block-paragraph">Liot Hill moved to table the proposal, but no colleague seconded the motion, a silence that sent the plan to its final vote. Janet Stevens and David Wheeler joined her in opposition. Joseph Kenney and John Stephen voted in favor.</p>
+
+
+
+<p class="wp-block-paragraph">Key-Wallace said his team remains excited about the state&#8217;s role in the digital asset economy, and he offered to present the idea to the council in the future.</p>
+<p>This post <a rel="nofollow" href="https://bitcoinmagazine.com/news/new-hampshire-council-rejects-100-million">New Hampshire Council Rejects $100 Million Bitcoin-Backed Bond</a> first appeared on <a rel="nofollow" href="https://bitcoinmagazine.com">Bitcoin Magazine</a> and is written by <a rel="nofollow" href="https://bitcoinmagazine.com/authors/micahzimmerman">Micah Zimmerman</a>.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>BitGo Adds Quantum-Risk Controls to Bitcoin Custody</title>
+		<link>https://bitcoinmagazine.com/news/bitgo-adds-quantum-risk-controls-bitcoin</link>
+		
+		<dc:creator><![CDATA[Micah Zimmerman]]></dc:creator>
+		<pubDate>Thu, 09 Jul 2026 14:50:41 +0000</pubDate>
+				<category><![CDATA[NEWS]]></category>
+		<category><![CDATA[Bitgo]]></category>
+		<category><![CDATA[Quantum]]></category>
+		<guid isPermaLink="false">https://bitcoinmagazine.com/?p=53232</guid>
+
+					<description><![CDATA[<p><a rel="nofollow" href="https://bitcoinmagazine.com">Bitcoin Magazine</a><br />
+<img src="https://bitcoinmagazine.com/wp-content/uploads/2026/07/BitGo-Adds-Quantum-Risk-Controls-to-Bitcoin-Custody.jpg" style="display: block; margin: 1em auto"><br />
+<a rel="nofollow" href="https://bitcoinmagazine.com/news/bitgo-adds-quantum-risk-controls-bitcoin">BitGo Adds Quantum-Risk Controls to Bitcoin Custody</a></p>
+<p>BitGo launched new quantum-risk tools that help institutional Bitcoin holders identify and reduce potential future quantum-computing exposure in their custody wallets.</p>
+<p>This post <a rel="nofollow" href="https://bitcoinmagazine.com/news/bitgo-adds-quantum-risk-controls-bitcoin">BitGo Adds Quantum-Risk Controls to Bitcoin Custody</a> first appeared on <a rel="nofollow" href="https://bitcoinmagazine.com">Bitcoin Magazine</a> and is written by <a rel="nofollow" href="https://bitcoinmagazine.com/authors/micahzimmerman">Micah Zimmerman</a>.</p>
+]]></description>
+										<content:encoded><![CDATA[<p><a rel="nofollow" href="https://bitcoinmagazine.com">Bitcoin Magazine</a><br />
+<img src="https://bitcoinmagazine.com/wp-content/uploads/2026/07/BitGo-Adds-Quantum-Risk-Controls-to-Bitcoin-Custody.jpg" style="display: block; margin: 1em auto"><br />
+<a rel="nofollow" href="https://bitcoinmagazine.com/news/bitgo-adds-quantum-risk-controls-bitcoin">BitGo Adds Quantum-Risk Controls to Bitcoin Custody</a></p>
+<div id="bsf_rt_marker"></div>
+<p class="wp-block-paragraph">BitGo Holdings, Inc. (NYSE: BTGO) introduced a set of tools to help institutions measure and reduce the quantum-computing risk tied to their Bitcoin holdings. The digital asset infrastructure company <a href="https://www.businesswire.com/news/home/20260709199344/en/BitGo-Announces-New-Quantum-Risk-Management-Capabilities-for-Bitcoin-Wallets" target="_blank" rel="noopener">said</a> the features apply to UTXO-based wallets and its multi-signature custody service.</p>
+
+
+
+<p class="wp-block-paragraph">The release builds on BitGo&#8217;s multi-signature <a href="https://www.bitgo.com/resources/blog/multisig-wallet-transactions/" target="_blank" rel="noopener">architecture</a>, which the firm pioneered for Bitcoin to reduce single points of failure. The new controls give clients more visibility into wallet-key exposure, better handling of unspent transaction outputs, and workflows for institutional wallet operations.</p>
+
+
+
+<p class="wp-block-paragraph">At the center of the launch is a Quantum Risk Score, an in-platform system that rates potential quantum exposure across supported Bitcoin wallets. A Fix Exposed Addresses Workflow guides clients through moving funds from addresses with elevated exposure into new addresses with stronger key hygiene.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">A new UTXO Selection Method groups and prioritizes coins by address to limit the exposure that partial spends create. Updated default address-type controls steer wallets away from transaction patterns that raise <a href="https://bitcoinmagazine.com/tags/quantum">quantum</a> concerns.</p>
+
+
+
+<h2 class="wp-block-heading">Bitcoin could face quantum attacks</h2>
+
+
+
+<p class="wp-block-paragraph">The risk stems from how Bitcoin addresses work. An address whose public key has appeared on-chain could, in a future with capable quantum machines, face attack.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">Estimates <a href="https://www.talos.com/insights/state-of-the-network-362" target="_blank" rel="noopener">place</a> 6.9 million Bitcoin in addresses with exposed public keys. Funds in address types that reveal a public key from creation, such as Taproot or Pay-to-Public-Key, fall outside the scope of the application and need separate remediation.</p>
+
+
+
+<p class="wp-block-paragraph">&#8220;We believe the safest key is one whose public key has never been revealed on-chain,&#8221; said Mike Belshe, CEO and co-founder of BitGo. &#8220;These capabilities give institutions a practical way to understand and reduce quantum exposure while continuing to rely on the proven security of multi-signature.&#8221;</p>
+
+
+
+<p class="wp-block-paragraph">BitGo said no quantum computer can break Bitcoin at present. <a href="https://bitcoinmagazine.com/tags/adam-back">Adam Back</a>, co-founder and CEO of Blockstream and BSTR, framed the timing as a reason to act. &#8220;Nobody has a quantum computer that can touch Bitcoin today, but that&#8217;s exactly why the work should start now, while it&#8217;s calm and optional rather than urgent and forced,&#8221; he said.</p>
+
+
+
+<p class="wp-block-paragraph">The company described the tools as a complement to future protocol-level post-quantum signature upgrades to Bitcoin, rather than a replacement.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">The features cover supported UTXO-based assets and multi-signature configurations.</p>
+<p>This post <a rel="nofollow" href="https://bitcoinmagazine.com/news/bitgo-adds-quantum-risk-controls-bitcoin">BitGo Adds Quantum-Risk Controls to Bitcoin Custody</a> first appeared on <a rel="nofollow" href="https://bitcoinmagazine.com">Bitcoin Magazine</a> and is written by <a rel="nofollow" href="https://bitcoinmagazine.com/authors/micahzimmerman">Micah Zimmerman</a>.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Russia&#8217;s Largest Private Bank Alfa-Bank To Test Bitcoin and Crypto Trading</title>
+		<link>https://bitcoinmagazine.com/news/russias-largest-private-bank-alfa-bank</link>
+		
+		<dc:creator><![CDATA[Micah Zimmerman]]></dc:creator>
+		<pubDate>Thu, 09 Jul 2026 13:40:50 +0000</pubDate>
+				<category><![CDATA[NEWS]]></category>
+		<category><![CDATA[alfa-bank]]></category>
+		<category><![CDATA[Bitcoin]]></category>
+		<category><![CDATA[Legislation]]></category>
+		<category><![CDATA[Russia]]></category>
+		<guid isPermaLink="false">https://bitcoinmagazine.com/?p=53228</guid>
+
+					<description><![CDATA[<p><a rel="nofollow" href="https://bitcoinmagazine.com">Bitcoin Magazine</a><br />
+<img src="https://bitcoinmagazine.com/wp-content/uploads/2026/07/Russias-Largest-Private-Bank-Alfa-Bank-To-Test-Bitcoin-and-Crypto-Trading.jpg" style="display: block; margin: 1em auto"><br />
+<a rel="nofollow" href="https://bitcoinmagazine.com/news/russias-largest-private-bank-alfa-bank">Russia&#8217;s Largest Private Bank Alfa-Bank To Test Bitcoin and Crypto Trading</a></p>
+<p>Russia's largest private lender, Alfa-Bank, plans to launch Bitcoin and crypto trading, custody, and a digital depository once new regulations take effect, joining a broader push by major Russian banks to enter the country's emerging crypto market by late 2026 or 2027.</p>
+<p>This post <a rel="nofollow" href="https://bitcoinmagazine.com/news/russias-largest-private-bank-alfa-bank">Russia&#8217;s Largest Private Bank Alfa-Bank To Test Bitcoin and Crypto Trading</a> first appeared on <a rel="nofollow" href="https://bitcoinmagazine.com">Bitcoin Magazine</a> and is written by <a rel="nofollow" href="https://bitcoinmagazine.com/authors/micahzimmerman">Micah Zimmerman</a>.</p>
+]]></description>
+										<content:encoded><![CDATA[<p><a rel="nofollow" href="https://bitcoinmagazine.com">Bitcoin Magazine</a><br />
+<img src="https://bitcoinmagazine.com/wp-content/uploads/2026/07/Russias-Largest-Private-Bank-Alfa-Bank-To-Test-Bitcoin-and-Crypto-Trading.jpg" style="display: block; margin: 1em auto"><br />
+<a rel="nofollow" href="https://bitcoinmagazine.com/news/russias-largest-private-bank-alfa-bank">Russia&#8217;s Largest Private Bank Alfa-Bank To Test Bitcoin and Crypto Trading</a></p>
+<div id="bsf_rt_marker"></div>
+<p class="wp-block-paragraph">Alfa-Bank, Russia&#8217;s largest private lender, is preparing to launch its own digital depository and a full slate of crypto services once national regulation takes effect, joining a widening race among Russian banks to capture a market that does not yet legally exist.</p>
+
+
+
+<p class="wp-block-paragraph">Dmitry Vitman, chief operating officer of Alfa-Bank&#8217;s corporate and investment business, <a href="https://www.rbc.ru/quote/08/07/2026/6a4cad8a9a79472d9bd21c4a?utm_referrer=https%3A%2F%2Fwww.theblock.co%2F" target="_blank" rel="noopener">told</a> RBC Investments that the bank intends to offer &#8220;all possible services related to digital currencies&#8221; once the relevant legislation comes into force.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">&#8220;First and foremost, we plan to create our own digital depository and offer its services to other companies,&#8221; he said.</p>
+
+
+
+<p class="wp-block-paragraph">Under the framework expected to govern the market, a digital depository would record and store cryptocurrency and digital financial assets, monitor client transactions, and block transfers to addresses not sanctioned by authorities.</p>
+
+
+
+<p class="wp-block-paragraph">Firms that already hold a depository license would not need a separate license from the Central Bank to operate one.</p>
+
+
+
+<p class="wp-block-paragraph">Vitman said the market will develop gradually. Retail brokerage will come first, leaning on Russian and international infrastructure, with a possible launch in late 2026 or early 2027 if digital currency legislation enters into force in September 2026.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">Even so, he cautioned that meaningful liquidity and volume in Russia&#8217;s crypto market are unlikely to materialize before late 2027, a timeline that reflects both the untested regulatory machinery and the caution of institutions wary of moving before the rules are final.</p>
+
+
+
+<p class="wp-block-paragraph">The bank also wants to build Russian investment instruments on open blockchains capable of attracting foreign investors.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">&#8220;It&#8217;s important for Russia to develop its own instruments, otherwise we&#8217;ll have nothing to offer,&#8221; Vitman said. &#8220;We need to attract investors to our infrastructure, so we need to create products that can compete globally.&#8221;</p>
+
+
+
+<h2 class="wp-block-heading">A crowded field in Russia</h2>
+
+
+
+<p class="wp-block-paragraph">Alfa-Bank is far from alone. T-Technologies Group, which controls T-Bank, has <a href="https://www1.ru/en/news/2026/07/02/t-bank-pervym-poznakomit-svoix-klientov-s-kriptovaliutami-rabotat-s-cifrovymi-aktivami-xotiat-razresit-k-koncu-goda.html" target="_blank" rel="noopener">announced</a> plans to launch a digital depository built on the Atomize digital financial asset platform and to sell crypto through its broker, T-Investments.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">VTB Bank <a href="https://bitcoinmagazine.com/news/vtb-to-open-russias-first-bank-run-bitcoin">likewise plans</a> to create its own domestic digital depository for storing, recording, and circulating digital assets, including <a href="https://bitcoinmagazine.com/">Bitcoin</a>.</p>
+
+
+
+<p class="wp-block-paragraph">State-owned giant <a href="https://bitcoinmagazine.com/news/russian-sberbank-plans-crypto-wallet">Sberbank is moving the fastest</a>. The bank will launch a digital depository for storing and accounting crypto by December 1. Sberbank also plans to enable authorized crypto transactions inside its Sber app and SberInvestments, integrating custody directly into services that reach tens of millions of Russians.</p>
+
+
+
+<h2 class="wp-block-heading">When bitcoin and crypto trading could begin</h2>
+
+
+
+<p class="wp-block-paragraph">The draft law &#8220;On Digital Currency and Digital Rights&#8221; has passed its first reading in the State Duma, <a href="https://bitcoinmagazine.com/news/russia-advances-sweeping-crypto-bill">advancing a sweeping regime</a> that defines crypto circulation rules and introduces new professional participants, including crypto exchanges and digital depositories.</p>
+
+
+
+<p class="wp-block-paragraph">Originally slated to take effect July 1, 2026, the law&#8217;s timeline has slipped, with the new expected in-force date set for September 1.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">Vladimir Chistyukhin, first deputy chairman of the Central Bank, said the regulator expects all rules needed to launch legal crypto operations to be adopted and published by November, clearing the way for the first transactions.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">The Moscow Exchange expects to conduct its first crypto trades by the end of 2026.</p>
+<p>This post <a rel="nofollow" href="https://bitcoinmagazine.com/news/russias-largest-private-bank-alfa-bank">Russia&#8217;s Largest Private Bank Alfa-Bank To Test Bitcoin and Crypto Trading</a> first appeared on <a rel="nofollow" href="https://bitcoinmagazine.com">Bitcoin Magazine</a> and is written by <a rel="nofollow" href="https://bitcoinmagazine.com/authors/micahzimmerman">Micah Zimmerman</a>.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Bitcoin Slips to $62,000, Paring Rebound as CryptoQuant Sees Room Higher</title>
+		<link>https://bitcoinmagazine.com/markets/bitcoin-slips-to-62000-paring-rebound</link>
+		
+		<dc:creator><![CDATA[Micah Zimmerman]]></dc:creator>
+		<pubDate>Wed, 08 Jul 2026 21:18:33 +0000</pubDate>
+				<category><![CDATA[MARKETS]]></category>
+		<category><![CDATA[Bitcoin]]></category>
+		<category><![CDATA[bitcoin price]]></category>
+		<category><![CDATA[cryptoquant]]></category>
+		<guid isPermaLink="false">https://bitcoinmagazine.com/?p=53226</guid>
+
+					<description><![CDATA[<p><a rel="nofollow" href="https://bitcoinmagazine.com">Bitcoin Magazine</a><br />
+<img src="https://bitcoinmagazine.com/wp-content/uploads/2026/06/Bitcoin-Price-Falls-to-62000-as-Hawkish-Fed-Shift-Raises-Risk-of-Deeper-Pullback.jpg" style="display: block; margin: 1em auto"><br />
+<a rel="nofollow" href="https://bitcoinmagazine.com/markets/bitcoin-slips-to-62000-paring-rebound">Bitcoin Slips to $62,000, Paring Rebound as CryptoQuant Sees Room Higher</a></p>
+<p>Bitcoin slipped to around $62,000 after rebounding from last week's $57,700 low, while CryptoQuant says improving demand, seasonality and valuation support further gains, though its bearish Bull Score Index suggests the move remains a bear-market recovery rather than a full trend reversal.</p>
+<p>This post <a rel="nofollow" href="https://bitcoinmagazine.com/markets/bitcoin-slips-to-62000-paring-rebound">Bitcoin Slips to $62,000, Paring Rebound as CryptoQuant Sees Room Higher</a> first appeared on <a rel="nofollow" href="https://bitcoinmagazine.com">Bitcoin Magazine</a> and is written by <a rel="nofollow" href="https://bitcoinmagazine.com/authors/micahzimmerman">Micah Zimmerman</a>.</p>
+]]></description>
+										<content:encoded><![CDATA[<p><a rel="nofollow" href="https://bitcoinmagazine.com">Bitcoin Magazine</a><br />
+<img src="https://bitcoinmagazine.com/wp-content/uploads/2026/06/Bitcoin-Price-Falls-to-62000-as-Hawkish-Fed-Shift-Raises-Risk-of-Deeper-Pullback.jpg" style="display: block; margin: 1em auto"><br />
+<a rel="nofollow" href="https://bitcoinmagazine.com/markets/bitcoin-slips-to-62000-paring-rebound">Bitcoin Slips to $62,000, Paring Rebound as CryptoQuant Sees Room Higher</a></p>
+<div id="bsf_rt_marker"></div>
+<p class="wp-block-paragraph">Bitcoin traded near $62,000 today, surrendering part of a rebound that had carried it to $64,000 from last week&#8217;s bear-market low of $57,700. The pullback holds the price above the <a href="https://bitcoinmagazine.com/markets/bitcoin-price-collapses-to-59000">$60,000 level</a> that <a href="https://cryptoquant.com/asset/btc/summary" target="_blank" rel="noopener">CryptoQuant</a> treats as support, though it trims a recovery of some 11% off the bottom.</p>
+
+
+
+<p class="wp-block-paragraph">The dip came as CryptoQuant&#8217;s Weekly Crypto Report, published today and shared with <em>Bitcoin Magazine</em>, argued the backdrop skews toward further gains. Head of Research Julio Moreno framed the bounce as a bear-market recovery rather than a trend reversal, with one central caution: the firm&#8217;s Bull Score Index, an aggregate of on-chain, market, and valuation conditions on a 0-to-100 scale, sits at 20, inside the bearish zone at or below 40 and short of the 60 reading tied to a <a href="https://bitcoinmagazine.com/markets/bitcoin-bear-market-almost-finished">sustainable bull market</a>.</p>
+
+
+
+<p class="wp-block-paragraph">The report&#8217;s bullish case rests on seasonality. Across the past decade, July has ranked among Bitcoin&#8217;s stronger months, closing higher in most years shown.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">The pattern held in the <a href="https://bitcoinmagazine.com/markets/bitcoin-price-four-year-cycle">down-cycles</a> of 2018 and 2022, when Bitcoin gained some 20% and 17% during the month as the broader trend stayed weak. Entering July 2026 off a bear-market low, the report said, that pattern skews near-term risk toward gains.</p>
+
+
+
+<h2 class="wp-block-heading">Bitcoin demand is turning</h2>
+
+
+
+<p class="wp-block-paragraph">Demand has turned. The 30-day change in total demand — spot plus perpetual futures — collapsed to some -650,000 BTC in early June, the deepest negative reading since 2022, as Bitcoin fell toward $58,000.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">It has since recovered toward neutral, with speculative futures demand crossing into positive territory and spot selling easing to its slowest pace since mid-May. A return to positive territory, the report said, would confirm a re-igniting demand engine.</p>
+
+
+
+<p class="wp-block-paragraph">U.S. buyers show signs of stabilizing. The Coinbase Premium Index, a proxy for U.S. spot demand, sank below zero in early June as Bitcoin bottomed near $57,000, one of its weakest readings of the year.</p>
+
+
+
+<p class="wp-block-paragraph">The premium remains under zero, though its path has tracked Bitcoin&#8217;s climb off the low and points to steadier institutional appetite.</p>
+
+
+
+<p class="wp-block-paragraph">Valuation added a floor. The on-chain trader unrealized profit/loss margin, for coins held one to three months, dropped below -24% in early June, under the -12% threshold the firm treats as undervalued. Readings at such extremes tend to mark local bottoms as short-term holders capitulate, the report said, and the margin has recovered as price bounced off $57,700.</p>
+
+
+
+<p class="wp-block-paragraph">Today&#8217;s slip to $62,000 underscores the report&#8217;s own hedge. CryptoQuant reads the market as off its lows, with improving internals but a bearish regime intact.&nbsp;</p>
+
+
+
+<p class="wp-block-paragraph">A durable rally, it concluded, would require the Bull Score Index to climb above 60. Until then, the firm treats the move as a recovery within a bear market, not a reversal — a framing this week&#8217;s give-back does little to challenge.</p>
+<p>This post <a rel="nofollow" href="https://bitcoinmagazine.com/markets/bitcoin-slips-to-62000-paring-rebound">Bitcoin Slips to $62,000, Paring Rebound as CryptoQuant Sees Room Higher</a> first appeared on <a rel="nofollow" href="https://bitcoinmagazine.com">Bitcoin Magazine</a> and is written by <a rel="nofollow" href="https://bitcoinmagazine.com/authors/micahzimmerman">Micah Zimmerman</a>.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+	</channel>
+</rss>
+
