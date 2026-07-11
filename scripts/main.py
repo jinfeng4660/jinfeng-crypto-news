@@ -929,6 +929,16 @@ body{{font-family:'Inter','Noto Sans SC',-apple-system,BlinkMacSystemFont,sans-s
         cal_evts = load_all_events()
         if cal_evts:
             render_calendar_page(cal_evts)
+            # 应用月历网格到calendar.html
+            try:
+                cal_html_path = os.path.join(BASE, "docs", "calendar.html")
+                grid_script = os.path.join(BASE, "scripts", "add_calendar_grid.py")
+                if os.path.exists(cal_html_path) and os.path.exists(grid_script):
+                    import subprocess
+                    import sys
+                    subprocess.run([sys.executable, grid_script], capture_output=True, text=True, encoding='utf-8')
+            except Exception:
+                pass
         else:
             print("[日历页] 无数据，跳过")
     except Exception as e:
