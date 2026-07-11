@@ -220,6 +220,7 @@ def fetch_ff_calendar(proxies=None):
                 'impact': impact,
                 'currency': ev.get('currency', ''),
                 'title': ev.get('name', ''),
+                'title_cn': translate_title(ev.get('name', '')),
                 'actual': ev.get('actual', '') or '',
                 'previous': ev.get('previous', '') or '',
                 'forecast': ev.get('forecast', '') or '',
@@ -270,6 +271,147 @@ def fetch_investing_calendar(proxies=None):
         return events, None
     except Exception as e:
         return [], f'Investing失败: {e}'
+
+
+#####################
+# 经济事件标题翻译表
+#####################
+
+EVENT_TRANSLATIONS = {
+    # 利率/货币政策
+    'Federal Funds Rate': '联邦基金利率',
+    'Official Bank Rate': '官方银行利率',
+    'Official Cash Rate': '官方现金利率',
+    'Cash Rate': '现金利率',
+    'Overnight Rate': '隔夜利率',
+    'Main Refinancing Rate': '主要再融资利率',
+    'SNB Policy Rate': '瑞士央行政策利率',
+    'BOJ Policy Rate': '日本央行政策利率',
+    'MPC Official Bank Rate Votes': 'MPC利率投票比',
+    'FOMC Statement': 'FOMC声明',
+    'FOMC Meeting Minutes': 'FOMC会议纪要',
+    'FOMC Economic Projections': 'FOMC经济预测',
+    'FOMC Press Conference': 'FOMC新闻发布会',
+    'Monetary Policy Statement': '货币政策声明',
+    'Monetary Policy Summary': '货币政策摘要',
+    'Monetary Policy Meeting Minutes': '货币政策会议纪要',
+    'Monetary Policy Report Hearings': '货币政策报告听证会',
+    'BOC Rate Statement': '加拿大央行利率声明',
+    'BOC Monetary Policy Report': '加拿大央行货币政策报告',
+    'BOC Press Conference': '加拿大央行新闻发布会',
+    'RBA Rate Statement': '澳洲联储利率声明',
+    'RBA Monetary Policy Statement': '澳洲联储货币政策声明',
+    'RBA Press Conference': '澳洲联储新闻发布会',
+    'RBNZ Rate Statement': '新西兰联储利率声明',
+    'RBNZ Monetary Policy Statement': '新西兰联储货币政策声明',
+    'RBNZ Press Conference': '新西兰联储新闻发布会',
+    'SNB Monetary Policy Assessment': '瑞士央行货币政策评估',
+    'SNB Press Conference': '瑞士央行新闻发布会',
+    'ECB Press Conference': '欧央行新闻发布会',
+    'ECB Financial Stability Review': '欧央行金融稳定评估报告',
+    'BOE Monetary Policy Report': '英央行货币政策报告',
+    'BOJ Outlook Report': '日本央行经济展望报告',
+    'BOJ Press Conference': '日本央行新闻发布会',
+    'Jackson Hole Symposium': '杰克逊霍尔全球央行年会',
+    'OPEC Meetings': 'OPEC会议',
+    'OPEC-JMMC Meetings': 'OPEC联合部长级监督委员会会议',
+    'Fed Chair Nomination Vote': '美联储主席提名投票',
+    
+    # 通胀数据
+    'CPI m/m': 'CPI月率',
+    'CPI y/y': 'CPI年率',
+    'CPI q/q': 'CPI季率',
+    'CPI Flash Estimate y/y': 'CPI初值年率',
+    'Core CPI m/m': '核心CPI月率',
+    'Core CPI y/y': '核心CPI年率',
+    'Core CPI Flash Estimate y/y': '核心CPI初值年率',
+    'Core PCE Price Index m/m': '核心PCE物价指数月率',
+    'Core PPI m/m': '核心PPI月率',
+    'PPI m/m': 'PPI月率',
+    'PPI y/y': 'PPI年率',
+    'Common CPI y/y': '普通CPI年率',
+    'Median CPI y/y': '中值CPI年率',
+    'Trimmed CPI y/y': '截尾CPI年率',
+    'Trimmed Mean CPI m/m': '截尾均值CPI月率',
+    'Tokyo Core CPI y/y': '东京核心CPI年率',
+    'Prelim UoM Inflation Expectations': '密歇根大学通胀预期初值',
+    'Revised UoM Inflation Expectations': '密歇根大学通胀预期终值',
+    'Inflation Expectations q/q': '通胀预期季率',
+    'German Prelim CPI m/m': '德国CPI初值月率',
+    
+    # 就业数据
+    'Non-Farm Employment Change': '非农就业人数变化',
+    'ADP Non-Farm Employment Change': 'ADP非农就业人数变化',
+    'Employment Change': '就业人数变化',
+    'Employment Change q/q': '就业人数变化季率',
+    'Unemployment Rate': '失业率',
+    'Unemployment Claims': '初请失业金人数',
+    'Claimant Count Change': '申领失业金人数变化',
+    'Average Earnings Index 3m/y': '平均薪资指数3月/年',
+    'Average Hourly Earnings m/m': '平均时薪月率',
+    'Employment Cost Index q/q': '就业成本指数季率',
+    'JOLTS Job Openings': 'JOLTS职位空缺',
+    'Prelim Benchmark Payrolls Revision': '基准薪资修正初值',
+    
+    # GDP
+    'Advance GDP q/q': 'GDP初值季率',
+    'Advance GDP Price Index q/q': 'GDP初值物价指数季率',
+    'Prelim GDP q/q': 'GDP修正值季率',
+    'Prelim GDP Price Index q/q': 'GDP修正值物价指数季率',
+    'Final GDP q/q': 'GDP终值季率',
+    'Final GDP Price Index q/q': 'GDP终值物价指数季率',
+    'GDP m/m': 'GDP月率',
+    'GDP q/q': 'GDP季率',
+    'German Prelim GDP q/q': '德国GDP初值季率',
+    
+    # PMI
+    'Flash Manufacturing PMI': '制造业PMI初值',
+    'Flash Services PMI': '服务业PMI初值',
+    'French Flash Manufacturing PMI': '法国制造业PMI初值',
+    'French Flash Services PMI': '法国服务业PMI初值',
+    'German Flash Manufacturing PMI': '德国制造业PMI初值',
+    'German Flash Services PMI': '德国服务业PMI初值',
+    'ISM Manufacturing PMI': 'ISM制造业PMI',
+    'ISM Manufacturing Prices': 'ISM制造业物价指数',
+    'ISM Services PMI': 'ISM服务业PMI',
+    'Philly Fed Manufacturing Index': '费城联储制造业指数',
+    
+    # 消费/零售/房市
+    'Retail Sales m/m': '零售销售月率',
+    'Core Retail Sales m/m': '核心零售销售月率',
+    'CB Consumer Confidence': '谘商会消费者信心指数',
+    'Prelim UoM Consumer Sentiment': '密歇根大学消费者信心初值',
+    'Revised UoM Consumer Sentiment': '密歇根大学消费者信心终值',
+    'New Home Sales': '新屋销售',
+    'Pending Home Sales m/m': '成屋签约销售月率',
+    
+    # 其他
+    'Annual Budget Release': '年度预算发布',
+    'Ivey PMI': 'Ivey采购经理人指数',
+    'Wage Price Index q/q': '薪资价格指数季率',
+    
+    # 央行官员讲话
+    'FOMC Member Powell Speaks': 'FOMC成员鲍威尔讲话',
+    'Fed Chairman Warsh Speaks': '美联储主席沃什讲话',
+    'Fed Chairman Warsh Testifies': '美联储主席沃什证词',
+    'President Trump Speaks': '特朗普总统讲话',
+    'BOC Gov Macklem Speaks': '加拿大央行行长麦克勒姆讲话',
+    'BOE Gov Bailey Speaks': '英央行行长贝利讲话',
+    'BOJ Gov Ueda Speaks': '日本央行行长植田和男讲话',
+    'ECB President Lagarde Speaks': '欧央行行长拉加德讲话',
+    'RBA Gov Bullock Speaks': '澳洲联储主席布洛克讲话',
+    'RBNZ Gov Breman Speaks': '新西兰联储主席布雷曼讲话',
+    'SNB Chairman Schlegel Speaks': '瑞士央行主席施莱格尔讲话',
+    'Treasury Sec Bessent Speaks': '财政部长贝森特讲话',
+    
+    # 加拿大特别
+    'Employment Change': '就业人数变化',
+}
+
+
+def translate_title(en_title):
+    """将英文经济事件标题翻译为中文"""
+    return EVENT_TRANSLATIONS.get(en_title, en_title)
 
 
 #####################
@@ -356,6 +498,7 @@ def _days_to_events(days):
                 'impact': impact,
                 'currency': ev.get('currency', ''),
                 'title': ev.get('name', ''),
+                'title_cn': translate_title(ev.get('name', '')),
                 'actual': ev.get('actual', '') or '',
                 'previous': ev.get('previous', '') or '',
                 'forecast': ev.get('forecast', '') or '',
