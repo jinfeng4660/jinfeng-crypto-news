@@ -1,0 +1,1094 @@
+======================================================================
+   金峰策略 · 全球加密快讯 · 全量资讯
+   生成时间: 2026-07-11 21:54
+======================================================================
+
+总事件数: 376  (高影响 188 / 中影响 188 / 低影响 0)
+
+
+--- 2026-05-01 (五) ---
+[10:30pm] [🟠中] President Trump Speaks  币种: USD
+
+[3:00am] [🟠中] Tokyo Core CPI y/y  币种: JPY
+   实际: 1.5% | 前值: 1.7% | 预期: 1.8%
+
+[5:30pm] [🟠中] ISM Manufacturing PMI  币种: USD
+   实际: 52.7 | 前值: 52.7 | 预期: 53.1
+
+[5:30pm] [🟠中] ISM Manufacturing Prices  币种: USD
+   实际: 84.6 | 前值: 78.3 | 预期: 80.0
+
+
+--- 2026-05-04 (一) ---
+[11:00pm] [🟠中] BOC Gov Macklem Speaks  币种: CAD
+
+
+--- 2026-05-05 (二) ---
+[10:00am] [🟠中] CPI m/m  币种: CHF
+   实际: 0.3% | 前值: 0.2% | 预期: 0.3%
+
+[4:00pm] [🟠中] ECB President Lagarde Speaks  币种: EUR
+
+[5:30pm] [🔴高] ISM Services PMI  币种: USD
+   实际: 53.6 | 前值: 54.0 | 预期: 53.7
+
+[5:30pm] [🔴高] JOLTS Job Openings  币种: USD
+   实际: 6.87M | 前值: 6.88M | 预期: 6.86M
+
+[8:00am] [🔴高] Cash Rate  币种: AUD
+   实际: 4.35% | 前值: 4.10% | 预期: 4.35%
+
+[8:00am] [🔴高] RBA Monetary Policy Statement  币种: AUD
+
+[8:00am] [🔴高] RBA Rate Statement  币种: AUD
+
+[9:00am] [🔴高] RBA Press Conference  币种: AUD
+
+[Feb Data] [🟠中] New Home Sales  币种: USD
+   实际: 682K | 前值: 635K | 预期: 652K
+
+
+--- 2026-05-06 (三) ---
+[11:45pm] [🟠中] BOC Gov Macklem Speaks  币种: CAD
+
+[2:15am] [🔴高] Employment Change q/q  币种: NZD
+   实际: 0.2% | 前值: 0.5% | 预期: 0.3%
+
+[2:15am] [🔴高] Unemployment Rate  币种: NZD
+   实际: 5.3% | 前值: 5.4% | 预期: 5.4%
+
+[3:45pm] [🟠中] ADP Non-Farm Employment Change  币种: USD
+   实际: 109K | 前值: 62K | 预期: 118K
+
+[4:30am] [🟠中] RBNZ Gov Breman Speaks  币种: NZD
+
+[5:30pm] [🟠中] Ivey PMI  币种: CAD
+   实际: 57.7 | 前值: 49.7 | 预期: 49.9
+
+
+--- 2026-05-07 (四) ---
+[12:40am] [🟠中] RBNZ Gov Breman Speaks  币种: NZD
+
+[4:00pm] [🟠中] Unemployment Claims  币种: USD
+   实际: 200K | 前值: 189K | 预期: 205K
+
+
+--- 2026-05-08 (五) ---
+[10:30am] [🟠中] ECB President Lagarde Speaks  币种: EUR
+
+[3:50pm] [🔴高] BOE Gov Bailey Speaks  币种: GBP
+
+[4:00pm] [🔴高] Employment Change  币种: CAD
+   实际: -17.7K | 前值: 14.1K | 预期: 12.9K
+
+[4:00pm] [🔴高] Unemployment Rate  币种: CAD
+   实际: 6.9% | 前值: 6.7% | 预期: 6.7%
+
+[4:00pm] [🔴高] Average Hourly Earnings m/m  币种: USD
+   实际: 0.2% | 前值: 0.2% | 预期: 0.3%
+
+[4:00pm] [🔴高] Non-Farm Employment Change  币种: USD
+   实际: 115K | 前值: 178K | 预期: 65K
+
+[4:00pm] [🔴高] Unemployment Rate  币种: USD
+   实际: 4.3% | 前值: 4.3% | 预期: 4.3%
+
+[5:30pm] [🟠中] Prelim UoM Consumer Sentiment  币种: USD
+   实际: 48.2 | 前值: 47.6 | 预期: 49.7
+
+[5:30pm] [🟠中] Prelim UoM Inflation Expectations  币种: USD
+   实际: 4.5% | 前值: 4.8%
+
+[7:30pm] [🟠中] President Trump Speaks  币种: USD
+
+
+--- 2026-05-11 (一) ---
+[5:00am] [🟠中] CPI y/y  币种: CNY
+   实际: 1.2% | 前值: 1.0% | 预期: 0.9%
+
+[5:00am] [🟠中] PPI y/y  币种: CNY
+   实际: 2.8% | 前值: 0.5% | 预期: 1.7%
+
+
+--- 2026-05-12 (二) ---
+[4:00pm] [🔴高] Core CPI m/m  币种: USD
+   实际: 0.4% | 前值: 0.2% | 预期: 0.3%
+
+[4:00pm] [🔴高] Core CPI y/y  币种: USD
+   实际: 2.8% | 前值: 2.6% | 预期: 2.7%
+
+[4:00pm] [🔴高] CPI m/m  币种: USD
+   实际: 0.6% | 前值: 0.9% | 预期: 0.6%
+
+[4:00pm] [🔴高] CPI y/y  币种: USD
+   实际: 3.8% | 前值: 3.3% | 预期: 3.7%
+
+
+--- 2026-05-13 (三) ---
+[10:10pm] [🔴高] Fed Chair Nomination Vote  币种: USD
+   实际: Pass | 预期: Pass
+
+[4:00pm] [🔴高] Core PPI m/m  币种: USD
+   实际: 1.0% | 前值: 0.1% | 预期: 0.3%
+
+[4:00pm] [🔴高] PPI m/m  币种: USD
+   实际: 1.4% | 前值: 0.5% | 预期: 0.5%
+
+[5:00am] [🟠中] Wage Price Index q/q  币种: AUD
+   实际: 0.8% | 前值: 0.8% | 预期: 0.8%
+
+
+--- 2026-05-14 (四) ---
+[4:00pm] [🔴高] Core Retail Sales m/m  币种: USD
+   实际: 0.7% | 前值: 1.9% | 预期: 0.7%
+
+[4:00pm] [🔴高] Retail Sales m/m  币种: USD
+   实际: 0.5% | 前值: 1.7% | 预期: 0.5%
+
+[4:00pm] [🟠中] Unemployment Claims  币种: USD
+   实际: 211K | 前值: 200K | 预期: 205K
+
+[9:30am] [🔴高] GDP m/m  币种: GBP
+   实际: 0.3% | 前值: 0.5% | 预期: -0.1%
+
+[9:30am] [🟠中] Prelim GDP q/q  币种: GBP
+   实际: 0.6% | 前值: 0.1% | 预期: 0.6%
+
+
+--- 2026-05-19 (二) ---
+[4:00pm] [🔴高] CPI m/m  币种: CAD
+   实际: 0.4% | 前值: 0.9% | 预期: 0.7%
+
+[4:00pm] [🟠中] Common CPI y/y  币种: CAD
+   实际: 2.5% | 前值: 2.6% | 预期: 2.6%
+
+[4:00pm] [🟠中] Median CPI y/y  币种: CAD
+   实际: 2.1% | 前值: 2.3% | 预期: 2.3%
+
+[4:00pm] [🟠中] Trimmed CPI y/y  币种: CAD
+   实际: 2.0% | 前值: 2.2% | 预期: 2.2%
+
+[5:00am] [🟠中] Monetary Policy Meeting Minutes  币种: AUD
+
+[5:30pm] [🟠中] Pending Home Sales m/m  币种: USD
+   实际: 1.4% | 前值: 1.5% | 预期: 1.0%
+
+[9:30am] [🔴高] Claimant Count Change  币种: GBP
+   实际: 26.5K | 前值: 26.8K | 预期: 23.1K
+
+[9:30am] [🟠中] Average Earnings Index 3m/y  币种: GBP
+   实际: 4.1% | 前值: 3.8% | 预期: 3.8%
+
+
+--- 2026-05-20 (三) ---
+[4:45pm] [🟠中] Monetary Policy Report Hearings  币种: GBP
+
+[9:30am] [🔴高] CPI y/y  币种: GBP
+   实际: 2.8% | 前值: 3.3% | 预期: 3.0%
+
+[9:30pm] [🔴高] FOMC Meeting Minutes  币种: USD
+
+
+--- 2026-05-21 (四) ---
+[10:45am] [🟠中] French Flash Manufacturing PMI  币种: EUR
+   实际: 48.9 | 前值: 52.8 | 预期: 52.1
+
+[10:45am] [🟠中] French Flash Services PMI  币种: EUR
+   实际: 42.9 | 前值: 46.5 | 预期: 46.6
+
+[11:00am] [🟠中] German Flash Manufacturing PMI  币种: EUR
+   实际: 49.9 | 前值: 51.2 | 预期: 51.0
+
+[11:00am] [🟠中] German Flash Services PMI  币种: EUR
+   实际: 47.8 | 前值: 46.9 | 预期: 47.1
+
+[12:00pm] [🟠中] Flash Manufacturing PMI  币种: GBP
+   实际: 53.7 | 前值: 53.6 | 预期: 52.9
+
+[12:00pm] [🟠中] Flash Services PMI  币种: GBP
+   实际: 47.9 | 前值: 52.0 | 预期: 51.7
+
+[4:00pm] [🟠中] Philly Fed Manufacturing Index  币种: USD
+   实际: -0.4 | 前值: 26.7 | 预期: 17.6
+
+[4:00pm] [🟠中] Unemployment Claims  币种: USD
+   实际: 209K | 前值: 211K | 预期: 210K
+
+[5:00am] [🔴高] Employment Change  币种: AUD
+   实际: -18.6K | 前值: 17.9K | 预期: 16.7K
+
+[5:00am] [🔴高] Unemployment Rate  币种: AUD
+   实际: 4.5% | 前值: 4.3% | 预期: 4.3%
+
+[5:15pm] [🟠中] Flash Manufacturing PMI  币种: USD
+   实际: 55.3 | 前值: 54.0 | 预期: 53.8
+
+[5:15pm] [🟠中] Flash Services PMI  币种: USD
+   实际: 50.9 | 前值: 51.3 | 预期: 51.1
+
+[6:30pm] [🔴高] BOE Gov Bailey Speaks  币种: GBP
+
+
+--- 2026-05-22 (五) ---
+[4:00pm] [🟠中] Core Retail Sales m/m  币种: CAD
+   实际: 1.4% | 前值: 0.5% | 预期: 0.9%
+
+[4:00pm] [🟠中] Retail Sales m/m  币种: CAD
+   实际: 0.9% | 前值: 0.7% | 预期: 0.6%
+
+[5:30pm] [🟠中] Revised UoM Consumer Sentiment  币种: USD
+   实际: 44.8 | 前值: 48.2 | 预期: 48.2
+
+[9:30am] [🟠中] Retail Sales m/m  币种: GBP
+   实际: -1.3% | 前值: 0.7% | 预期: -0.6%
+
+
+--- 2026-05-26 (二) ---
+[5:30pm] [🟠中] CB Consumer Confidence  币种: USD
+   实际: 93.1 | 前值: 92.8 | 预期: 91.9
+
+
+--- 2026-05-27 (三) ---
+[11:30am] [🟠中] ECB Financial Stability Review  币种: EUR
+
+[11:40pm] [🟠中] RBNZ Gov Breman Speaks  币种: NZD
+
+[3:30am] [🟠中] BOJ Gov Ueda Speaks  币种: JPY
+
+[5:00am] [🔴高] CPI m/m  币种: AUD
+   实际: 0.4% | 前值: 1.1% | 预期: 0.6%
+
+[5:00am] [🔴高] CPI y/y  币种: AUD
+   实际: 4.2% | 前值: 4.6% | 预期: 4.4%
+
+[5:00am] [🔴高] Trimmed Mean CPI m/m  币种: AUD
+   实际: 0.3% | 前值: 0.3% | 预期: 0.3%
+
+[5:30am] [🔴高] Official Cash Rate  币种: NZD
+   实际: 2.25% | 前值: 2.25% | 预期: 2.25%
+
+[5:30am] [🔴高] RBNZ Monetary Policy Statement  币种: NZD
+
+[5:30am] [🔴高] RBNZ Rate Statement  币种: NZD
+
+[6:30am] [🔴高] RBNZ Press Conference  币种: NZD
+
+
+--- 2026-05-28 (四) ---
+[10:40am] [🟠中] ECB President Lagarde Speaks  币种: EUR
+
+[2:30pm] [🟠中] SNB Chairman Schlegel Speaks  币种: CHF
+
+[4:00pm] [🔴高] Core PCE Price Index m/m  币种: USD
+   实际: 0.2% | 前值: 0.3% | 预期: 0.3%
+
+[4:00pm] [🔴高] Prelim GDP q/q  币种: USD
+   实际: 1.6% | 前值: 0.7% | 预期: 2.0%
+
+[4:00pm] [🟠中] Prelim GDP Price Index q/q  币种: USD
+   实际: 3.5% | 前值: 3.8% | 预期: 3.6%
+
+[4:00pm] [🟠中] Unemployment Claims  币种: USD
+   实际: 215K | 前值: 209K | 预期: 211K
+
+[5:30am] [🟠中] Annual Budget Release  币种: NZD
+
+[5:30pm] [🟠中] New Home Sales  币种: USD
+   实际: 622K | 前值: 682K | 预期: 661K
+
+[6:30pm] [🟠中] BOC Press Conference  币种: CAD
+
+[9:30pm] [🟠中] Treasury Sec Bessent Speaks  币种: USD
+
+
+--- 2026-05-29 (五) ---
+[11:50am] [🔴高] BOE Gov Bailey Speaks  币种: GBP
+
+[3:00am] [🟠中] Tokyo Core CPI y/y  币种: JPY
+   实际: 1.3% | 前值: 1.5% | 预期: 1.5%
+
+[4:00pm] [🔴高] GDP m/m  币种: CAD
+   实际: -0.1% | 前值: 0.2% | 预期: 0.1%
+
+[All Day] [🟠中] German Prelim CPI m/m  币种: EUR
+   实际: -0.2% | 前值: 0.6% | 预期: 0.1%
+
+
+--- 2026-06-01 (一) ---
+[4:00am] [🟠中] FOMC Member Powell Speaks  币种: USD
+
+[5:30pm] [🔴高] ISM Manufacturing PMI  币种: USD
+   实际: 54.0 | 前值: 52.7 | 预期: 53.3
+
+[5:30pm] [🟠中] ISM Manufacturing Prices  币种: USD
+   实际: 82.1 | 前值: 84.6 | 预期: 85.3
+
+
+--- 2026-06-02 (二) ---
+[12:30pm] [🟠中] Core CPI Flash Estimate y/y  币种: EUR
+   实际: 2.5% | 前值: 2.2% | 预期: 2.4%
+
+[12:30pm] [🟠中] CPI Flash Estimate y/y  币种: EUR
+   实际: 3.2% | 前值: 3.0% | 预期: 3.2%
+
+[5:30pm] [🔴高] BOE Gov Bailey Speaks  币种: GBP
+
+[5:30pm] [🟠中] JOLTS Job Openings  币种: USD
+   实际: 7.62M | 前值: 6.87M | 预期: 6.87M
+
+
+--- 2026-06-03 (三) ---
+[12:00pm] [🔴高] BOJ Gov Ueda Speaks  币种: JPY
+
+[3:45pm] [🔴高] ADP Non-Farm Employment Change  币种: USD
+   实际: 122K | 前值: 109K | 预期: 118K
+
+[5:00am] [🔴高] GDP q/q  币种: AUD
+   实际: 0.3% | 前值: 0.8% | 预期: 0.5%
+
+[5:30pm] [🔴高] ISM Services PMI  币种: USD
+   实际: 54.5 | 前值: 53.6 | 预期: 53.7
+
+[5:30pm] [🟠中] Treasury Sec Bessent Speaks  币种: USD
+
+
+--- 2026-06-04 (四) ---
+[10:00am] [🟠中] CPI m/m  币种: CHF
+   实际: 0.2% | 前值: 0.3% | 预期: 0.3%
+
+[10:30pm] [🟠中] President Trump Speaks  币种: USD
+
+[11:30am] [🟠中] ECB President Lagarde Speaks  币种: EUR
+
+[4:00pm] [🟠中] Unemployment Claims  币种: USD
+   实际: 225K | 前值: 215K | 预期: 214K
+
+[5:30pm] [🟠中] Treasury Sec Bessent Speaks  币种: USD
+
+[7:10pm] [🔴高] BOE Gov Bailey Speaks  币种: GBP
+
+[8:30am] [🔴高] RBA Gov Bullock Speaks  币种: AUD
+
+
+--- 2026-06-05 (五) ---
+[4:00pm] [🔴高] Employment Change  币种: CAD
+   实际: 87.8K | 前值: -17.7K | 预期: 10.6K
+
+[4:00pm] [🔴高] Unemployment Rate  币种: CAD
+   实际: 6.6% | 前值: 6.9% | 预期: 6.9%
+
+[4:00pm] [🔴高] Average Hourly Earnings m/m  币种: USD
+   实际: 0.3% | 前值: 0.2% | 预期: 0.3%
+
+[4:00pm] [🔴高] Non-Farm Employment Change  币种: USD
+   实际: 172K | 前值: 115K | 预期: 85K
+
+[4:00pm] [🔴高] Unemployment Rate  币种: USD
+   实际: 4.3% | 前值: 4.3% | 预期: 4.3%
+
+[5:30pm] [🟠中] Ivey PMI  币种: CAD
+   实际: 58.2 | 前值: 57.7 | 预期: 54.5
+
+[9:30pm] [🟠中] BOE Gov Bailey Speaks  币种: GBP
+
+
+--- 2026-06-07 (日) ---
+[All Day] [🟠中] OPEC-JMMC Meetings  币种: All
+
+[All Day] [🟠中] OPEC Meetings  币种: All
+
+
+--- 2026-06-10 (三) ---
+[4:00pm] [🔴高] Core CPI m/m  币种: USD
+   实际: 0.2% | 前值: 0.4% | 预期: 0.3%
+
+[4:00pm] [🔴高] Core CPI y/y  币种: USD
+   实际: 2.9% | 前值: 2.8% | 预期: 2.9%
+
+[4:00pm] [🔴高] CPI m/m  币种: USD
+   实际: 0.5% | 前值: 0.6% | 预期: 0.5%
+
+[4:00pm] [🔴高] CPI y/y  币种: USD
+   实际: 4.2% | 前值: 3.8% | 预期: 4.2%
+
+[5:15pm] [🔴高] BOC Rate Statement  币种: CAD
+
+[5:15pm] [🔴高] Overnight Rate  币种: CAD
+   实际: 2.25% | 前值: 2.25% | 预期: 2.25%
+
+[6:00pm] [🔴高] BOC Press Conference  币种: CAD
+
+
+--- 2026-06-11 (四) ---
+[3:45pm] [🔴高] Main Refinancing Rate  币种: EUR
+   实际: 2.40% | 前值: 2.15% | 预期: 2.40%
+
+[3:45pm] [🔴高] Monetary Policy Statement  币种: EUR
+
+[4:00pm] [🔴高] Core PPI m/m  币种: USD
+   实际: 0.4% | 前值: 1.0% | 预期: 0.5%
+
+[4:00pm] [🔴高] PPI m/m  币种: USD
+   实际: 1.1% | 前值: 1.4% | 预期: 0.7%
+
+[4:00pm] [🟠中] Unemployment Claims  币种: USD
+   实际: 229K | 前值: 225K | 预期: 220K
+
+[4:15pm] [🔴高] ECB Press Conference  币种: EUR
+
+
+--- 2026-06-12 (五) ---
+[5:30pm] [🟠中] Prelim UoM Consumer Sentiment  币种: USD
+   实际: 48.9 | 前值: 48.2 | 预期: 46.1
+
+[5:30pm] [🟠中] Prelim UoM Inflation Expectations  币种: USD
+   实际: 4.6% | 前值: 4.5%
+
+[9:30am] [🔴高] GDP m/m  币种: GBP
+   实际: -0.1% | 前值: 0.3% | 预期: -0.1%
+
+
+--- 2026-06-15 (一) ---
+[11:00am] [🟠中] ECB President Lagarde Speaks  币种: EUR
+
+
+--- 2026-06-16 (二) ---
+[10:00am] [🔴高] BOJ Press Conference  币种: JPY
+
+[6:49am] [🔴高] BOJ Policy Rate  币种: JPY
+   实际: <1.00% | 前值: <0.75% | 预期: <1.00%
+
+[6:49am] [🔴高] Monetary Policy Statement  币种: JPY
+
+[8:00am] [🔴高] Cash Rate  币种: AUD
+   实际: 4.35% | 前值: 4.35% | 预期: 4.35%
+
+[8:00am] [🔴高] RBA Rate Statement  币种: AUD
+
+[9:00am] [🔴高] RBA Press Conference  币种: AUD
+
+
+--- 2026-06-17 (三) ---
+[10:00pm] [🔴高] FOMC Press Conference  币种: USD
+
+[2:20pm] [🟠中] ECB President Lagarde Speaks  币种: EUR
+
+[4:00pm] [🟠中] Core Retail Sales m/m  币种: USD
+   实际: 0.8% | 前值: 0.7% | 预期: 0.6%
+
+[4:00pm] [🟠中] Retail Sales m/m  币种: USD
+   实际: 0.9% | 前值: 0.5% | 预期: 0.5%
+
+[6:15pm] [🟠中] President Trump Speaks  币种: USD
+
+[9:30am] [🔴高] CPI y/y  币种: GBP
+   实际: 2.8% | 前值: 2.8% | 预期: 3.0%
+
+[9:30pm] [🔴高] Federal Funds Rate  币种: USD
+   实际: 3.75% | 前值: 3.75% | 预期: 3.75%
+
+[9:30pm] [🔴高] FOMC Economic Projections  币种: USD
+
+[9:30pm] [🔴高] FOMC Statement  币种: USD
+
+
+--- 2026-06-18 (四) ---
+[11:00am] [🔴高] SNB Monetary Policy Assessment  币种: CHF
+
+[11:00am] [🔴高] SNB Policy Rate  币种: CHF
+   实际: 0.00% | 前值: 0.00% | 预期: 0.00%
+
+[11:30am] [🔴高] SNB Press Conference  币种: CHF
+
+[2:15am] [🔴高] GDP q/q  币种: NZD
+   实际: 0.8% | 前值: 0.2% | 预期: 0.8%
+
+[2:30pm] [🔴高] Monetary Policy Summary  币种: GBP
+
+[2:30pm] [🔴高] MPC Official Bank Rate Votes  币种: GBP
+   实际: 2-0-7 | 前值: 1-0-8 | 预期: 1-0-8
+
+[2:30pm] [🔴高] Official Bank Rate  币种: GBP
+   实际: 3.75% | 前值: 3.75% | 预期: 3.75%
+
+[4:00pm] [🟠中] Philly Fed Manufacturing Index  币种: USD
+   实际: 10.3 | 前值: -0.4 | 预期: 9.8
+
+[4:00pm] [🟠中] Unemployment Claims  币种: USD
+   实际: 226K | 前值: 229K | 预期: 225K
+
+[9:30am] [🔴高] Claimant Count Change  币种: GBP
+   实际: 31.2K | 前值: 26.5K | 预期: 25.8K
+
+[9:30am] [🟠中] Average Earnings Index 3m/y  币种: GBP
+   实际: 4.4% | 前值: 4.1% | 预期: 4.0%
+
+
+--- 2026-06-19 (五) ---
+[9:30am] [🟠中] Retail Sales m/m  币种: GBP
+   实际: 1.2% | 前值: -1.3% | 预期: 0.5%
+
+
+--- 2026-06-22 (一) ---
+[4:00pm] [🔴高] CPI m/m  币种: CAD
+   实际: 1.0% | 前值: 0.4% | 预期: 0.7%
+
+[4:00pm] [🔴高] Median CPI y/y  币种: CAD
+   实际: 2.1% | 前值: 2.1% | 预期: 2.1%
+
+[4:00pm] [🔴高] Trimmed CPI y/y  币种: CAD
+   实际: 2.0% | 前值: 2.0% | 预期: 2.0%
+
+[4:00pm] [🟠中] Common CPI y/y  币种: CAD
+   实际: 2.7% | 前值: 2.5% | 预期: 2.5%
+
+[4:30pm] [🟠中] ECB President Lagarde Speaks  币种: EUR
+
+
+--- 2026-06-23 (二) ---
+[10:45am] [🟠中] French Flash Manufacturing PMI  币种: EUR
+   实际: 50.7 | 前值: 48.9 | 预期: 50.2
+
+[10:45am] [🟠中] French Flash Services PMI  币种: EUR
+   实际: 47.4 | 前值: 42.9 | 预期: 45.9
+
+[11:00am] [🟠中] German Flash Manufacturing PMI  币种: EUR
+   实际: 50.0 | 前值: 49.9 | 预期: 50.3
+
+[11:00am] [🟠中] German Flash Services PMI  币种: EUR
+   实际: 46.8 | 前值: 47.8 | 预期: 49.0
+
+[12:00pm] [🟠中] Flash Manufacturing PMI  币种: GBP
+   实际: 53.1 | 前值: 53.7 | 预期: 53.5
+
+[12:00pm] [🟠中] Flash Services PMI  币种: GBP
+   实际: 48.7 | 前值: 47.9 | 预期: 50.1
+
+[4:55pm] [🟠中] BOC Gov Macklem Speaks  币种: CAD
+
+[5:15pm] [🟠中] Flash Manufacturing PMI  币种: USD
+   实际: 55.7 | 前值: 55.3 | 预期: 54.6
+
+[5:15pm] [🟠中] Flash Services PMI  币种: USD
+   实际: 51.3 | 前值: 50.9 | 预期: 51.1
+
+[9:35pm] [🟠中] President Trump Speaks  币种: USD
+
+
+--- 2026-06-24 (三) ---
+[5:00am] [🔴高] CPI m/m  币种: AUD
+   实际: -0.7% | 前值: 0.4% | 预期: -0.4%
+
+[5:00am] [🔴高] CPI y/y  币种: AUD
+   实际: 4.0% | 前值: 4.2% | 预期: 4.3%
+
+[5:00am] [🔴高] Trimmed Mean CPI m/m  币种: AUD
+   实际: 0.4% | 前值: 0.3% | 预期: 0.3%
+
+
+--- 2026-06-25 (四) ---
+[4:00am] [🟠中] President Trump Speaks  币种: USD
+
+[4:00pm] [🔴高] Core PCE Price Index m/m  币种: USD
+   实际: 0.3% | 前值: 0.2% | 预期: 0.3%
+
+[4:00pm] [🔴高] Final GDP q/q  币种: USD
+   实际: 2.1% | 前值: 1.6% | 预期: 1.6%
+
+[4:00pm] [🟠中] Final GDP Price Index q/q  币种: USD
+   实际: 3.6% | 前值: 3.5% | 预期: 3.5%
+
+[4:00pm] [🟠中] Unemployment Claims  币种: USD
+   实际: 215K | 前值: 226K | 预期: 225K
+
+[5:00am] [🔴高] Employment Change  币种: AUD
+   实际: 40.3K | 前值: -18.6K | 预期: 31.2K
+
+[5:00am] [🔴高] Unemployment Rate  币种: AUD
+   实际: 4.4% | 前值: 4.5% | 预期: 4.4%
+
+
+--- 2026-06-26 (五) ---
+[3:00am] [🟠中] Tokyo Core CPI y/y  币种: JPY
+   实际: 1.6% | 前值: 1.3% | 预期: 1.6%
+
+[5:30pm] [🟠中] Revised UoM Consumer Sentiment  币种: USD
+   实际: 49.5 | 前值: 48.9 | 预期: 50.0
+
+[5:30pm] [🟠中] Revised UoM Inflation Expectations  币种: USD
+   实际: 4.6% | 前值: 4.6%
+
+[9:00pm] [🟠中] President Trump Speaks  币种: USD
+
+
+--- 2026-06-28 (日) ---
+[3:45pm] [🟠中] RBA Gov Bullock Speaks  币种: AUD
+
+
+--- 2026-06-29 (一) ---
+[10:30pm] [🟠中] ECB President Lagarde Speaks  币种: EUR
+
+
+--- 2026-06-30 (二) ---
+[4:00pm] [🔴高] GDP m/m  币种: CAD
+   实际: 0.5% | 前值: -0.1% | 预期: 0.4%
+
+[5:30pm] [🟠中] CB Consumer Confidence  币种: USD
+   实际: 91.2 | 前值: 93.1 | 预期: 94.4
+
+[5:30pm] [🟠中] JOLTS Job Openings  币种: USD
+   实际: 7.59M | 前值: 7.62M | 预期: 7.28M
+
+[All Day] [🟠中] German Prelim CPI m/m  币种: EUR
+   实际: -0.3% | 前值: -0.2% | 预期: 0.0%
+
+
+--- 2026-07-01 (三) ---
+[10:45pm] [🟠中] President Trump Speaks  币种: USD
+
+[12:30pm] [🟠中] Core CPI Flash Estimate y/y  币种: EUR
+   实际: 2.4% | 前值: 2.5% | 预期: 2.5%
+
+[12:30pm] [🟠中] CPI Flash Estimate y/y  币种: EUR
+   实际: 2.8% | 前值: 3.2% | 预期: 3.0%
+
+[3:45pm] [🟠中] ADP Non-Farm Employment Change  币种: USD
+   实际: 98K | 前值: 122K | 预期: 118K
+
+[4:30pm] [🟠中] BOC Gov Macklem Speaks  币种: CAD
+
+[4:30pm] [🟠中] ECB President Lagarde Speaks  币种: EUR
+
+[4:30pm] [🔴高] BOE Gov Bailey Speaks  币种: GBP
+
+[4:30pm] [🔴高] Fed Chairman Warsh Speaks  币种: USD
+
+[5:30pm] [🔴高] ISM Manufacturing PMI  币种: USD
+   实际: 53.3 | 前值: 54.0 | 预期: 53.8
+
+[5:30pm] [🟠中] ISM Manufacturing Prices  币种: USD
+   实际: 73.0 | 前值: 82.1 | 预期: 77.7
+
+
+--- 2026-07-02 (四) ---
+[10:00am] [🟠中] CPI m/m  币种: CHF
+   实际: 0.0% | 前值: 0.2% | 预期: 0.1%
+
+[4:00pm] [🔴高] Average Hourly Earnings m/m  币种: USD
+   实际: 0.3% | 前值: 0.3% | 预期: 0.3%
+
+[4:00pm] [🔴高] Non-Farm Employment Change  币种: USD
+   实际: 57K | 前值: 172K | 预期: 114K
+
+[4:00pm] [🔴高] Unemployment Rate  币种: USD
+   实际: 4.2% | 前值: 4.3% | 预期: 4.3%
+
+[4:00pm] [🟠中] Unemployment Claims  币种: USD
+   实际: 215K | 前值: 215K | 预期: 219K
+
+
+--- 2026-07-03 (五) ---
+[11:30am] [🟠中] ECB President Lagarde Speaks  币种: EUR
+
+[6:30pm] [🟠中] BOE Gov Bailey Speaks  币种: GBP
+
+
+--- 2026-07-06 (一) ---
+[5:30pm] [🔴高] ISM Services PMI  币种: USD
+   实际: 54.0 | 前值: 54.5 | 预期: 54.2
+
+
+--- 2026-07-07 (二) ---
+[2:00pm] [🟠中] BOE Gov Bailey Speaks  币种: GBP
+
+[5:30pm] [🟠中] Ivey PMI  币种: CAD
+   实际: 56.2 | 前值: 58.2 | 预期: 59.1
+
+
+--- 2026-07-08 (三) ---
+[5:30am] [🔴高] Official Cash Rate  币种: NZD
+   实际: 2.50% | 前值: 2.25% | 预期: 2.50%
+
+[5:30am] [🔴高] RBNZ Rate Statement  币种: NZD
+
+[6:30am] [🔴高] RBNZ Press Conference  币种: NZD
+
+[8:10pm] [🟠中] SNB Chairman Schlegel Speaks  币种: CHF
+
+[9:30pm] [🔴高] FOMC Meeting Minutes  币种: USD
+
+
+--- 2026-07-09 (四) ---
+[4:00pm] [🟠中] Unemployment Claims  币种: USD
+   实际: 215K | 前值: 215K | 预期: 218K
+
+
+--- 2026-07-10 (五) ---
+[4:00pm] [🔴高] Employment Change  币种: CAD
+   实际: 18.2K | 前值: 87.8K | 预期: 11.2K
+
+[4:00pm] [🔴高] Unemployment Rate  币种: CAD
+   实际: 6.5% | 前值: 6.6% | 预期: 6.6%
+
+
+--- 2026-07-14 (二) ---
+[12:15pm] [🔴高] BOE Gov Bailey Speaks  币种: GBP
+
+[4:00pm] [🔴高] Core CPI m/m  币种: USD
+   前值: 0.2% | 预期: 0.2%
+
+[4:00pm] [🔴高] Core CPI y/y  币种: USD
+   前值: 2.9% | 预期: 2.8%
+
+[4:00pm] [🔴高] CPI m/m  币种: USD
+   前值: 0.5% | 预期: -0.1%
+
+[4:00pm] [🔴高] CPI y/y  币种: USD
+   前值: 4.2% | 预期: 3.8%
+
+[5:30pm] [🔴高] Fed Chairman Warsh Testifies  币种: USD
+
+
+--- 2026-07-15 (三) ---
+[4:00pm] [🔴高] Core PPI m/m  币种: USD
+   前值: 0.4% | 预期: 0.3%
+
+[4:00pm] [🔴高] PPI m/m  币种: USD
+   前值: 1.1% | 预期: 0.0%
+
+[5:15pm] [🔴高] BOC Monetary Policy Report  币种: CAD
+
+[5:15pm] [🔴高] BOC Rate Statement  币种: CAD
+
+[5:15pm] [🔴高] Overnight Rate  币种: CAD
+   前值: 2.25% | 预期: 2.25%
+
+[5:30pm] [🔴高] Fed Chairman Warsh Testifies  币种: USD
+
+[6:00pm] [🔴高] BOC Press Conference  币种: CAD
+
+
+--- 2026-07-16 (四) ---
+[4:00pm] [🟠中] Core Retail Sales m/m  币种: USD
+   前值: 0.8% | 预期: -0.1%
+
+[4:00pm] [🟠中] Philly Fed Manufacturing Index  币种: USD
+   前值: 10.3 | 预期: 12.1
+
+[4:00pm] [🟠中] Retail Sales m/m  币种: USD
+   前值: 0.9% | 预期: 0.3%
+
+[4:00pm] [🟠中] Unemployment Claims  币种: USD
+   前值: 215K | 预期: 215K
+
+[9:30am] [🔴高] GDP m/m  币种: GBP
+   前值: -0.1% | 预期: 0.1%
+
+
+--- 2026-07-17 (五) ---
+[5:30pm] [🟠中] Prelim UoM Consumer Sentiment  币种: USD
+   前值: 48.9 | 预期: 51.4
+
+[5:30pm] [🟠中] Prelim UoM Inflation Expectations  币种: USD
+   前值: 4.6%
+
+
+--- 2026-07-20 (一) ---
+[4:00pm] [🔴高] CPI m/m  币种: CAD
+
+[4:00pm] [🔴高] Median CPI y/y  币种: CAD
+
+[4:00pm] [🔴高] Trimmed CPI y/y  币种: CAD
+
+[4:00pm] [🟠中] Common CPI y/y  币种: CAD
+
+
+--- 2026-07-21 (二) ---
+[2:15am] [🔴高] CPI q/q  币种: NZD
+
+[9:30am] [🔴高] Claimant Count Change  币种: GBP
+
+[9:30am] [🟠中] Average Earnings Index 3m/y  币种: GBP
+
+
+--- 2026-07-22 (三) ---
+[9:30am] [🔴高] CPI y/y  币种: GBP
+
+
+--- 2026-07-23 (四) ---
+[3:45pm] [🔴高] Main Refinancing Rate  币种: EUR
+
+[3:45pm] [🔴高] Monetary Policy Statement  币种: EUR
+
+[4:00pm] [🟠中] Unemployment Claims  币种: USD
+
+[4:15pm] [🔴高] ECB Press Conference  币种: EUR
+
+[5:00am] [🔴高] Employment Change  币种: AUD
+
+[5:00am] [🔴高] Unemployment Rate  币种: AUD
+
+
+--- 2026-07-24 (五) ---
+[10:45am] [🟠中] French Flash Manufacturing PMI  币种: EUR
+
+[10:45am] [🟠中] French Flash Services PMI  币种: EUR
+
+[11:00am] [🟠中] German Flash Manufacturing PMI  币种: EUR
+
+[11:00am] [🟠中] German Flash Services PMI  币种: EUR
+
+[12:00pm] [🟠中] Flash Manufacturing PMI  币种: GBP
+
+[12:00pm] [🟠中] Flash Services PMI  币种: GBP
+
+[9:30am] [🟠中] Retail Sales m/m  币种: GBP
+
+
+--- 2026-07-28 (二) ---
+[28th-30th] [🟠中] German Prelim GDP q/q  币种: EUR
+
+[5:30pm] [🟠中] CB Consumer Confidence  币种: USD
+
+
+--- 2026-07-29 (三) ---
+[10:00pm] [🔴高] FOMC Press Conference  币种: USD
+
+[5:00am] [🔴高] CPI m/m  币种: AUD
+
+[5:00am] [🔴高] CPI y/y  币种: AUD
+
+[5:00am] [🔴高] Trimmed Mean CPI m/m  币种: AUD
+
+[9:30pm] [🔴高] Federal Funds Rate  币种: USD
+
+[9:30pm] [🔴高] FOMC Statement  币种: USD
+
+
+--- 2026-07-30 (四) ---
+[2:30pm] [🔴高] BOE Monetary Policy Report  币种: GBP
+
+[2:30pm] [🔴高] Monetary Policy Summary  币种: GBP
+
+[2:30pm] [🔴高] MPC Official Bank Rate Votes  币种: GBP
+
+[2:30pm] [🔴高] Official Bank Rate  币种: GBP
+
+[4:00pm] [🔴高] Advance GDP q/q  币种: USD
+
+[4:00pm] [🔴高] Core PCE Price Index m/m  币种: USD
+
+[4:00pm] [🟠中] Advance GDP Price Index q/q  币种: USD
+
+[4:00pm] [🟠中] Unemployment Claims  币种: USD
+
+[All Day] [🟠中] German Prelim CPI m/m  币种: EUR
+
+
+--- 2026-07-31 (五) ---
+[12:30pm] [🟠中] Core CPI Flash Estimate y/y  币种: EUR
+
+[12:30pm] [🟠中] CPI Flash Estimate y/y  币种: EUR
+
+[3:00am] [🟠中] Tokyo Core CPI y/y  币种: JPY
+
+[4:00pm] [🔴高] GDP m/m  币种: CAD
+
+[4:00pm] [🟠中] Employment Cost Index q/q  币种: USD
+
+[5:30pm] [🟠中] Revised UoM Consumer Sentiment  币种: USD
+
+[5:30pm] [🟠中] Revised UoM Inflation Expectations  币种: USD
+
+[Tentative] [🔴高] BOJ Policy Rate  币种: JPY
+
+[Tentative] [🔴高] Monetary Policy Statement  币种: JPY
+
+[Tentative] [🔴高] BOJ Outlook Report  币种: JPY
+
+[Tentative] [🔴高] BOJ Press Conference  币种: JPY
+
+
+--- 2026-08-01 (六) ---
+[All Day] [🟠中] OPEC-JMMC Meetings  币种: All
+
+[Tentative] [🟠中] Annual Budget Release  币种: CAD
+
+
+--- 2026-08-03 (一) ---
+[5:30pm] [🔴高] ISM Manufacturing PMI  币种: USD
+
+[5:30pm] [🟠中] ISM Manufacturing Prices  币种: USD
+
+
+--- 2026-08-04 (二) ---
+[10:00am] [🟠中] CPI m/m  币种: CHF
+
+[5:30pm] [🟠中] JOLTS Job Openings  币种: USD
+
+
+--- 2026-08-05 (三) ---
+[2:15am] [🔴高] Employment Change q/q  币种: NZD
+
+[2:15am] [🔴高] Unemployment Rate  币种: NZD
+
+[3:45pm] [🟠中] ADP Non-Farm Employment Change  币种: USD
+
+[5:30pm] [🔴高] ISM Services PMI  币种: USD
+
+
+--- 2026-08-06 (四) ---
+[4:00pm] [🟠中] Unemployment Claims  币种: USD
+
+
+--- 2026-08-07 (五) ---
+[4:00pm] [🔴高] Employment Change  币种: CAD
+
+[4:00pm] [🔴高] Unemployment Rate  币种: CAD
+
+[4:00pm] [🔴高] Average Hourly Earnings m/m  币种: USD
+
+[4:00pm] [🔴高] Non-Farm Employment Change  币种: USD
+
+[4:00pm] [🔴高] Unemployment Rate  币种: USD
+
+[5:30pm] [🟠中] Ivey PMI  币种: CAD
+
+
+--- 2026-08-11 (二) ---
+[8:00am] [🔴高] Cash Rate  币种: AUD
+
+[8:00am] [🔴高] RBA Monetary Policy Statement  币种: AUD
+
+[8:00am] [🔴高] RBA Rate Statement  币种: AUD
+
+[9:00am] [🔴高] RBA Press Conference  币种: AUD
+
+
+--- 2026-08-12 (三) ---
+[4:00pm] [🔴高] Core CPI m/m  币种: USD
+
+[4:00pm] [🔴高] Core CPI y/y  币种: USD
+
+[4:00pm] [🔴高] CPI m/m  币种: USD
+
+[4:00pm] [🔴高] CPI y/y  币种: USD
+
+
+--- 2026-08-13 (四) ---
+[4:00pm] [🔴高] Core PPI m/m  币种: USD
+
+[4:00pm] [🔴高] PPI m/m  币种: USD
+
+[4:00pm] [🟠中] Unemployment Claims  币种: USD
+
+[6:30am] [🟠中] Inflation Expectations q/q  币种: NZD
+
+[9:30am] [🔴高] Claimant Count Change  币种: GBP
+
+[9:30am] [🔴高] GDP m/m  币种: GBP
+
+[9:30am] [🟠中] Average Earnings Index 3m/y  币种: GBP
+
+[9:30am] [🟠中] Prelim GDP q/q  币种: GBP
+
+
+--- 2026-08-14 (五) ---
+[4:00pm] [🟠中] Core Retail Sales m/m  币种: USD
+
+[4:00pm] [🟠中] Retail Sales m/m  币种: USD
+
+[5:30pm] [🟠中] Prelim UoM Consumer Sentiment  币种: USD
+
+[5:30pm] [🟠中] Prelim UoM Inflation Expectations  币种: USD
+
+
+--- 2026-08-17 (一) ---
+[4:00pm] [🔴高] CPI m/m  币种: CAD
+
+[4:00pm] [🔴高] Median CPI y/y  币种: CAD
+
+[4:00pm] [🔴高] Trimmed CPI y/y  币种: CAD
+
+[4:00pm] [🟠中] Common CPI y/y  币种: CAD
+
+
+--- 2026-08-19 (三) ---
+[5:00am] [🟠中] Wage Price Index q/q  币种: AUD
+
+[5:30pm] [🔴高] Prelim Benchmark Payrolls Revision  币种: USD
+   前值: -911K
+
+[9:30am] [🔴高] CPI y/y  币种: GBP
+
+[9:30pm] [🔴高] FOMC Meeting Minutes  币种: USD
+
+
+--- 2026-08-20 (四) ---
+[4:00pm] [🟠中] Philly Fed Manufacturing Index  币种: USD
+
+[4:00pm] [🟠中] Unemployment Claims  币种: USD
+
+[5:00am] [🔴高] Employment Change  币种: AUD
+
+[5:00am] [🔴高] Unemployment Rate  币种: AUD
+
+[Day 1] [🟠中] Jackson Hole Symposium  币种: All
+
+
+--- 2026-08-21 (五) ---
+[10:45am] [🟠中] French Flash Manufacturing PMI  币种: EUR
+
+[10:45am] [🟠中] French Flash Services PMI  币种: EUR
+
+[11:00am] [🟠中] German Flash Manufacturing PMI  币种: EUR
+
+[11:00am] [🟠中] German Flash Services PMI  币种: EUR
+
+[12:00pm] [🟠中] Flash Manufacturing PMI  币种: GBP
+
+[12:00pm] [🟠中] Flash Services PMI  币种: GBP
+
+[9:30am] [🟠中] Retail Sales m/m  币种: GBP
+
+[Day 2] [🟠中] Jackson Hole Symposium  币种: All
+
+
+--- 2026-08-22 (六) ---
+[Day 3] [🟠中] Jackson Hole Symposium  币种: All
+
+
+--- 2026-08-25 (二) ---
+[5:30pm] [🟠中] CB Consumer Confidence  币种: USD
+
+
+--- 2026-08-26 (三) ---
+[4:00pm] [🔴高] Core PCE Price Index m/m  币种: USD
+
+[4:00pm] [🔴高] Prelim GDP q/q  币种: USD
+
+[4:00pm] [🟠中] Prelim GDP Price Index q/q  币种: USD
+
+[5:00am] [🔴高] CPI m/m  币种: AUD
+
+[5:00am] [🔴高] CPI y/y  币种: AUD
+
+[5:00am] [🔴高] Trimmed Mean CPI m/m  币种: AUD
+
+
+--- 2026-08-27 (四) ---
+[4:00pm] [🟠中] Unemployment Claims  币种: USD
+
+
+--- 2026-08-28 (五) ---
+[3:00am] [🟠中] Tokyo Core CPI y/y  币种: JPY
+
+[4:00pm] [🔴高] GDP m/m  币种: CAD
+
+[5:30pm] [🟠中] Revised UoM Consumer Sentiment  币种: USD
+
+[5:30pm] [🟠中] Revised UoM Inflation Expectations  币种: USD
+
+
+--- 2026-08-31 (一) ---
+[All Day] [🟠中] German Prelim CPI m/m  币种: EUR
