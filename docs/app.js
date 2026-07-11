@@ -444,11 +444,19 @@ function renderCalendar(){
   var groups={};
   cd.forEach(function(ev){
     var d=ev.date;
-    if(!groups[d])groups[d]={weekday:ev.weekday,isToday:!!ev.isToday,events:[]};
+    if(!d)return;
+    if(!groups[d])groups[d]={weekday:ev.weekday||'',isToday:!!ev.isToday,events:[]};
+    if(!groups[d].events)groups[d].events=[];
     groups[d].events.push(ev);
   });
   
   var dates=Object.keys(groups).sort();
+  
+  // Show first 2 dates by default, rest collapsed
+  var showCount=2;
+  var hasMore=dates.length>showCount;
+  if(hasMore)dates=dates.slice(0,showCount);
+  
   var html='';
   dates.forEach(function(ds){
     var g=groups[ds];
@@ -456,17 +464,104 @@ function renderCalendar(){
     html+='<div class="cal-date-group'+tc+'">';
     html+='<div class="cal-date-hdr">'+esc(ds)+' 周'+g.weekday+'</div>';
     g.events.forEach(function(ev){
-      var ic=ev.impact==='high'?'hi':'md';
-      html+='<div class="cal-ev imp-'+ic+'">';
-      html+='<span class="cal-tm">'+esc(ev.time||'--:--')+'</span>';
-      html+='<span class="cal-ccy">'+esc(ev.currency)+'</span>';
-      html+='<span class="cal-tl">'+esc(ev.title)+'</span>';
-      var det=[];
-      if(ev.actual)det.push('实: '+ev.actual);
-      if(ev.previous)det.push('前: '+ev.previous);
-      if(ev.forecast)det.push('预: '+ev.forecast);
-      if(det.length)html+='<div class="cal-det">'+det.join(' | ')+'</div>';
-      html+='</div>';
+      html+=renderCalEvent(ev);
+    });
+    html+='</div>';
+  });
+  
+  if(hasMore){
+    html+='<div class="cal-more-bar"><button class="cal-more-btn" onclick="expandCalendar()">📅 查看全部 '+(Object.keys(groups).length-showCount)+' 天日程</button></div>';
+  }
+  
+  cp.innerHTML=html;
+}
+
+function renderCalEvent(ev){
+  var ic=ev.impact==='high'?'hi':'md';
+  var ai=ev.ai_analysis||{};
+  
+  var html='<div class="cal-ev imp-'+ic+'" onclick="toggleCalDetail(this)">';
+  html+='<div class="cal-ev-header">';
+  html+='<span class="cal-tm">'+esc(ev.time||'--:--')+'</span>';
+  html+='<span class="cal-ccy">'+esc(ev.currency)+'</span>';
+  html+='<span class="cal-tl">'+esc(ev.title)+'</span>';
+  if(ev.impact==='high')html+='<span class="cal-impact-badge">🔴 高</span>';
+  html+='</div>';
+  
+  // Values row
+  var vals='';
+  if(ev.actual)vals+='<span class="cal-val act">实: '+esc(ev.actual)+'</span>';
+  if(ev.forecast)vals+='<span class="cal-val fcast">预: '+esc(ev.forecast)+'</span>';
+  if(ev.previous)vals+='<span class="cal-val prev">前: '+esc(ev.previous)+'</span>';
+  if(vals)html+='<div class="cal-vals">'+vals+'</div>';
+  
+  // Collapsible detail (AI analysis + historical comparison)
+  html+='<div class="cal-detail-content" style="display:none">';
+  
+  // AI analysis
+  if(ai.impact_assessment||ai.crypto_relevance||ai.trend_note){
+    html+='<div class="cal-ai-box">';
+    html+='<div class="cal-ai-hdr">🤖 AI 分析</div>';
+    if(ai.trend_note)html+='<div class="cal-ai-row"><span class="cal-ai-label">趋势：</span>'+esc(ai.trend_note)+'</div>';
+    if(ai.impact_assessment)html+='<div class="cal-ai-row"><span class="cal-ai-label">影响：</span>'+esc(ai.impact_assessment)+'</div>';
+    if(ai.crypto_relevance)html+='<div class="cal-ai-row"><span class="cal-ai-label">加密关联：</span>'+esc(ai.crypto_relevance)+'</div>';
+    var db=ai.direction_bias;
+    if(db&&db!=='neutral'){
+      var dirIcon=db==='bullish'?'📈':'📉';
+      html+='<div class="cal-ai-row"><span class="cal-ai-label">倾向：</span>'+dirIcon+' '+(db==='bullish'?'偏多':'偏空')+'</div>';
+    }
+    html+='</div>';
+  }
+  
+  // Historical comparison (if actual vs forecast)
+  if(ev.actual&&ev.forecast){
+    html+='<div class="cal-hist-box">';
+    html+='<div class="cal-hist-hdr">📊 数据对比</div>';
+    html+='<div class="cal-hist-chart">';
+    html+='<div class="cal-hist-row"><span class="cal-hist-lbl">前值</span><div class="cal-hist-bar-wrap"><div class="cal-hist-bar prev" style="width:50%"></div></div><span class="cal-hist-val">'+esc(ev.previous)+'</span></div>';
+    html+='<div class="cal-hist-row"><span class="cal-hist-lbl">预测</span><div class="cal-hist-bar-wrap"><div class="cal-hist-bar fcast" style="width:60%"></div></div><span class="cal-hist-val">'+esc(ev.forecast)+'</span></div>';
+    html+='<div class="cal-hist-row"><span class="cal-hist-lbl">实际</span><div class="cal-hist-bar-wrap"><div class="cal-hist-bar act" style="width:80%"></div></div><span class="cal-hist-val">'+esc(ev.actual)+'</span></div>';
+    html+='</div></div>';
+  }
+  
+  html+='</div>'; // detail-content
+  html+='</div>';
+  return html;
+}
+
+// Expand/collapse event detail
+function toggleCalDetail(el){
+  var detail=el.querySelector('.cal-detail-content');
+  if(!detail)return;
+  var expanded=detail.style.display!=='none';
+  detail.style.display=expanded?'none':'block';
+  el.classList.toggle('expanded',!expanded);
+}
+
+var calendarFullData=[];
+function expandCalendar(){
+  var cd=typeof CALENDAR_DATA!=='undefined'?CALENDAR_DATA:[];
+  if(!cd||!cd.length)return;
+  
+  // Group all by date
+  var groups={};
+  cd.forEach(function(ev){
+    var d=ev.date;
+    if(!d)return;
+    if(!groups[d])groups[d]={weekday:ev.weekday||'',isToday:!!ev.isToday,events:[]};
+    groups[d].events.push(ev);
+  });
+  
+  var dates=Object.keys(groups).sort();
+  var cp=$('calendar-panel');
+  var html='';
+  dates.forEach(function(ds){
+    var g=groups[ds];
+    var tc=g.isToday?' cal-today':'';
+    html+='<div class="cal-date-group'+tc+'">';
+    html+='<div class="cal-date-hdr">'+esc(ds)+' 周'+g.weekday+'</div>';
+    g.events.forEach(function(ev){
+      html+=renderCalEvent(ev);
     });
     html+='</div>';
   });

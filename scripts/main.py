@@ -496,17 +496,16 @@ def render_site_v05(articles, now_str):
     """v0.5 SPA模式：生成数据JSON + 引用独立的前端app.js"""
     import random
     
-    # 采集财经日历
+    # 采集财经日历（V2带历史+AI分析）
     try:
-        from calendar_fetcher import fetch_forex_factory_calendar
-        # 用quickq代理（硬编码，与config保持一致）
+        from calendar_fetcher_v2 import run_calendar_pipeline
         proxy = 'http://127.0.0.1:10020'
-        cal_events, cal_err = fetch_forex_factory_calendar(proxies={'http': proxy, 'https': proxy})
+        cal_events, cal_err = run_calendar_pipeline(proxies={'http': proxy, 'https': proxy}, save_db=True)
         if cal_err:
             print(f"[日历] {cal_err}")
             calendar_json = "[]"
         else:
-            print(f"[日历] 采集到 {len(cal_events)} 条事件")
+            print(f"[日历] 采集到 {len(cal_events)} 条事件（含历史+AI分析）")
             calendar_json = json.dumps(cal_events, ensure_ascii=False)
     except Exception as e:
         print(f"[日历] 错误: {e}")
@@ -711,20 +710,51 @@ body{{font-family:'Inter','Noto Sans SC',-apple-system,BlinkMacSystemFont,sans-s
 .card-fast{{animation:cardIn .15s ease forwards;opacity:0;transform:translateY(6px)}}
 .card.hidden{{display:none!important}}
 .vote-count{{font-size:8px;display:block;line-height:1;margin-top:1px;color:#484f58;font-weight:600}}
-/* ===== 财经日历样式 ===== */
+/* ===== 财经日历样式 V2 ===== */
 .cal-date-group{{margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid #1b1d23}}
 .cal-date-group:last-child{{border-bottom:none;margin-bottom:0}}
 .cal-date-hdr{{font-size:11px;font-weight:600;color:#8b949e;margin-bottom:6px;letter-spacing:.3px}}
 .cal-today .cal-date-hdr{{color:#ffd700}}
-.cal-ev{{padding:4px 6px;margin-bottom:3px;border-radius:4px;font-size:10px;line-height:1.4;background:#121318}}
-.cal-ev.imp-hi{{border-left:2px solid #f85149}}
-.cal-ev.imp-md{{border-left:2px solid #d29922}}
-.cal-tm{{color:#484f58;margin-right:4px;font-family:monospace;font-size:9px}}
-.cal-ccy{{display:inline-block;padding:0 3px;border-radius:2px;background:#1b1d23;color:#ffd700;font-size:9px;font-weight:600;margin-right:4px}}
-.cal-tl{{color:#c9d1d9}}
-.cal-det{{font-size:9px;color:#484f58;margin-top:2px}}
+.cal-ev{{padding:6px 8px;margin-bottom:4px;border-radius:6px;font-size:10px;line-height:1.4;background:#121318;cursor:pointer;transition:all .2s}}
+.cal-ev:hover{{background:#1b1d23}}
+.cal-ev.expanded{{background:#161b22;border-color:#30363d}}
+.cal-ev.imp-hi{{border-left:3px solid #f85149}}
+.cal-ev.imp-md{{border-left:3px solid #d29922}}
+.cal-ev-header{{display:flex;align-items:center;gap:4px;flex-wrap:wrap}}
+.cal-tm{{color:#484f58;font-family:monospace;font-size:9px;min-width:36px}}
+.cal-ccy{{display:inline-block;padding:0 4px;border-radius:3px;background:#1b1d23;color:#ffd700;font-size:9px;font-weight:700;letter-spacing:.5px}}
+.cal-tl{{color:#c9d1d9;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500}}
+.cal-ev.expanded .cal-tl{{white-space:normal;overflow:visible}}
+.cal-impact-badge{{font-size:8px;padding:1px 4px;border-radius:3px;background:#f8514915;color:#f85149;font-weight:600}}
+.cal-vals{{display:flex;gap:6px;margin-top:3px;flex-wrap:wrap}}
+.cal-val{{font-size:9px;padding:1px 5px;border-radius:3px}}
+.cal-val.act{{color:#3fb950;background:#3fb95015}}
+.cal-val.fcast{{color:#d29922;background:#d2992215}}
+.cal-val.prev{{color:#8b949e;background:#8b949e15}}
+/* AI 分析盒子 */
+.cal-detail-content{{padding:6px 0 2px}}
+.cal-ai-box{{border:1px solid #1b1d23;border-radius:6px;padding:6px 8px;margin-top:4px;background:#0d1117}}
+.cal-ai-hdr{{font-size:9px;font-weight:700;color:#58a6ff;margin-bottom:4px;display:flex;align-items:center;gap:4px}}
+.cal-ai-hdr::before{{content:'';display:inline-block;width:4px;height:4px;border-radius:50%;background:#58a6ff;animation:pulse-dot 2s infinite}}
+.cal-ai-row{{font-size:9px;color:#8b949e;margin:2px 0;line-height:1.5}}
+.cal-ai-label{{color:#c9d1d9;font-weight:600}}
+/* 数据对比历史条 */
+.cal-hist-box{{border:1px solid #1b1d23;border-radius:6px;padding:6px 8px;margin-top:4px;background:#0d1117}}
+.cal-hist-hdr{{font-size:9px;font-weight:700;color:#8b949e;margin-bottom:4px}}
+.cal-hist-row{{display:flex;align-items:center;gap:4px;margin:2px 0;font-size:9px}}
+.cal-hist-lbl{{width:20px;color:#8b949e}}
+.cal-hist-bar-wrap{{flex:1;height:6px;background:#1b1d23;border-radius:3px;overflow:hidden}}
+.cal-hist-bar{{height:100%;border-radius:3px;transition:width .5s}}
+.cal-hist-bar.prev{{background:#8b949e}}
+.cal-hist-bar.fcast{{background:#d29922}}
+.cal-hist-bar.act{{background:#3fb950}}
+.cal-hist-val{{width:40px;text-align:right;color:#c9d1d9}}
+/* 更多按钮 */
+.cal-more-bar{{text-align:center;padding:4px 0}}
+.cal-more-btn{{font-size:9px;padding:4px 12px;border-radius:20px;background:#121318;border:1px solid #1b1d23;color:#8b949e;cursor:pointer;transition:all .2s}}
+.cal-more-btn:hover{{background:#1b1d23;color:#c9d1d9}}
 .cal-empty{{text-align:center;color:#484f58;padding:12px 0;font-size:11px}}
-@media(max-width:900px){{.cal-ev{{font-size:11px}}.cal-det{{font-size:10px}}}}
+@media(max-width:900px){{.cal-ev{{font-size:11px}}.cal-val{{font-size:10px}}.cal-ai-row{{font-size:10px}}}}
 </style>
 </head>
 <body>
