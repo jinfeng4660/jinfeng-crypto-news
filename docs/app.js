@@ -217,7 +217,10 @@ function applyFilterDOM(){
     if(!a){c.classList.add('hidden');return}
     var show=true;
     if(currentLevel!=='ALL'&&a.level!==currentLevel)show=false;
-    if(currentCoin!=='ALL'&&!(a.coins||[]).includes(currentCoin)&&!(a.coins||[]).includes('ALL'))show=false;
+    if(currentCoin!=='ALL'){
+      var tags=a.coins||[];
+      if(!tags.includes(currentCoin)&&!tags.includes('ALL'))show=false;
+    }
     if(searchQuery&&!(a.title||'').toLowerCase().includes(searchQuery))show=false;
     c.classList.toggle('hidden',!show);
   });
