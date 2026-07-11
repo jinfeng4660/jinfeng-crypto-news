@@ -295,7 +295,7 @@ function renderEventList(){
       var key=ev.currency+'|'+ev.title;
       var sel=key===selectedEvKey?' selected':'';
       var ic=ev.impact==='high'?'hi':'md';
-      html+='<div class="cal-ev imp-'+ic+sel+'" onclick="selectEvent(this,\''+esc(key)+'\')">';
+      html+='<div class="cal-ev imp-'+ic+sel+'" data-key="'+esc(key)+'" onclick="selectEvent(this,this.dataset.key)">';
       html+='<div class="cal-ev-header">';
       html+='<span class="cal-tm">'+esc(ev.time||'--:--')+'</span>';
       html+='<span class="cal-ccy">'+esc(ev.currency)+'</span>';
