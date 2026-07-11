@@ -736,32 +736,40 @@ function renderChainPanel(mb,cd,coin){
     var f2=function(p){return '$'+p.toFixed(2)};
     var f4=function(p){return p<1?'$'+p.toFixed(4):'$'+p.toFixed(2)};
     var fp=function(p){return p<0.01?p.toFixed(6):p<1?p.toFixed(4):p.toFixed(2)};
-    // Grid levels — 5 horizontal lines
-    var levels=[0,0.25,0.50,0.75,1.0];
-    var levelLabels=[maxP,maxP-(maxP-minP)*0.25,maxP-(maxP-minP)*0.5,maxP-(maxP-minP)*0.75,minP];
+    // Key price points: high / open / end / low
+    var keyPrices=[];
+    var keyLabels={};
+    // Always include max, min, start, end
+    keyPrices.push(maxP);
+    keyPrices.push(minP);
+    if(startP!==maxP && startP!==minP) keyPrices.push(startP);
+    if(endP!==maxP && endP!==minP && endP!==startP) keyPrices.push(endP);
+    keyPrices.sort(function(a,b){return b-a}); // descending
     
     html+='<div class="chain-chart">';
     html+='<div class="label" style="margin-bottom:6px;display:flex;justify-content:space-between;align-items:center">';
     html+='  <span>📈 24h走势图（15分钟线）</span>';
-    html+='  <span style="font-size:12px;font-weight:600;color:'+lineColor+'">'+f2(startP)+' → '+f2(endP)+' <span style="font-weight:700">'+(isUp?'+':'')+changePct+'%</span></span>';
+    html+='  <span style="font-size:12px;font-weight:600;color:'+lineColor+'">高:'+f4(maxP)+' 开:'+f4(startP)+' 现:'+f4(endP)+' <span style="font-weight:700;color:'+lineColor+'">'+(isUp?'+':'')+changePct+'%</span></span>';
     html+='</div>';
     
     html+='<svg width="100%" height="'+chH+'" viewBox="0 0 '+chW+' '+chH+'" preserveAspectRatio="none" style="overflow:visible;display:block">';
     
-    // ===== Grid lines + price labels on LEFT =====
+    // ===== Horizontal lines + price labels for key points =====
     var gColor='rgba(255,255,255,0.06)';
     var tColor='#8b949e';
-    levels.forEach(function(r,i){
-      var y=py(levelLabels[i]);
+    keyPrices.forEach(function(p){
+      var y=py(p);
+      var label='';
+      if(p===maxP) label='最高';
+      else if(p===minP) label='最低';
+      else if(p===startP) label='开盘';
+      else if(p===endP) label='现价';
       html+='<line x1="0" y1="'+y+'" x2="'+chW+'" y2="'+y+'" stroke="'+gColor+'" stroke-width="1"/>';
-      // Left label
-      html+='<text x="0" y="'+(y+3)+'" fill="'+tColor+'" font-size="9" font-family="monospace">'+f4(levelLabels[i])+'</text>';
+      // Left price
+      html+='<text x="0" y="'+(y+3)+'" fill="'+tColor+'" font-size="9" font-family="monospace">'+f4(p)+'</text>';
+      // Right label
+      html+='<text x="'+(chW-1)+'" y="'+(y-4)+'" fill="'+(label==='现价'?lineColor:tColor)+'" font-size="'+((label==='现价'||label==='最高'||label==='最低')?'8':'7')+'" text-anchor="end" font-weight="'+(label==='现价'?'bold':'normal')+'">'+label+'</text>';
     });
-    
-    // ===== Open price baseline (dashed) =====
-    var openY=py(startP);
-    html+='<line x1="0" y1="'+openY+'" x2="'+chW+'" y2="'+openY+'" stroke="'+lineColor+'" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.3"/>';
-    html+='<text x="'+(chW-2)+'" y="'+(openY+3)+'" fill="'+lineColor+'" font-size="7" text-anchor="end" opacity="0.5">开</text>';
     
     // ===== Area fill =====
     var areaPts=[];
@@ -779,15 +787,13 @@ function renderChainPanel(mb,cd,coin){
     });
     html+='<polyline points="'+pts.join(' ')+'" fill="none" stroke="'+lineColor+'" stroke-width="1.5" stroke-linejoin="round"/>';
     
-    // ===== Start/End dots + labels =====
+    // ===== Start/End dots =====
     var startY=py(prices[0]);
     var endY=py(prices[prices.length-1]);
-    // Start
+    // Start dot (small)
     html+='<circle cx="0" cy="'+startY+'" r="2.5" fill="'+lineColor+'" opacity="0.6"/>';
-    html+='<text x="1" y="'+(startY-5)+'" fill="'+tColor+'" font-size="7" opacity="0.6">'+f4(startP)+'</text>';
-    // End
+    // End dot (big)
     html+='<circle cx="'+(chW-1)+'" cy="'+endY+'" r="4" fill="'+lineColor+'" stroke="#0d0e12" stroke-width="2"/>';
-    html+='<text x="'+(chW-2)+'" y="'+(endY-7)+'" fill="'+lineColor+'" font-size="9" font-weight="bold" text-anchor="end">'+f4(endP)+'</text>';
     
     // ===== Volume bars (thin, bottom 25%) =====
     var vols=d.klines.map(function(c){return c.v});
