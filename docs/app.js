@@ -32,7 +32,7 @@ function genAI(a){
 // ===== Render =====
 function renderCards(data){
   ARTICLES_DATA=data;
-  applyFilters();
+  buildCards();
   var now=new Date();
   $('header-time').textContent='🕐 '+now.toLocaleDateString('zh-CN')+' '+now.toLocaleTimeString('zh-CN',{hour12:false,hour:'2-digit',minute:'2-digit'});
   $('footer-update').textContent='🕐 更新于 '+now.toLocaleTimeString('zh-CN',{hour12:false,hour:'2-digit',minute:'2-digit'});
