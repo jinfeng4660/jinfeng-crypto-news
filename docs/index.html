@@ -81,6 +81,33 @@ body{font-family:'Inter','Noto Sans SC',-apple-system,BlinkMacSystemFont,sans-se
 .vote-btn.up:hover,.vote-btn.up.voted{color:#3fb950}
 .vote-btn.down:hover,.vote-btn.down.voted{color:#f85149}
 .vote-btn.imp:hover,.vote-btn.imp.voted{color:#ffd700}
+.vote-btn.lol:hover,.vote-btn.lol.voted{color:#db6d28}
+.vote-btn.save:hover,.vote-btn.save.voted{color:#58a6ff}
+.vote-btn.toxic:hover,.vote-btn.toxic.voted{color:#8b5cf6}
+.vote-btn.like:hover,.vote-btn.like.voted{color:#3fb950}
+.vote-btn.dislike:hover,.vote-btn.dislike.voted{color:#f85149}
+.comment-section{display:none;margin-top:6px;padding:8px;background:#121318;border:1px solid #1b1d23;border-radius:8px}
+.comment-form{display:flex;gap:6px}
+.comment-input{flex:1;background:#0d0e12;border:1px solid #1b1d23;border-radius:6px;padding:6px 10px;color:#e1e4e8;font-size:11px;outline:none}
+.comment-input:focus{border-color:#ffd70044}
+.comment-submit{background:linear-gradient(135deg,#ffd700,#ff8c00);border:none;border-radius:6px;padding:6px 14px;color:#0a0b0e;font-size:11px;font-weight:600;cursor:pointer}
+.comment-list{margin-bottom:6px;max-height:120px;overflow-y:auto}
+.comment-empty{font-size:10px;color:#484f58;text-align:center;padding:6px}
+.comment-item{padding:4px 0;border-bottom:1px solid #1b1d23}
+.comment-item:last-child{border-bottom:none}
+.comment-text{font-size:10px;color:#c9d1d9;line-height:1.4}
+.comment-time{font-size:8px;color:#484f58;margin-top:1px}
+.gl-table{width:100%;border-collapse:collapse;font-size:10px}
+.gl-table th{text-align:left;color:#484f58;font-weight:600;padding:2px 4px;font-size:9px;letter-spacing:.5px;border-bottom:1px solid #1b1d23}
+.gl-table td{padding:4px 4px;border-bottom:1px solid #1b1d2308}
+.gl-coin{display:flex;align-items:center;gap:4px;font-weight:600;color:#c9d1d9}
+.gl-dot{width:4px;height:4px;border-radius:50%;display:inline-block}
+.gl-dot.gl-up{background:#3fb950}
+.gl-dot.gl-down{background:#f85149}
+.gl-price{color:#8b949e;font-family:monospace}
+.gl-ch{font-weight:600;text-align:right}
+.gl-ch.gl-up{color:#3fb950}
+.gl-ch.gl-down{color:#f85149}
 .card-body{flex:1;padding:12px 12px 12px 4px;min-width:0}
 .card-header{display:flex;align-items:center;gap:4px;margin-bottom:5px;flex-wrap:wrap}
 .level-badge{font-size:9px;font-weight:700;padding:2px 7px;border-radius:4px}
@@ -263,6 +290,8 @@ body{font-family:'Inter','Noto Sans SC',-apple-system,BlinkMacSystemFont,sans-se
 <div class="sidebar-section"><h3>📊 情绪分布</h3><div class="sentiment-bar" id="sentiment-bar"><div class="seg bullish" style="width:0%"></div><div class="seg bearish" style="width:0%"></div><div class="seg neutral" style="width:0%"></div></div><div id="sentiment-stats"></div></div>
 <div class="sidebar-section"><h3>🔥 热门话题</h3><div id="hot-topics"></div></div>
 <div class="sidebar-section"><h3>📡 数据源分布</h3><div id="source-dist"></div></div>
+
+<div class="sidebar-section"><h3>📊 涨跌榜</h3><div id="gainers-losers">加载中…</div></div>
 
 <div class="sidebar-section"><h3>📅 财经日历</h3><div id="calendar-panel"><div class="cal-stats"><div style="font-size:11px;color:#8b949e;line-height:1.6"><span id="cal-total"><span style="color:#e1e4e8;font-weight:700">0</span> 条事件</span><br><span id="cal-days"><span style="color:#e1e4e8">0</span> 天</span> · <span id="cal-high"><span style="color:#f85149">0</span> 条高影响</span></div><div id="cal-next" style="margin-top:6px;padding:6px 8px;background:#121318;border:1px solid #1b1d23;border-radius:6px;font-size:10px;color:#8b949e">下一事件：<span id="cal-next-title" style="color:#c9d1d9">加载中…</span></div></div></div><div style="margin-top:6px;text-align:center"><a href="./calendar.html" class="cal-open-full" target="_blank">📊 打开完整日历 →</a></div></div>
 </aside></div>

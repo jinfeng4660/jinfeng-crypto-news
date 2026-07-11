@@ -14,8 +14,34 @@ function doneProgress(){clearInterval(npTimer);$('nprogress-bar').style.width='1
 var currentLevel='ALL',currentCoin='ALL',searchQuery='',currentSort='latest',ARTICLES_DATA=[];
 var voted={};
 
-// ===== Prices (Binance API — 无CORS) =====
-async function fetchPrices(){
+// ===== Prices (now in GL override below) =====
+}
+setInterval(fetchPrices,60000);
+
+// ===== Gainers & Losers =====
+var lastPrices={};
+function renderGainersLosers(){
+  var el=$('gainers-losers');
+  if(!el)return;
+  var coins=Object.keys(lastPrices);
+  if(!coins.length){el.innerHTML='<div style="font-size:10px;color:#8b949e">等待价格数据…</div>';return}
+  coins.sort(function(a,b){return Math.abs(lastPrices[b].ch)-Math.abs(lastPrices[a].ch)});
+  var winners=[],losers=[];
+  coins.forEach(function(c){if(lastPrices[c].ch>=0)winners.push(c);else losers.push(c)});
+  var show=winners.slice(0,6).concat(losers.slice(0,6));
+  var h='<table class="gl-table"><tr><th>币种</th><th>价格</th><th>24h</th></tr>';
+  show.forEach(function(c){
+    var d=lastPrices[c];var cls=d.ch>=0?'gl-up':'gl-down';var sign=d.ch>=0?'+':'';
+    h+='<tr><td class="gl-coin"><span class="gl-dot '+cls+'"></span>'+c.toUpperCase()+'</td><td class="gl-price">$'+d.p.toFixed(d.p<1?4:2)+'</td><td class="gl-ch '+cls+'">'+sign+d.ch.toFixed(2)+'%</td></tr>';
+  });
+  h+='</table>';
+  var avgW=winners.length?winners.reduce(function(s,c){return s+lastPrices[c].ch},0)/winners.length:0;
+  var avgL=losers.length?losers.reduce(function(s,c){return s+lastPrices[c].ch},0)/losers.length:0;
+  h+='<div style="font-size:10px;color:#484f58;margin-top:6px;text-align:center">上涨 '+winners.length+' · 下跌 '+losers.length+' · 平均 '+(avgW>0?'🟢 +'+avgW.toFixed(2):'')+'% / '+(avgL<0?'🔴 '+avgL.toFixed(2):'')+'%</div>';
+  el.innerHTML=h;
+}
+// Override fetchPrices with gainers
+fetchPrices=async function(){
   var syms=['BTCUSDT','ETHUSDT','SOLUSDT','SUIUSDT','DOGEUSDT'];
   try{
     var r=await fetch('https://api.binance.com/api/v3/ticker/24hr?symbols='+JSON.stringify(syms));
@@ -24,16 +50,14 @@ async function fetchPrices(){
       var sym=t.symbol.replace('USDT','').toLowerCase();
       var pel=$(sym+'-price'),cel=$(sym+'-change');
       if(pel)pel.textContent='$'+fmt(parseFloat(t.lastPrice));
-      if(cel){
-        var ch=parseFloat(t.priceChangePercent);
-        cel.textContent=(ch>0?'+':'')+ch.toFixed(2)+'%';
-        cel.className='ticker-change '+(ch>0?'up':'down');
-      }
+      if(cel){var ch=parseFloat(t.priceChangePercent);cel.textContent=(ch>0?'+':'')+ch.toFixed(2)+'%';cel.className='ticker-change '+(ch>0?'up':'down');}
+      lastPrices[sym]={p:parseFloat(t.lastPrice),ch:parseFloat(t.priceChangePercent)};
     });
   }catch(e){console.warn('Binance price fetch failed',e)}
+  renderGainersLosers();
   fetchFearGreed();
-}
-fetchPrices();setInterval(fetchPrices,60000);
+
+fetchPrices();};
 
 // ===== Fear & Greed =====
 async function fetchFearGreed(){
@@ -148,7 +172,7 @@ function buildCards(){
 
 function getSortedData(){
   var sorted=[].concat(ARTICLES_DATA);
-  if(currentSort==='hot')sorted.sort(function(a,b){return(b.votes?.bullish||0)+(b.votes?.bearish||0)+(b.votes?.important||0)-((a.votes?.bullish||0)+(a.votes?.bearish||0)+(a.votes?.important||0))});
+  if(currentSort==='hot')sorted.sort(function(a,b){var va=a.votes||{};var vb=b.votes||{};var sa=(va.bullish||0)+(va.bearish||0)+(va.important||0)+(va.lol||0)+(va.save||0)+(va.toxic||0)+(va.like||0)+(va.dislike||0);var sb=(vb.bullish||0)+(vb.bearish||0)+(vb.important||0)+(vb.lol||0)+(vb.save||0)+(vb.toxic||0)+(vb.like||0)+(vb.dislike||0);return sb-sa});
   return sorted;
 }
 
@@ -165,7 +189,7 @@ function createCard(a,i){
   var dirCls='dir-'+ai.direction;
   
   var v=a.votes||{bullish:0,bearish:0,important:0};
-  var bullishV=v.bullish||0,bearishV=v.bearish||0,impV=v.important||0;
+  var bullishV=v.bullish||0,bearishV=v.bearish||0,impV=v.important||0,lolV=v.lol||0,saveV=v.save||0,toxicV=v.toxic||0,likeV=v.like||0,dislikeV=v.dislike||0;
   
   var coins=a.coins&&a.coins.length?a.coins.filter(function(c){return c!=='ALL'}):[];
   var coinHtml=coins.map(function(c){return '<span class="coin-tag">'+esc(c)+'</span>'}).join('');
@@ -185,12 +209,12 @@ function createCard(a,i){
   card.dataset.coins=JSON.stringify(a.coins||['ALL']);
   card.dataset.title=(a.title||'').toLowerCase();
   
-  card.innerHTML=
+  var comHtml='<div class="comment-section" style="display:none"><div class="comment-list" id="comment-list-'+i+'"></div><form onsubmit="submitComment('+i+',event)" class="comment-form"><input id="comment-input-'+i+'" class="comment-input" placeholder="写评论…" maxlength="200"><button type="submit" class="comment-submit">发送</button></form></div>';\n  card.innerHTML=
     '<div class="left-border" style="background:'+leftColor+'"></div>'+
     '<div class="card-votes">'+
       '<button class="vote-btn up'+(voted[i+'-bullish']?' voted':'')+'" onclick="vote('+i+',\'bullish\',event)">▲<span class="vote-count">'+bullishV+'</span></button>'+
       '<button class="vote-btn imp'+(voted[i+'-important']?' voted':'')+'" onclick="vote('+i+',\'important\',event)">⚡<span class="vote-count">'+impV+'</span></button>'+
-      '<button class="vote-btn down'+(voted[i+'-bearish']?' voted':'')+'" onclick="vote('+i+',\'bearish\',event)">▼<span class="vote-count">'+bearishV+'</span></button>'+
+      '<button class="vote-btn down'+(voted[i+'-bearish']?' voted':'')+'" onclick="vote('+i+',\'bearish\',event)">▼<span class="vote-count">'+bearishV+'</span></button>'+\n      '<button class="vote-btn lol'+(voted[i+'-lol']?' voted':'')+'" onclick="vote('+i+','lol',event)" title="哈哈">😂<span class="vote-count">'+lolV+'</span></button>'+\n      '<button class="vote-btn save'+(voted[i+'-save']?' voted':'')+'" onclick="vote('+i+','save",event)" title="收藏">📌<span class="vote-count">'+saveV+'</span></button>'+\n      '<button class="vote-btn toxic'+(voted[i+'-toxic']?' voted':'')+'" onclick="vote('+i+','toxic',event)" title="有毒">🤢<span class="vote-count">'+toxicV+'</span></button>'+\n      '<button class="vote-btn like'+(voted[i+'-like']?' voted':'')+'" onclick="vote('+i+','like',event)" title="赞">👍<span class="vote-count">'+likeV+'</span></button>'+\n      '<button class="vote-btn dislike'+(voted[i+'-dislike']?' voted':'')+'" onclick="vote('+i+','dislike',event)" title="踩">👎<span class="vote-count">'+dislikeV+'</span></button>'+
     '</div>'+
     '<div class="card-body">'+
       '<div class="card-header">'+
@@ -211,7 +235,7 @@ function createCard(a,i){
         '<div class="ai-strategy">'+esc(ai.strategy)+'</div>'+
       '</div>'+
       '<div class="card-footer">'+
-        '<button class="expand-btn" onclick="toggleExpand('+i+',event)"><span class="arrow">▾</span> AI分析</button>'+
+        '<button class="expand-btn" onclick="toggleExpand('+i+',event)"><span class="arrow">▾</span> AI分析</button>'+\n        '<button class="expand-btn comment-toggle" onclick="toggleCommentBox('+i+',event)"><span class="arrow">💬</span> 评论</button>'+
       '</div>'+
     '</div>';
   
@@ -308,7 +332,7 @@ function updateTopics(){
     }
   });
   var topicSorted=Object.keys(topics).sort(function(a,b){return topics[b]-topics[a]}).slice(0,8);
-  var html='';topicSorted.forEach(function(t){html+='<span class="hot-topic" onclick="filterByCoin(\''+t+'\')"><span class="dot '+t.toLowerCase()+'"></span>'+esc(t)+'<span class="ht-count">'+topics[t]+'</span></span>'});
+  var html='';topicSorted.forEach(function(t){html+='<span class="hot-topic" onclick="filterByCoin(\'+\n    comHtml+\n    '</div>';
   if(!html)html='<span class="hot-topic">无活跃话题</span>';
   var ht=$('hot-topics');
   if(ht)ht.innerHTML=html;
@@ -382,13 +406,45 @@ function vote(idx,type,e){
   
   if(voted[key]){voted[key]=false;btns.forEach(function(b){b.classList.remove('voted')});return}
   
-  ['bullish','bearish','important'].forEach(function(t){voted[idx+'-'+t]=false});
+  ['bullish','bearish','important','lol','save','toxic','like','dislike'].forEach(function(t){voted[idx+'-'+t]=false});
   btns.forEach(function(b){b.classList.remove('voted')});
   
   voted[key]=true;
-  var btnMap={bullish:'up',bearish:'down',important:'imp'};
+  var btnMap={bullish:'up',bearish:'down',important:'imp',lol:'lol',save:'save',toxic:'toxic',like:'like',dislike:'dislike'};
   var cls=btnMap[type]||'';
   btns.forEach(function(b){if(b.classList.contains(cls))b.classList.add('voted')});
+}
+
+
+// ===== Comments =====
+function toggleCommentBox(i,e){
+  if(e)e.stopPropagation();
+  var card=qsa('.card')[parseInt(i)];
+  if(!card)return;
+  var box=card.querySelector('.comment-section');
+  if(box)box.style.display=box.style.display==='none'?'block':'none';
+}
+function submitComment(i,e){
+  if(e){e.stopPropagation();e.preventDefault()}
+  var textarea=document.querySelector('#comment-input-'+i);
+  if(!textarea)return;
+  var text=textarea.value.trim();
+  if(!text)return;
+  var comments=JSON.parse(localStorage.getItem('comments')||'{}');
+  if(!comments[i])comments[i]=[];
+  comments[i].push({text:text,time:Date.now()});
+  localStorage.setItem('comments',JSON.stringify(comments));
+  textarea.value='';
+  renderComments(i,qsa('.card')[parseInt(i)]);
+}
+function renderComments(i,card){
+  var container=card.querySelector('.comment-list');
+  if(!container)return;
+  var comments=JSON.parse(localStorage.getItem('comments')||'{}')[i];
+  if(!comments||!comments.length){container.innerHTML='<div class="comment-empty">暂无评论</div>';return}
+  var h='';
+  comments.slice(-5).reverse().forEach(function(c){h+='<div class="comment-item"><div class="comment-text">'+esc(c.text)+'</div><div class="comment-time">'+relTime(c.time)+'</div></div>'});
+  container.innerHTML=h;
 }
 
 // ===== Mobile =====
