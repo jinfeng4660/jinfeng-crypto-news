@@ -1,0 +1,465 @@
+"""
+财经日历独立页面渲染器
+生成独立的 calendar.html 页面，展示完整财经日历
+功能：
+- 左侧事件列表（近30天，按日期分组）
+- 右侧事件详情（点击左侧事件展开）
+- 每个事件的历史发布记录趋势
+- AI分析
+"""
+
+import sys, json, os, sqlite3, hashlib
+from datetime import datetime
+
+sys.stdout.reconfigure(encoding='utf-8')
+
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DB_PATH = os.path.join(BASE, "data", "calendar_history.db")
+
+
+def load_all_events(days_back=60):
+    """从SQLite加载所有事件"""
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    cur = conn.cursor()
+    cur.execute("""
+        SELECT id, date, weekday, time, impact, currency, title,
+               actual, previous, forecast, ai_analysis
+        FROM calendar_events
+        WHERE date >= date('now', ?)
+        ORDER BY date DESC, time
+    """, (f'-{days_back} days',))
+    rows = [dict(r) for r in cur.fetchall()]
+    conn.close()
+    return rows
+
+
+def group_by_event_key(events):
+    """按(currency, title)分组，得到每个事件的历史发布记录"""
+    groups = {}
+    for ev in events:
+        key = f'{ev["currency"]}|{ev["title"]}'
+        if key not in groups:
+            groups[key] = {
+                'currency': ev['currency'],
+                'title': ev['title'],
+                'impact': ev['impact'],
+                'history': []
+            }
+        groups[key]['history'].append({
+            'id': ev['id'],
+            'date': ev['date'],
+            'time': ev.get('time', ''),
+            'actual': ev.get('actual', ''),
+            'previous': ev.get('previous', ''),
+            'forecast': ev.get('forecast', ''),
+        })
+    return groups
+
+
+def build_event_groups(events):
+    """按日期分组全部事件"""
+    groups = {}
+    for ev in events:
+        d = ev.get('date', '')
+        if not d:
+            continue
+        if d not in groups:
+            groups[d] = {'events': []}
+        groups[d]['events'].append(ev)
+    return groups
+
+
+def render_calendar_page(events):
+    """生成独立日历HTML页面"""
+    today_str = datetime.now().strftime('%Y-%m-%d')
+    docs_dir = os.path.join(BASE, "docs")
+    events_json = json.dumps(events, ensure_ascii=False)
+
+    html = f'''<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>金峰策略 · 财经日历</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{{margin:0;padding:0;box-sizing:border-box}}
+html{{font-size:15px;-webkit-font-smoothing:antialiased;background:#0a0b0e;color:#c9d1d9;font-family:'Inter','Noto Sans SC',sans-serif}}
+body{{min-height:100vh;display:flex;flex-direction:column}}
+a{{color:#58a6ff;text-decoration:none}}
+
+/* Header */
+.header{{background:#0d0e12;border-bottom:1px solid #1b1d23;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}}
+.header-l{{display:flex;align-items:center;gap:10px}}
+.header-logo{{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#ffd700,#ff8c00);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px;color:#0a0b0e}}
+.header h1{{font-size:16px;font-weight:700;color:#e1e4e8}}
+.header .badge{{font-size:10px;padding:2px 6px;border-radius:4px;background:#1b1d23;color:#8b949e;margin-left:6px}}
+.header-time{{font-size:11px;color:#484f58}}
+.header-r{{display:flex;align-items:center;gap:12px}}
+.back-btn{{padding:6px 14px;border-radius:6px;background:#121318;border:1px solid #1b1d23;color:#8b949e;font-size:12px;cursor:pointer;transition:all .2s}}
+.back-btn:hover{{background:#1b1d23;color:#c9d1d9}}
+
+/* Layout */
+.layout{{display:flex;flex:1;height:calc(100vh - 57px);overflow:hidden}}
+
+/* Left panel - events list */
+.left-panel{{width:380px;min-width:380px;border-right:1px solid #1b1d23;overflow-y:auto;background:#0d0e12}}
+.left-panel::-webkit-scrollbar{{width:4px}}
+.left-panel::-webkit-scrollbar-thumb{{background:#1b1d23;border-radius:2px}}
+.left-panel::-webkit-scrollbar-track{{background:transparent}}
+
+.panel-header{{padding:10px 14px;border-bottom:1px solid #1b1d23;font-size:13px;font-weight:600;color:#e1e4e8;position:sticky;top:0;background:#0d0e12;z-index:10}}
+.panel-header span{{font-size:10px;font-weight:400;color:#484f58;margin-left:6px}}
+.panel-header .filter-row{{margin-top:6px;display:flex;gap:4px;flex-wrap:wrap}}
+.filter-btn{{font-size:9px;padding:2px 8px;border-radius:12px;background:#121318;border:1px solid #1b1d23;color:#484f58;cursor:pointer;transition:all .2s}}
+.filter-btn.active{{background:#1b1d23;border-color:#30363d;color:#c9d1d9}}
+.filter-btn.high{{border-color:#f8514933}}
+.filter-btn.high.active{{border-color:#f85149;color:#f85149}}
+.filter-btn.med{{border-color:#d2992233}}
+.filter-btn.med.active{{border-color:#d29922;color:#d29922}}
+
+.cal-date-group{{padding:8px 14px}}
+.cal-date-group+.cal-date-group{{border-top:1px solid #1b1d23}}
+.cal-date-hdr{{font-size:11px;font-weight:600;color:#8b949e;margin-bottom:6px;letter-spacing:.3px}}
+.cal-today .cal-date-hdr{{color:#ffd700}}
+
+.cal-ev{{padding:8px 10px;margin-bottom:4px;border-radius:6px;font-size:12px;line-height:1.4;background:#121318;cursor:pointer;transition:all .2s;border-left:3px solid transparent}}
+.cal-ev:hover{{background:#1b1d23}}
+.cal-ev.selected{{background:#161b22;border-color:#30363d}}
+.cal-ev.imp-hi{{border-left-color:#f85149}}
+.cal-ev.imp-md{{border-left-color:#d29922}}
+.cal-ev-header{{display:flex;align-items:center;gap:6px;flex-wrap:wrap}}
+.cal-tm{{color:#484f58;font-family:monospace;font-size:10px;min-width:40px}}
+.cal-ccy{{display:inline-block;padding:1px 5px;border-radius:3px;background:#1b1d23;color:#ffd700;font-size:10px;font-weight:700}}
+.cal-tl{{color:#c9d1d9;flex:1;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
+.cal-impact-badge{{font-size:9px;padding:1px 5px;border-radius:3px;font-weight:600}}
+.cal-impact-badge.hi{{background:#f8514915;color:#f85149}}
+.cal-impact-badge.md{{background:#d2992215;color:#d29922}}
+.cal-vals{{display:flex;gap:6px;margin-top:4px;flex-wrap:wrap}}
+.cal-val{{font-size:10px;padding:1px 6px;border-radius:3px}}
+.cal-val.act{{color:#3fb950;background:#3fb95015}}
+.cal-val.fcast{{color:#d29922;background:#d2992215}}
+.cal-val.prev{{color:#8b949e;background:#8b949e15}}
+.cal-date-badge{{font-size:9px;color:#484f58;margin-top:2px}}
+
+/* Right panel - detail */
+.right-panel{{flex:1;overflow-y:auto;padding:24px 32px;background:#0a0b0e}}
+.right-panel::-webkit-scrollbar{{width:6px}}
+.right-panel::-webkit-scrollbar-thumb{{background:#1b1d23;border-radius:3px}}
+.right-panel::-webkit-scrollbar-track{{background:transparent}}
+.no-selection{{display:flex;align-items:center;justify-content:center;height:100%;color:#484f58;font-size:14px;text-align:center;padding:40px}}
+.no-selection p{{max-width:360px;line-height:1.8}}
+
+/* Event Detail */
+.detail-section{{margin-bottom:24px}}
+.detail-hdr{{display:flex;align-items:center;gap:8px;margin-bottom:16px}}
+.detail-hdr .big-ccy{{padding:2px 8px;border-radius:4px;background:#1b1d23;color:#ffd700;font-size:16px;font-weight:700}}
+.detail-hdr h2{{font-size:20px;font-weight:700;color:#e1e4e8}}
+.detail-impact{{font-size:11px;padding:2px 8px;border-radius:4px;font-weight:600}}
+.detail-impact.hi{{background:#f8514915;color:#f85149}}
+.detail-impact.md{{background:#d2992215;color:#d29922}}
+.detail-date{{font-size:12px;color:#484f58;margin-top:4px}}
+
+/* Data card */
+.data-card{{background:#0d0e12;border:1px solid #1b1d23;border-radius:8px;padding:16px;margin-bottom:16px}}
+.data-card h3{{font-size:13px;font-weight:600;color:#e1e4e8;margin-bottom:12px;display:flex;align-items:center;gap:6px}}
+.data-grid{{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}}
+.data-item{{text-align:center;padding:8px;border-radius:6px;background:#121318}}
+.data-item .lbl{{font-size:10px;color:#484f58;margin-bottom:4px}}
+.data-item .val{{font-size:22px;font-weight:700}}
+.data-item .val.act{{color:#3fb950}}
+.data-item .val.fcast{{color:#d29922}}
+.data-item .val.prev{{color:#8b949e}}
+
+/* Historical bar chart */
+.hist-chart{{margin:16px 0 4px}}
+.hist-row{{display:flex;align-items:center;gap:8px;margin:6px 0}}
+.hist-lbl{{width:28px;font-size:10px;color:#8b949e;text-align:right}}
+.hist-bar-wrap{{flex:1;height:10px;background:#1b1d23;border-radius:5px;overflow:hidden}}
+.hist-bar{{height:100%;border-radius:5px;transition:width .6s ease}}
+.hist-bar.prev{{background:#8b949e}}
+.hist-bar.fcast{{background:#d29922}}
+.hist-bar.act{{background:#3fb950}}
+.hist-val{{width:60px;text-align:right;font-size:11px;font-weight:600;color:#c9d1d9;font-family:monospace}}
+
+/* History timeline */
+.history-table{{width:100%;border-collapse:collapse;font-size:12px}}
+.history-table th{{text-align:left;padding:8px 10px;border-bottom:1px solid #1b1d23;color:#484f58;font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:.5px}}
+.history-table td{{padding:8px 10px;border-bottom:1px solid #121318;color:#8b949e}}
+.history-table tr:hover td{{background:#121318}}
+.history-table .val{{font-weight:600}}
+.history-table .val.up{{color:#3fb950}}
+.history-table .val.down{{color:#f85149}}
+
+/* AI Analysis */
+.ai-card{{border:1px solid #1b1d23;border-radius:8px;padding:16px;margin-bottom:16px}}
+.ai-card h3{{font-size:13px;font-weight:600;color:#58a6ff;margin-bottom:10px;display:flex;align-items:center;gap:6px}}
+.ai-grid{{display:grid;gap:8px}}
+.ai-row{{padding:6px 0;border-bottom:1px solid #121318;display:flex;gap:8px;font-size:12px;line-height:1.6}}
+.ai-row:last-child{{border-bottom:none}}
+.ai-lbl{{color:#8b949e;min-width:70px;font-weight:500}}
+.ai-val{{color:#c9d1d9;flex:1}}
+
+/* Empty state */
+.empty-state{{text-align:center;padding:40px 20px;color:#484f58;font-size:13px}}
+
+/* Mobile */
+@media(max-width:768px){{
+.layout{{flex-direction:column;height:auto}}
+.left-panel{{width:100%;min-width:100%;max-height:50vh;border-right:none;border-bottom:1px solid #1b1d23}}
+.right-panel{{padding:16px}}
+.detail-hdr h2{{font-size:17px}}
+.data-grid{{grid-template-columns:repeat(3,1fr);gap:8px}}
+.hist-lbl{{width:24px}}
+.hist-val{{width:50px}}
+}}
+
+/* Loading */
+.loading-dots::after{{content:'';animation:dots 1.5s infinite}}
+@keyframes dots{{0%{{content:'.'}}33%{{content:'..'}}66%{{content:'...'}}}}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-l">
+    <div class="header-logo">金</div>
+    <h1>财经日历 <span class="badge">v1.0</span></h1>
+    <span class="header-time" id="header-time">更新于 —</span>
+  </div>
+  <div class="header-r">
+    <a href="./" class="back-btn">← 返回快讯</a>
+  </div>
+</div>
+
+<div class="layout">
+  <!-- Left: Event List -->
+  <div class="left-panel" id="left-panel">
+    <div class="panel-header">
+      全部事件 <span id="ev-count"></span>
+      <div class="filter-row">
+        <button class="filter-btn active" onclick="setFilter('ALL')">全部</button>
+        <button class="filter-btn high" onclick="setFilter('high')">🔴 高影响</button>
+        <button class="filter-btn med" onclick="setFilter('medium')">🟡 中影响</button>
+      </div>
+    </div>
+    <div id="event-list"></div>
+  </div>
+
+  <!-- Right: Detail -->
+  <div class="right-panel" id="right-panel">
+    <div class="no-selection">
+      <p>📅 从左侧选择一条经济事件<br>查看详细数据、AI分析及历史趋势</p>
+    </div>
+  </div>
+</div>
+
+<script>
+var EVENTS_DATA = ''' + events_json + ''';
+var currentFilter = 'ALL';
+var selectedEvKey = null;
+
+// ==== Filter ====
+function setFilter(f){
+  currentFilter=f;
+  document.querySelectorAll('.filter-btn').forEach(function(b){{
+    b.classList.toggle('active',b.textContent.includes(f==='high'?'高':f==='medium'?'中':'全部'));
+  }});
+  renderEventList();
+}
+
+// ==== Render Event List ====
+function renderEventList(){
+  var el=$('event-list');
+  var filtered=EVENTS_DATA.filter(function(ev){{
+    if(currentFilter==='ALL')return true;
+    return ev.impact===currentFilter;
+  }});
+  
+  // Group by date
+  var groups={{}};
+  filtered.forEach(function(ev){{
+    var d=ev.date;
+    if(!groups[d])groups[d]={{events:[]}};
+    groups[d].events.push(ev);
+  }});
+  
+  var dates=Object.keys(groups).sort().reverse();
+  var html='';
+  dates.forEach(function(ds){{
+    var tc=ds===todayStr?' cal-today':'';
+    html+='<div class="cal-date-group'+tc+'">';
+    html+='<div class="cal-date-hdr">'+esc(ds)+'</div>';
+    groups[ds].events.forEach(function(ev){{
+      var key=ev.currency+'|'+ev.title;
+      var sel=key===selectedEvKey?' selected':'';
+      var ic=ev.impact==='high'?'hi':'md';
+      html+='<div class="cal-ev imp-'+ic+sel+'" onclick="selectEvent(this,\''+esc(key)+'\')">';
+      html+='<div class="cal-ev-header">';
+      html+='<span class="cal-tm">'+esc(ev.time||'--:--')+'</span>';
+      html+='<span class="cal-ccy">'+esc(ev.currency)+'</span>';
+      html+='<span class="cal-tl">'+esc(ev.title)+'</span>';
+      html+='<span class="cal-impact-badge '+ic+'">'+(ev.impact==='high'?'🔴 高':'🟡 中')+'</span>';
+      html+='</div>';
+      var vals='';
+      if(ev.actual)vals+='<span class="cal-val act">实: '+esc(ev.actual)+'</span>';
+      if(ev.forecast)vals+='<span class="cal-val fcast">预: '+esc(ev.forecast)+'</span>';
+      if(ev.previous)vals+='<span class="cal-val prev">前: '+esc(ev.previous)+'</span>';
+      if(vals)html+='<div class="cal-vals">'+vals+'</div>';
+      html+='</div>';
+    }});
+    html+='</div>';
+  }});
+  
+  if(!html)html='<div class="empty-state">暂无匹配事件</div>';
+  el.innerHTML=html;
+  $('ev-count').textContent='('+filtered.length+'条)';
+}
+
+// ==== Select Event & Show Detail ====
+function selectEvent(el, key){
+  document.querySelectorAll('.cal-ev.selected').forEach(function(b){b.classList.remove('selected')});
+  el.classList.add('selected');
+  selectedEvKey=key;
+  showDetail(key);
+}
+
+function showDetail(key){
+  var rp=$('right-panel');
+  // Get all events with this key
+  var ccy=key.split('|')[0];
+  var title=key.split('|')[1];
+  // Also get events with same title (possibly different currency for comparison)
+  var related=EVENTS_DATA.filter(function(ev){{
+    return ev.title===title;
+  }});
+  // Group history by currency
+  var histByCcy={{}};
+  related.forEach(function(ev){{
+    var c=ev.currency;
+    if(!histByCcy[c])histByCcy[c]=[];
+    histByCcy[c].push(ev);
+  }});
+  
+  // Latest event (the one that was clicked or first)
+  var latest = related.filter(function(ev){{return ev.currency===ccy}})[0] || related[0];
+  if(!latest){{rp.innerHTML='<div class="empty-state">无数据</div>';return}}
+  
+  var imp=latest.impact==='high'?'hi':'md';
+  var ai=latest.ai_analysis||{{}};
+  var ic=latest.impact==='high'?'🔴 高':'🟡 中';
+  
+  var html='';
+  // Header
+  html+='<div class="detail-section">';
+  html+='<div class="detail-hdr">';
+  html+='<span class="big-ccy">'+esc(latest.currency)+'</span>';
+  html+='<h2>'+esc(latest.title)+'</h2>';
+  html+='<span class="detail-impact '+imp+'">'+ic+'</span>';
+  html+='</div>';
+  html+='<div class="detail-date">最新数据: '+esc(latest.date)+' '+esc(latest.time||'')+'</div>';
+  html+='</div>';
+  
+  // Data Card
+  html+='<div class="data-card"><h3>📊 当期数据</h3><div class="data-grid">';
+  html+='<div class="data-item"><div class="lbl">实际值</div><div class="val act">'+(latest.actual||'—')+'</div></div>';
+  html+='<div class="data-item"><div class="lbl">预测值</div><div class="val fcast">'+(latest.forecast||'—')+'</div></div>';
+  html+='<div class="data-item"><div class="lbl">前值</div><div class="val prev">'+(latest.previous||'—')+'</div></div>';
+  html+='</div>';
+  
+  // Historical bars
+  if(latest.actual&&latest.forecast){{
+    try{{
+      var maxVal=0;
+      ['actual','forecast','previous'].forEach(function(k){{
+        var v=parseFloat(String(latest[k]||'0').replace(/[^0-9.]/g,''));
+        if(v>maxVal)maxVal=v;
+      }});
+      if(maxVal>0){{
+        html+='<div class="hist-chart">';
+        ['previous','forecast','actual'].forEach(function(k){{
+          var lbl={previous:'前',forecast:'预',actual:'实'}[k];
+          var v=parseFloat(String(latest[k]||'0').replace(/[^0-9.]/g,''));
+          var pct=(v/maxVal*80+5);
+          html+='<div class="hist-row"><span class="hist-lbl">'+lbl+'</span><div class="hist-bar-wrap"><div class="hist-bar '+k+'" style="width:'+pct+'%"></div></div><span class="hist-val">'+(latest[k]||'—')+'</span></div>';
+        }});
+        html+='</div>';
+      }}
+    }}catch(e){{}}
+  }}
+  html+='</div>';
+  
+  // AI Analysis
+  if(ai.impact_assessment||ai.crypto_relevance||ai.trend_note){{
+    html+='<div class="ai-card"><h3>🤖 AI 分析</h3><div class="ai-grid">';
+    if(ai.trend_note)html+='<div class="ai-row"><span class="ai-lbl">趋势</span><span class="ai-val">'+esc(ai.trend_note)+'</span></div>';
+    if(ai.impact_assessment)html+='<div class="ai-row"><span class="ai-lbl">影响评估</span><span class="ai-val">'+esc(ai.impact_assessment)+'</span></div>';
+    if(ai.crypto_relevance)html+='<div class="ai-row"><span class="ai-lbl">加密关联</span><span class="ai-val">'+esc(ai.crypto_relevance)+'</span></div>';
+    html+='</div></div>';
+  }}
+  
+  // Historical timeline: same title across all dates
+  var sortedHist = related.slice().sort(function(a,b){{return a.date.localeCompare(b.date)||a.time.localeCompare(b.time)}});
+  if(sortedHist.length>1){{
+    html+='<div class="data-card"><h3>📈 历史发布记录 ('+sortedHist.length+'次)</h3>';
+    html+='<table class="history-table"><thead><tr><th>日期</th><th>币种</th><th>实际</th><th>预测</th><th>前值</th><th>偏差</th></tr></thead><tbody>';
+    sortedHist.forEach(function(ev){{
+      var actualVal=ev.actual||'—';
+      var forecastVal=ev.forecast||'—';
+      var prevVal=ev.previous||'—';
+      var devHtml='<span class="val" style="color:#484f58">—</span>';
+      if(ev.actual&&ev.forecast){{
+        try{{
+          var a=parseFloat(String(ev.actual).replace(/[^0-9.-]/g,''));
+          var f=parseFloat(String(ev.forecast).replace(/[^0-9.-]/g,''));
+          if(f!==0){{
+            var d=((a-f)/Math.abs(f)*100).toFixed(1);
+            devHtml='<span class="val '+(d>0?'up':'down')+'">'+(d>0?'+':'')+d+'%</span>';
+          }}
+        }}catch(e){{}}
+      }}
+      html+='<tr><td>'+esc(ev.date)+'</td><td>'+esc(ev.currency)+'</td>';
+      html+='<td class="val">'+actualVal+'</td><td>'+forecastVal+'</td><td>'+prevVal+'</td>';
+      html+='<td>'+devHtml+'</td></tr>';
+    }});
+    html+='</tbody></table></div>';
+  }}
+  
+  rp.innerHTML=html;
+}
+
+// ==== Utility ====
+function $(id){{return document.getElementById(id)}}
+function esc(s){{var d=document.createElement('div');d.textContent=s;return d.innerHTML}}
+
+var todayStr=''' + today_str + ''';
+
+// Init
+renderEventList();
+$('header-time').textContent='🕐 更新于 ' + new Date().toLocaleString('zh-CN',{{hour:'2-digit',minute:'2-digit'}});
+</script>
+</body>
+</html>'''
+
+    path = os.path.join(docs_dir, "calendar.html")
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(html)
+    print(f'✅ 日历独立页面已生成: {path} ({len(html)//1024}KB)')
+    return html
+
+
+if __name__ == '__main__':
+    from calendar_fetcher_v2 import run_calendar_pipeline
+    proxy = 'http://127.0.0.1:10020'
+    events, err = run_calendar_pipeline(proxies={'http': proxy, 'https': proxy}, save_db=True)
+    if err:
+        print(f'采集错误: {err}')
+    else:
+        print(f'采集到 {len(events)} 条事件')
+    
+    # Combine with all DB data for the page
+    all_events = load_all_events()
+    print(f'DB中共 {len(all_events)} 条记录')
+    
+    render_calendar_page(all_events)

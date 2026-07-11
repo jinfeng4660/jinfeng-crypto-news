@@ -753,6 +753,8 @@ body{{font-family:'Inter','Noto Sans SC',-apple-system,BlinkMacSystemFont,sans-s
 .cal-more-bar{{text-align:center;padding:4px 0}}
 .cal-more-btn{{font-size:9px;padding:4px 12px;border-radius:20px;background:#121318;border:1px solid #1b1d23;color:#8b949e;cursor:pointer;transition:all .2s}}
 .cal-more-btn:hover{{background:#1b1d23;color:#c9d1d9}}
+.cal-open-full{{display:inline-block;font-size:10px;padding:4px 12px;border-radius:20px;background:#121318;border:1px solid #1b1d23;color:#58a6ff;text-decoration:none;transition:all .2s}}
+.cal-open-full:hover{{background:#1b1d23;color:#58a6ff;border-color:#58a6ff33}}
 .cal-empty{{text-align:center;color:#484f58;padding:12px 0;font-size:11px}}
 @media(max-width:900px){{.cal-ev{{font-size:11px}}.cal-val{{font-size:10px}}.cal-ai-row{{font-size:10px}}}}
 </style>
@@ -794,7 +796,7 @@ body{{font-family:'Inter','Noto Sans SC',-apple-system,BlinkMacSystemFont,sans-s
 <div class="sidebar-section"><h3>🔥 热门话题</h3><div id="hot-topics"></div></div>
 <div class="sidebar-section"><h3>📡 数据源分布</h3><div id="source-dist"></div></div>
 <div class="sidebar-section"><h3>🔗 更多资源</h3><p><a href="https://cryptopanic.com" target="_blank">→ CryptoPanic</a><br><a href="https://www.panewslab.com" target="_blank">→ PANews</a><br><a href="https://cointelegraph.com" target="_blank">→ Cointelegraph</a><br><a href="https://bitcoinmagazine.com" target="_blank">→ Bitcoin Magazine</a></p></div>
-<div class="sidebar-section"><h3>📅 财经日历</h3><div id="calendar-panel">加载中…</div></div>
+<div class="sidebar-section"><h3>📅 财经日历</h3><div id="calendar-panel">加载中…</div><div style="margin-top:6px;text-align:center"><a href="./calendar.html" class="cal-open-full" target="_blank">📊 打开完整日历 →</a></div></div>
 </aside></div>
 <button class="sidebar-toggle-mobile" id="sidebar-toggle" onclick="toggleMobileSidebar()">📊</button>
 <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleMobileSidebar()"></div>
@@ -807,6 +809,17 @@ body{{font-family:'Inter','Noto Sans SC',-apple-system,BlinkMacSystemFont,sans-s
     with open(html_path, "w", encoding="utf-8") as f:
         f.write(html)
     print(f"\n✅ v0.5网站已生成: {html_path} ({len(html)/1024:.0f}KB)")
+    
+    # 同步生成日历独立页面
+    try:
+        from calendar_page import load_all_events, render_calendar_page
+        cal_evts = load_all_events()
+        if cal_evts:
+            render_calendar_page(cal_evts)
+        else:
+            print("[日历页] 无数据，跳过")
+    except Exception as e:
+        print(f"[日历页] 生成失败: {e}")
     
     return html
 
