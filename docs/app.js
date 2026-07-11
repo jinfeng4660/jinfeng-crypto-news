@@ -268,8 +268,14 @@ function updateCount(){
 function updateSidebar(){
   updateSentiment();
   updateTopics();
-  updateSources();
-  var m=$('sidebar-mobile');
+  var topics={};
+  ARTICLES_DATA.forEach(function(a){
+    if(a.coins){
+      a.coins.forEach(function(c){
+        if(c!="ALL"){topics[c]=(topics[c]||0)+1}
+      })
+    }
+  });
   if(m)m.innerHTML=$('sidebar-desktop').innerHTML;
 }
 
@@ -292,7 +298,13 @@ function updateSentiment(){
 
 function updateTopics(){
   var topics={};
-  ARTICLES_DATA.forEach(function(a){if(a.coins){a.coins.forEach(function(c){if(c!=='ALL'){topics[c]=(topics[c]||0)+1}})});
+  ARTICLES_DATA.forEach(function(a){
+    if(a.coins){
+      a.coins.forEach(function(c){
+        if(c!="ALL"){topics[c]=(topics[c]||0)+1}
+      })
+    }
+  });
   var topicSorted=Object.keys(topics).sort(function(a,b){return topics[b]-topics[a]}).slice(0,8);
   var html='';topicSorted.forEach(function(t){html+='<span class="hot-topic" onclick="filterByCoin(\''+t+'\')"><span class="dot '+t.toLowerCase()+'"></span>'+esc(t)+'<span class="ht-count">'+topics[t]+'</span></span>'});
   if(!html)html='<span class="hot-topic">无活跃话题</span>';
