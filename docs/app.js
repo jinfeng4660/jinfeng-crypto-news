@@ -11,7 +11,7 @@ function startProgress(){var b=$('nprogress-bar');var w=15;b.style.width=w+'%';c
 function doneProgress(){clearInterval(npTimer);$('nprogress-bar').style.width='100%';setTimeout(function(){$('nprogress-bar').style.width='0%'},400)}
 
 // ===== State =====
-var currentLevel='ALL',currentCoin='ALL',searchQuery='',currentSort='latest',ARTICLES_DATA=[];
+var currentLevel='ALL',currentCoin='ALL',searchQuery='',currentTimeFilter='ALL',currentSort='latest',ARTICLES_DATA=[];
 var voted={};
 
 // ===== Prices (now in GL override below) =====
@@ -20,6 +20,32 @@ setInterval(fetchPrices,60000);
 
 // ===== Gainers & Losers =====
 var lastPrices={};
+// ===== Recent Comments Sidebar =====
+function renderRecentComments(){
+  var el=$('recent-comments');
+  if(!el)return;
+  var all=JSON.parse(localStorage.getItem('comments')||'{}');
+  var items=[];
+  Object.keys(all).forEach(function(i){
+    (all[i]||[]).forEach(function(c){
+      items.push({idx:i,text:c.text,time:c.time});
+    });
+  });
+  items.sort(function(a,b){return b.time-a.time});
+  var top=items.slice(0,6);
+  if(!top.length){
+    el.innerHTML='<div style="font-size:10px;color:#484f58;text-align:center;padding:6px">暂无评论</div>';
+    return;
+  }
+  var h='';
+  top.forEach(function(c){
+    var cardT='';
+    if(ARTICLES_DATA[parseInt(c.idx)])cardT=esc(ARTICLES_DATA[parseInt(c.idx)].title||'').substring(0,40);
+    h+='<div class="rc-item"><div class="rc-text">'+esc(c.text).substring(0,60)+'</div><div class="rc-meta">'+(cardT?'<span class="rc-title">'+cardT+'</span> · ':'')+'<span class="rc-time">'+relTime(c.time)+'</span></div></div>';
+  });
+  el.innerHTML=h;
+}
+
 function renderGainersLosers(){
   var el=$('gainers-losers');
   if(!el)return;
@@ -167,6 +193,12 @@ function buildCards(){
   list.appendChild(fragment);
   updateCount();
   applyFilterDOM();
+  // Render comments for each card
+  sorted.forEach(function(a,i){
+    var card=qsa('.card')[i];
+    if(card){renderComments(i,card);}
+  });
+  renderRecentComments();
   doneProgress();
 }
 
@@ -362,9 +394,26 @@ function applyFilterDOM(){
       if(!tags.includes(currentCoin))show=false;
     }
     if(searchQuery&&!(a.title||'').toLowerCase().includes(searchQuery))show=false;
+    if(currentTimeFilter!=='ALL'){
+      var ts=Date.parse(a.published_at||a.created_at||a.time||'');
+      if(!ts)show=false;
+      else{
+        var now=Date.now();
+        var cutoff=currentTimeFilter==='1h'?now-3600000:currentTimeFilter==='6h'?now-21600000:currentTimeFilter==='24h'?now-86400000:0;
+        if(cutoff&&ts<cutoff)show=false;
+      }
+    }
     c.classList.toggle('hidden',!show);
   });
   updateCount();
+}
+
+function setTimeFilter(tf){
+  currentTimeFilter=tf||'ALL';
+  qsa('.tf-btn').forEach(function(b){b.classList.remove('active')});
+  if(tf&&tf!=='ALL'){qsa('.tf-btn').forEach(function(b){if(b.dataset.tf===tf)b.classList.add('active')})}
+  else{qsa('.tf-btn')[0].classList.add('active')}
+  applyFilterDOM();
 }
 
 function filterByLevel(lv){
