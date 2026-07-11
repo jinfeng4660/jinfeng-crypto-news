@@ -4,29 +4,87 @@ function esc(s){var d=document.createElement('div');d.textContent=s;return d.inn
 function fmt(n){return typeof n==='number'?n.toLocaleString('en-US'):n}
 function qs(s,ctx){return (ctx||document).querySelector(s)}
 function qsa(s,ctx){return (ctx||document).querySelectorAll(s)}
+function trunc(s,n){return s&&s.length>n?s.slice(0,n)+'…':s}
 
 // ===== NProgress =====
 var npTimer=null;
-function startProgress(){var b=$('nprogress-bar');var w=10;b.style.width=w+'%';clearInterval(npTimer);npTimer=setInterval(function(){w+=(100-w)*0.08;if(w>=98)w=98;b.style.width=w+'%'},300)}
-function doneProgress(){clearInterval(npTimer);$('nprogress-bar').style.width='100%';setTimeout(function(){$('nprogress-bar').style.width='0%'},500)}
+function startProgress(){var b=$('nprogress-bar');var w=15;b.style.width=w+'%';clearInterval(npTimer);npTimer=setInterval(function(){w+=(100-w)*0.06;if(w>=95)w=95;b.style.width=w+'%'},300)}
+function doneProgress(){clearInterval(npTimer);$('nprogress-bar').style.width='100%';setTimeout(function(){$('nprogress-bar').style.width='0%'},400)}
 
 // ===== State =====
 var currentLevel='ALL',currentCoin='ALL',searchQuery='',currentSort='latest',ARTICLES_DATA=[];
 var voted={};
 
-// ===== Prices =====
-async function fetchPrices(){try{var r=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana&vs_currencies=usd&include_24hr_change=true');var d=await r.json();function u(id,pel,cel){var p=d[id]?.usd,c=d[id]?.usd_24h_change;if(p)$(pel).textContent='$'+fmt(p);if(c!==undefined){$(cel).textContent=(c>0?'+':'')+c.toFixed(2)+'%';$(cel).className='ticker-change '+(c>0?'up':'down')}};u('bitcoin','btc-price','btc-change');u('ethereum','eth-price','eth-change');u('solana','sol-price','sol-change')}catch(e){if($('btc-price'))$('btc-price').textContent='—'}}
+// ===== Prices (Binance API — 无CORS) =====
+async function fetchPrices(){
+  var syms=['BTCUSDT','ETHUSDT','SOLUSDT','LINKUSDT','DOGEUSDT'];
+  try{
+    var r=await fetch('https://api.binance.com/api/v3/ticker/24hr?symbols='+JSON.stringify(syms));
+    var d=await r.json();
+    d.forEach(function(t){
+      var sym=t.symbol.replace('USDT','').toLowerCase();
+      var pel=$(sym+'-price'),cel=$(sym+'-change');
+      if(pel)pel.textContent='$'+fmt(parseFloat(t.lastPrice));
+      if(cel){
+        var ch=parseFloat(t.priceChangePercent);
+        cel.textContent=(ch>0?'+':'')+ch.toFixed(2)+'%';
+        cel.className='ticker-change '+(ch>0?'up':'down');
+      }
+    });
+  }catch(e){console.warn('Binance price fetch failed',e)}
+  // Also fetch Fear & Greed
+  fetchFearGreed();
+}
 fetchPrices();setInterval(fetchPrices,60000);
+
+// ===== Fear & Greed =====
+async function fetchFearGreed(){
+  try{
+    var r=await fetch('https://api.alternative.me/fng/?limit=1');
+    var d=await r.json();
+    if(d&&d.data&&d.data[0]){
+      var v=parseInt(d.data[0].value);
+      var cls=v<=25?'extreme-fear':v<=45?'fear':v<=55?'neutral':v<=75?'greed':'extreme-greed';
+      var label=d.data[0].value_classification;
+      var fg=$('fng-value');
+      if(fg){
+        fg.textContent=v+' — '+label;
+        fg.className='fng '+cls;
+      }
+    }
+  }catch(e){$('fng-value')&&($('fng-value').textContent='—')}
+}
+
+// ===== Relative Time =====
+function relTime(t){
+  if(!t)return '';
+  var m=Math.floor((Date.now()-new Date(t).getTime())/60000);
+  if(m<1)return '刚刚';
+  if(m<60)return m+'分钟前';
+  var h=Math.floor(m/60);
+  if(h<24)return h+'小时前';
+  return Math.floor(h/24)+'天前';
+}
+var _rtInt=null;
+function startRelTime(){
+  if(_rtInt)clearInterval(_rtInt);
+  _rtInt=setInterval(function(){
+    qsa('.reltime').forEach(function(el){
+      var ts=el.dataset.ts;
+      if(ts)el.textContent=relTime(ts);
+    });
+  },30000);
+}
 
 // ===== AI Analysis =====
 function genAI(a){
   var t=(a.title||'')+' '+(a.summary||'');
   var imp=3,dir='neutral',reason='市场关注度一般',strat='';
-  var hl=t.match(/(爆仓|暴跌|暴涨|批准|牌照|4\.9亿|2200万|抛售|出售|起诉|诉讼|创新高|巨鲸|强平|崩盘|熔断)/);
+  var hl=t.match(/(爆仓|暴跌|暴涨|批准|牌照|4\.9亿|2200万|抛售|出售|起诉|诉讼|创新高|巨鲸|强平|崩盘|熔断|清算|回收)/);
   var ml=t.match(/(上线|投资|收购|合作|推出|突破|铸造|获批|银行|通过|牌照|融资|开源|ETF|合规|TVL)/);
   if(hl){imp=7+Math.random()*3|0;reason='重大市场事件，对行情有直接冲击'}else if(ml){imp=4+Math.random()*3|0;reason='行业发展信号，中短期影响值得关注'}else{imp=1+Math.random()*4|0;reason='市场常规动态，持续观察即可'}
-  var bullW=(t.match(/(暴涨|看涨|买入|批准|突破|支持|利好|增持|正向|积极|上线|银行|牌照|机构|流入|铸造|融资|增长|突破)/g)||[]);
-  var bearW=(t.match(/(暴跌|抛售|看跌|卖出|做空|亏损|爆仓|下跌|利空|抛压|挤兑|起诉|诉讼|流失|调查|监管|打压|出售|罚款|spook|sell|loss)/g)||[]);
+  var bullW=(t.match(/(暴涨|看涨|买入|批准|突破|支持|利好|增持|正向|积极|上线|银行|牌照|机构|流入|铸造|融资|增长|流入)/g)||[]);
+  var bearW=(t.match(/(暴跌|抛售|看跌|卖出|做空|亏损|爆仓|下跌|利空|抛压|挤兑|起诉|诉讼|流失|调查|监管|打压|出售|罚款|spook|sell|loss|清算)/g)||[]);
   if(bullW.length>bearW.length+1){dir='bullish';reason=bullW.slice(0,2).join('、')+'等利多因素'}else if(bearW.length>bullW.length+1){dir='bearish';reason=bearW.slice(0,2).join('、')+'等利空因素'}
   if(imp>=7){strat='该事件影响级别较高，建议结合技术面确认后决策'}else if(imp>=4){strat='趋势性事件，纳入中短期分析参考'}else{strat='常规信息，保持关注即可'}
   return{impact:imp,direction:dir,reason:reason,strategy:strat}
@@ -36,13 +94,14 @@ function genAI(a){
 function renderCards(data){
   ARTICLES_DATA=data;
   buildCards();
+  startRelTime();
   var now=new Date();
   $('header-time').textContent='🕐 '+now.toLocaleDateString('zh-CN')+' '+now.toLocaleTimeString('zh-CN',{hour12:false,hour:'2-digit',minute:'2-digit'});
   $('footer-update').textContent='🕐 更新于 '+now.toLocaleTimeString('zh-CN',{hour12:false,hour:'2-digit',minute:'2-digit'});
   doneProgress();
 }
 
-// ===== Build Cards (DocumentFragment — 零延迟，一次渲染) =====
+// ===== Build Cards (DocumentFragment) =====
 function buildCards(){
   var list=$('news-list');
   var fragment=document.createDocumentFragment();
@@ -53,15 +112,12 @@ function buildCards(){
     updateCount();updateSidebar();return
   }
   
-  // Stats & Sidebar
   updateStats();
   updateSidebar();
   
-  // Sort
   var sorted=[].concat(ARTICLES_DATA);
   if(currentSort==='hot')sorted.sort(function(a,b){return(b.votes?.bullish||0)+(b.votes?.bearish||0)+(b.votes?.important||0)-((a.votes?.bullish||0)+(a.votes?.bearish||0)+(a.votes?.important||0))});
   
-  // Build each card
   sorted.forEach(function(a,i){
     var card=createCard(a,i);
     fragment.appendChild(card);
@@ -69,8 +125,6 @@ function buildCards(){
   
   list.appendChild(fragment);
   updateCount();
-  
-  // Apply filters to freshly rendered cards
   applyFilterDOM();
 }
 
@@ -86,18 +140,20 @@ function createCard(a,i){
   var dirLabel=ai.direction==='bullish'?'📈 看涨':ai.direction==='bearish'?'📉 看跌':'➡️ 中性';
   var dirCls='dir-'+ai.direction;
   
-  // Coins
+  // Votes display
+  var v=a.votes||{bullish:0,bearish:0,important:0};
+  var bullishV=v.bullish||0,bearishV=v.bearish||0,impV=v.important||0;
+  
   var coins=a.coins&&a.coins.length?a.coins.filter(function(c){return c!=='ALL'}):[];
   var coinHtml=coins.map(function(c){return '<span class="coin-tag">'+esc(c)+'</span>'}).join('');
   
-  // Link
   var linkUrl=a.url||'';
   var linkHtml=linkUrl?' <a href="'+esc(linkUrl)+'" target="_blank" class="source-link" onclick="event.stopPropagation()">🔗</a>':'';
   
   var title=esc(a.title||'');
   var summary=esc(a.summary||'');
   var timeStr=a.time||'';
-  
+
   var card=document.createElement('div');
   card.className='card level-'+lv.toLowerCase()+(i<3?' card-fast':'');
   card.dataset.i=i;
@@ -108,16 +164,16 @@ function createCard(a,i){
   card.innerHTML=
     '<div class="left-border" style="background:'+leftColor+'"></div>'+
     '<div class="card-votes">'+
-      '<button class="vote-btn up" onclick="vote('+i+',\'bullish\',event)">▲</button>'+
-      '<button class="vote-btn imp" onclick="vote('+i+',\'important\',event)">⚡</button>'+
-      '<button class="vote-btn down" onclick="vote('+i+',\'bearish\',event)">▼</button>'+
+      '<button class="vote-btn up'+(voted[i+'-bullish']?' voted':'')+'" onclick="vote('+i+',\'bullish\',event)">▲<span class="vote-count">'+bullishV+'</span></button>'+
+      '<button class="vote-btn imp'+(voted[i+'-important']?' voted':'')+'" onclick="vote('+i+',\'important\',event)">⚡<span class="vote-count">'+impV+'</span></button>'+
+      '<button class="vote-btn down'+(voted[i+'-bearish']?' voted':'')+'" onclick="vote('+i+',\'bearish\',event)">▼<span class="vote-count">'+bearishV+'</span></button>'+
     '</div>'+
     '<div class="card-body">'+
       '<div class="card-header">'+
         '<span class="level-badge" style="background:'+lvColor+'15;color:'+lvColor+'">'+lvLabel+'</span>'+
         '<span class="source-badge">'+esc(a.source||'')+linkHtml+'</span>'+
         coinHtml+
-        (timeStr?'<span class="time-tag">'+esc(timeStr)+'</span>':'')+
+        (timeStr?'<span class="time-tag reltime" data-ts="'+a.rawTime+'">'+relTime(a.rawTime)+'</span>':'')+
       '</div>'+
       '<div class="card-title">'+title+'</div>'+
       (summary?'<div class="card-summary">'+summary+'</div>':'')+
@@ -146,7 +202,7 @@ function toggleExpand(i,e){
   if(card)card.classList.toggle('expanded');
 }
 
-// ===== Stats Updates =====
+// ===== Stats =====
 function updateStats(){
   var stats={S:0,A:0,B:0,C:0};
   ARTICLES_DATA.forEach(function(a){stats[a.level]=(stats[a.level]||0)+1});
@@ -166,7 +222,6 @@ function updateSidebar(){
   updateSentiment();
   updateTopics();
   updateSources();
-  // Sync mobile sidebar
   var m=$('sidebar-mobile');
   if(m)m.innerHTML=$('sidebar-desktop').innerHTML;
 }
@@ -190,7 +245,7 @@ function updateSentiment(){
 
 function updateTopics(){
   var topics={};
-  ARTICLES_DATA.forEach(function(a){if(a.coins){a.coins.forEach(function(c){if(c!=='ALL'){topics[c]=(topics[c]||0)+1}})}});
+  ARTICLES_DATA.forEach(function(a){if(a.coins){a.coins.forEach(function(c){if(c!=='ALL'){topics[c]=(topics[c]||0)+1}})});
   var topicSorted=Object.keys(topics).sort(function(a,b){return topics[b]-topics[a]}).slice(0,8);
   var html='';topicSorted.forEach(function(t){html+='<span class="hot-topic" onclick="filterByCoin(\''+t+'\')"><span class="dot '+t.toLowerCase()+'"></span>'+esc(t)+'<span class="ht-count">'+topics[t]+'</span></span>'});
   if(!html)html='<span class="hot-topic">无活跃话题</span>';
@@ -208,7 +263,7 @@ function updateSources(){
   if(sd)sd.innerHTML=html;
 }
 
-// ===== Filters (DOM操作 — 只切换class，不重建) =====
+// ===== Filters =====
 function applyFilterDOM(){
   var cards=qsa('.card');
   cards.forEach(function(c){
@@ -240,7 +295,6 @@ function filterByCoin(coin){
   qsa('.coin-pill').forEach(function(b){if(b.textContent.trim()===coin)b.classList.add('active')});
   currentCoin=coin;
   applyFilterDOM();
-  // Also sync sidebar hot topics active state
   qsa('.hot-topic').forEach(function(b){b.classList.toggle('inactive',coin!=='ALL'&&b.textContent.trim()!==coin)});
 }
 
@@ -253,7 +307,7 @@ function setSort(mode){
   currentSort=mode;
   qsa('.sort-btn').forEach(function(b){b.classList.remove('active')});
   $('sort-'+mode).classList.add('active');
-  buildCards(); // rebuild since sort changes order
+  buildCards();
 }
 
 // ===== Voting =====
@@ -265,10 +319,8 @@ function vote(idx,type,e){
   if(!card)return;
   var btns=card.querySelectorAll('.vote-btn');
   
-  // Toggle off if already voted same
   if(voted[key]){voted[key]=false;btns.forEach(function(b){b.classList.remove('voted')});return}
   
-  // Clear previous votes for this card
   ['bullish','bearish','important'].forEach(function(t){voted[idx+'-'+t]=false});
   btns.forEach(function(b){b.classList.remove('voted')});
   
@@ -276,10 +328,6 @@ function vote(idx,type,e){
   var btnMap={bullish:'up',bearish:'down',important:'imp'};
   var cls=btnMap[type]||'';
   btns.forEach(function(b){if(b.classList.contains(cls))b.classList.add('voted')});
-  
-  // Update data
-  if(!ARTICLES_DATA[idx].votes)ARTICLES_DATA[idx].votes={bullish:0,bearish:0,important:0};
-  ARTICLES_DATA[idx].votes[type]=(ARTICLES_DATA[idx].votes[type]||0)+1;
 }
 
 // ===== Mobile =====
@@ -288,26 +336,18 @@ function toggleMobileSidebar(){
   $('sidebar-mobile').classList.toggle('open');
 }
 
-// ===== Auto Refresh (静默无感) =====
+// ===== Auto Refresh (silent fetch every 5min) =====
 setInterval(function(){
   var el=$('update-status');
-  if(el){el.textContent='正在刷新…';el.classList.add('show')}
-  // Silently refresh page (backup)
-  setTimeout(function(){location.reload()},1800000);
-},600000); // 10分钟检查提示
-
-// ===== Status Toast =====
-function showStatus(msg){
-  var el=$('update-status');
-  if(!el)return;
-  el.textContent=msg;
-  el.classList.add('show');
-  clearTimeout(el._hide);
-  el._hide=setTimeout(function(){el.classList.remove('show')},3000);
-}
+  if(el){el.textContent='正在检查新快讯…';el.classList.add('show')}
+  // Reload page every 5min for fresh data
+  setTimeout(function(){location.reload()},300000);
+},240000); // 4min提示, 5min刷新
 
 // ===== Keyboard =====
 document.addEventListener('DOMContentLoaded',function(){
   var si=$('search-input');
   if(si)si.addEventListener('input',function(){doSearch(this.value)});
+  // Set active stats
+  qsa('.stat-item')[0]&&qsa('.stat-item')[0].classList.add('active');
 });

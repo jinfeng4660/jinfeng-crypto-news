@@ -534,6 +534,8 @@ def render_site_v05(articles, now_str):
         "original": a.get("original",""),
         "source": a.get("source","?"),
         "url": a.get("url",""),
+        "time": a.get("scrape_time",a.get("time","")),
+        "rawTime": a.get("scrape_time",""),
         "sentiment": a.get("sentiment","neutral"),
         "analysis": a.get("analysis",""),
         "summary": a.get("summary",""),
@@ -675,6 +677,12 @@ body{{font-family:'Inter','Noto Sans SC',-apple-system,BlinkMacSystemFont,sans-s
 .source-row .src-bar-wrap{{flex:1;margin:0 8px;height:3px;background:#1b1d23;border-radius:2px;overflow:hidden}}
 .source-row .src-bar-fill{{height:100%;background:#ffd700;border-radius:2px}}
 .source-row .src-val{{color:#e1e4e8;font-weight:600;font-size:10px}}
+.fng-display{{font-size:20px;font-weight:800;text-align:center;padding:8px 0}}
+.fng-display.extreme-fear{{color:#f85149}}
+.fng-display.fear{{color:#ff8c00}}
+.fng-display.neutral{{color:#8b949e}}
+.fng-display.greed{{color:#3fb950}}
+.fng-display.extreme-greed{{color:#3fb950}}
 .sidebar-toggle-mobile{{display:none;position:fixed;bottom:20px;right:20px;z-index:99;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#ffd700,#ff8c00);border:none;color:#0a0b0e;font-size:18px;cursor:pointer;box-shadow:0 4px 16px #ffd70033}}
 .sidebar-overlay{{display:none;position:fixed;inset:0;z-index:199;background:#00000088}}
 .sidebar-mobile{{display:none;position:fixed;top:0;right:0;bottom:0;width:300px;z-index:200;background:#0a0b0e;border-left:1px solid #1b1d23;overflow-y:auto;padding:20px;transform:translateX(100%);transition:transform .3s}}
@@ -684,6 +692,9 @@ body{{font-family:'Inter','Noto Sans SC',-apple-system,BlinkMacSystemFont,sans-s
 .footer p{{font-size:11px;color:#484f58}}
 .footer .update-badge{{display:inline-flex;align-items:center;gap:4px;margin-top:6px;padding:4px 10px;background:#121318;border:1px solid #1b1d23;border-radius:20px;font-size:10px;color:#8b949e}}
 .empty-state{{text-align:center;padding:60px 20px;color:#484f58}}
+.card-fast{{animation:cardIn .15s ease forwards;opacity:0;transform:translateY(6px)}}
+.card.hidden{{display:none!important}}
+.vote-count{{font-size:8px;display:block;line-height:1;margin-top:1px;color:#484f58;font-weight:600}}
 </style>
 </head>
 <body>
@@ -692,6 +703,8 @@ body{{font-family:'Inter','Noto Sans SC',-apple-system,BlinkMacSystemFont,sans-s
 <div class="ticker-item"><span class="ticker-symbol">BTC</span><span class="ticker-price" id="btc-price">—</span><span class="ticker-change" id="btc-change"></span></div>
 <div class="ticker-item"><span class="ticker-symbol">ETH</span><span class="ticker-price" id="eth-price">—</span><span class="ticker-change" id="eth-change"></span></div>
 <div class="ticker-item"><span class="ticker-symbol">SOL</span><span class="ticker-price" id="sol-price">—</span><span class="ticker-change" id="sol-change"></span></div>
+<div class="ticker-item"><span class="ticker-symbol">LINK</span><span class="ticker-price" id="link-price">—</span><span class="ticker-change" id="link-change"></span></div>
+<div class="ticker-item"><span class="ticker-symbol">DOGE</span><span class="ticker-price" id="doge-price">—</span><span class="ticker-change" id="doge-change"></span></div>
 <div class="ticker-status"><span class="ticker-dot live"></span><span>实时</span></div>
 </div></div>
 <header class="header"><div class="header-inner"><div class="header-left"><div class="header-logo">金</div><h1>金峰策略 <span class="badge">v0.5</span></h1></div><span class="header-time" id="header-time">🕐 更新中…</span></div></header>
@@ -716,6 +729,7 @@ body{{font-family:'Inter','Noto Sans SC',-apple-system,BlinkMacSystemFont,sans-s
 </div>
 <div class="main-layout"><div class="news-feed"><div class="news-feed-header"><h2>📰 快讯 <span class="count" id="feed-count"></span></h2><span id="update-status"></span></div><div id="news-list"></div></div>
 <aside class="sidebar" id="sidebar-desktop">
+<div class="sidebar-section"><h3>😱 恐惧与贪婪</h3><div class="fng-display" id="fng-value">加载中…</div></div>
 <div class="sidebar-section"><h3>📊 情绪分布</h3><div class="sentiment-bar" id="sentiment-bar"><div class="seg bullish" style="width:0%"></div><div class="seg bearish" style="width:0%"></div><div class="seg neutral" style="width:0%"></div></div><div id="sentiment-stats"></div></div>
 <div class="sidebar-section"><h3>🔥 热门话题</h3><div id="hot-topics"></div></div>
 <div class="sidebar-section"><h3>📡 数据源分布</h3><div id="source-dist"></div></div>
