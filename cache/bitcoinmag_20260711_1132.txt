@@ -1,0 +1,24 @@
+Source: Web Fetch (bitcoinmagazine.com/.rss/full/)
+Fetched at: 2026-07-11T03:32:16.572Z
+---
+Bitcoin Magazine RSS Feed - Fri, 10 Jul 2026 20:23:56 +0000
+
+1. U.S. Representatives Urge Senate to Vote on CLARITY Act in July, Address Ethics Concerns
+   Rep. French Hill urged Senate vote before August recess. CLARITY Act pairs with GENIUS Act. Polymarket predicts Clarity Act 2026 passage near 39%, down from 74% prior month.
+
+2. Circle (CRCL) Wins Final OCC Approval for National Trust Bank
+   Circle to charter First National Digital Currency Bank, N.A. CRCL shares climbed 14% on announcement. OCC approval caps process started June 2025.
+
+3. Metaplanet Announces Joint Study to Bring Bitcoin-Backed Digital Credit to Japan
+   Study group: Metaplanet, JPYC, Progmat, Siiibo Securities. Metaplanet holds 43,000 BTC ($2.47B). Project Nova strategy.
+
+4. Bitcoin is "A Screaming Buy": Standard Chartered Backs $100,000 Target
+   Geoffrey Kendrick maintains end-2026 $100,000 BTC target. Strategy's (MSTR) sell-off reflects communication issue, not balance sheet deterioration.
+
+5. JPMorgan Says the Real Threat to Bitcoin Isn't Strategy (MSTR) — It's Private Blockchains
+   Banks adopting private blockchains could reduce activity on public networks. Tokenization markets near $50B but could migrate to private infrastructure.
+
+6. Bitcoin's New Debt Machine is Facing Its First Major Test
+   June was first stress test for Bitcoin-backed preferred shares (STRC, SATA). STRC fell to $75, recovered to $87. Public treasuries added ~7,300 BTC net in June.
+
+7. New Hampshire Council Rejects $100 Million Bitcoin-Backed Bond
