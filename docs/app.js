@@ -4,7 +4,6 @@ function esc(s){var d=document.createElement('div');d.textContent=s;return d.inn
 function fmt(n){return typeof n==='number'?n.toLocaleString('en-US'):n}
 function qs(s,ctx){return (ctx||document).querySelector(s)}
 function qsa(s,ctx){return (ctx||document).querySelectorAll(s)}
-function trunc(s,n){return s&&s.length>n?s.slice(0,n)+'…':s}
 
 // ===== NProgress =====
 var npTimer=null;
@@ -32,7 +31,6 @@ async function fetchPrices(){
       }
     });
   }catch(e){console.warn('Binance price fetch failed',e)}
-  // Also fetch Fear & Greed
   fetchFearGreed();
 }
 fetchPrices();setInterval(fetchPrices,60000);
@@ -58,13 +56,22 @@ async function fetchFearGreed(){
 // ===== Relative Time =====
 function relTime(t){
   if(!t)return '';
-  var m=Math.floor((Date.now()-new Date(t).getTime())/60000);
-  if(m<1)return '刚刚';
-  if(m<60)return m+'分钟前';
+  var now=Date.now();
+  var ts;
+  if(typeof t==='number'){ts=t}
+  else if(typeof t==='string'){
+    if(t.includes('T')){ts=new Date(t).getTime()}
+    else if(t.match(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}/)){ts=new Date(t.replace(' ','T')+':00').getTime()}
+    else{return t}
+  }else{return''}
+  var m=Math.floor((now-ts)/60000);
+  if(m<1)return'刚刚';
+  if(m<60){return m+'分钟前'}
   var h=Math.floor(m/60);
-  if(h<24)return h+'小时前';
+  if(h<24){return h+'小时前'}
   return Math.floor(h/24)+'天前';
 }
+
 var _rtInt=null;
 function startRelTime(){
   if(_rtInt)clearInterval(_rtInt);
@@ -73,7 +80,8 @@ function startRelTime(){
       var ts=el.dataset.ts;
       if(ts)el.textContent=relTime(ts);
     });
-  },30000);
+    // Also update minutes display in vote buttons area
+  },15000);
 }
 
 // ===== AI Analysis =====
@@ -95,10 +103,13 @@ function renderCards(data){
   ARTICLES_DATA=data;
   buildCards();
   startRelTime();
+  updateHeaderTime();
+}
+
+function updateHeaderTime(){
   var now=new Date();
-  $('header-time').textContent='🕐 '+now.toLocaleDateString('zh-CN')+' '+now.toLocaleTimeString('zh-CN',{hour12:false,hour:'2-digit',minute:'2-digit'});
-  $('footer-update').textContent='🕐 更新于 '+now.toLocaleTimeString('zh-CN',{hour12:false,hour:'2-digit',minute:'2-digit'});
-  doneProgress();
+  if($('header-time'))$('header-time').textContent='🕐 '+now.toLocaleDateString('zh-CN')+' '+now.toLocaleTimeString('zh-CN',{hour12:false,hour:'2-digit',minute:'2-digit'});
+  if($('footer-update'))$('footer-update').textContent='🕐 更新于 '+now.toLocaleTimeString('zh-CN',{hour12:false,hour:'2-digit',minute:'2-digit'});
 }
 
 // ===== Build Cards (DocumentFragment) =====
@@ -115,17 +126,21 @@ function buildCards(){
   updateStats();
   updateSidebar();
   
-  var sorted=[].concat(ARTICLES_DATA);
-  if(currentSort==='hot')sorted.sort(function(a,b){return(b.votes?.bullish||0)+(b.votes?.bearish||0)+(b.votes?.important||0)-((a.votes?.bullish||0)+(a.votes?.bearish||0)+(a.votes?.important||0))});
-  
+  var sorted=getSortedData();
   sorted.forEach(function(a,i){
-    var card=createCard(a,i);
-    fragment.appendChild(card);
+    fragment.appendChild(createCard(a,i));
   });
   
   list.appendChild(fragment);
   updateCount();
   applyFilterDOM();
+  doneProgress();
+}
+
+function getSortedData(){
+  var sorted=[].concat(ARTICLES_DATA);
+  if(currentSort==='hot')sorted.sort(function(a,b){return(b.votes?.bullish||0)+(b.votes?.bearish||0)+(b.votes?.important||0)-((a.votes?.bullish||0)+(a.votes?.bearish||0)+(a.votes?.important||0))});
+  return sorted;
 }
 
 function createCard(a,i){
@@ -140,7 +155,6 @@ function createCard(a,i){
   var dirLabel=ai.direction==='bullish'?'📈 看涨':ai.direction==='bearish'?'📉 看跌':'➡️ 中性';
   var dirCls='dir-'+ai.direction;
   
-  // Votes display
   var v=a.votes||{bullish:0,bearish:0,important:0};
   var bullishV=v.bullish||0,bearishV=v.bearish||0,impV=v.important||0;
   
@@ -152,7 +166,8 @@ function createCard(a,i){
   
   var title=esc(a.title||'');
   var summary=esc(a.summary||'');
-  var timeStr=a.time||'';
+  var rawTime=a.rawTime||a.time||'';
+  var displayTime=relTime(rawTime);
 
   var card=document.createElement('div');
   card.className='card level-'+lv.toLowerCase()+(i<3?' card-fast':'');
@@ -173,7 +188,7 @@ function createCard(a,i){
         '<span class="level-badge" style="background:'+lvColor+'15;color:'+lvColor+'">'+lvLabel+'</span>'+
         '<span class="source-badge">'+esc(a.source||'')+linkHtml+'</span>'+
         coinHtml+
-        (timeStr?'<span class="time-tag reltime" data-ts="'+a.rawTime+'">'+relTime(a.rawTime)+'</span>':'')+
+        '<span class="time-tag reltime" data-ts="'+esc(rawTime)+'">'+displayTime+'</span>'+
       '</div>'+
       '<div class="card-title">'+title+'</div>'+
       (summary?'<div class="card-summary">'+summary+'</div>':'')+
@@ -192,6 +207,29 @@ function createCard(a,i){
     '</div>';
   
   return card;
+}
+
+// ===== Silent Fetch (新快讯静默追加到顶部) =====
+async function silentRefresh(){
+  var el=$('update-status');
+  if(el){el.textContent='正在检查新快讯…';el.classList.add('show')}
+  try{
+    var r=await fetch('https://api.github.com/repos/jinfeng4660/jinfeng-crypto-news/contents/docs/index.html');
+    var d=await r.json();
+    var content=atob(d.content);
+    var dataMatch=content.match(/var DATA = (\[.+?\]);/);
+    if(dataMatch){
+      var newData=JSON.parse(dataMatch[1]);
+      if(newData.length>ARTICLES_DATA.length){
+        // New news arrived - we need the time from the raw
+        if(el){el.textContent='📬 发现 '+(newData.length-ARTICLES_DATA.length)+' 条新快讯，刷新页面';el.classList.add('show')}
+        setTimeout(function(){location.reload()},3000);
+      }else{
+        if(el)el.textContent='✅ 已是最新';el.classList.add('show')
+        setTimeout(function(){if(el)el.classList.remove('show')},2000);
+      }
+    }
+  }catch(e){if(el)el.textContent='检查失败';setTimeout(function(){if(el)el.classList.remove('show')},2000)}
 }
 
 // ===== Toggle Expand =====
@@ -274,7 +312,7 @@ function applyFilterDOM(){
     if(currentLevel!=='ALL'&&a.level!==currentLevel)show=false;
     if(currentCoin!=='ALL'){
       var tags=a.coins||[];
-      if(!tags.includes(currentCoin)&&!tags.includes('ALL'))show=false;
+      if(!tags.includes(currentCoin))show=false;
     }
     if(searchQuery&&!(a.title||'').toLowerCase().includes(searchQuery))show=false;
     c.classList.toggle('hidden',!show);
@@ -336,13 +374,16 @@ function toggleMobileSidebar(){
   $('sidebar-mobile').classList.toggle('open');
 }
 
-// ===== Auto Refresh (silent fetch every 5min) =====
+// ===== Auto: silent refresh every 90 seconds =====
 setInterval(function(){
-  var el=$('update-status');
-  if(el){el.textContent='正在检查新快讯…';el.classList.add('show')}
-  // Reload page every 5min for fresh data
-  setTimeout(function(){location.reload()},300000);
-},240000); // 4min提示, 5min刷新
+  silentRefresh();
+  updateHeaderTime();
+},90000);
+
+setInterval(function(){
+  // 30min full page refresh as fallback
+  location.reload();
+},1800000);
 
 // ===== Keyboard =====
 document.addEventListener('DOMContentLoaded',function(){
@@ -350,4 +391,5 @@ document.addEventListener('DOMContentLoaded',function(){
   if(si)si.addEventListener('input',function(){doSearch(this.value)});
   // Set active stats
   qsa('.stat-item')[0]&&qsa('.stat-item')[0].classList.add('active');
+  startRelTime();
 });

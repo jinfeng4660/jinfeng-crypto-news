@@ -535,7 +535,7 @@ def render_site_v05(articles, now_str):
         "source": a.get("source","?"),
         "url": a.get("url",""),
         "time": a.get("scrape_time",a.get("time","")),
-        "rawTime": a.get("scrape_time",""),
+        "rawTime": now_str,
         "sentiment": a.get("sentiment","neutral"),
         "analysis": a.get("analysis",""),
         "summary": a.get("summary",""),
