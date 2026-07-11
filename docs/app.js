@@ -11,7 +11,7 @@ function startProgress(){var b=$('nprogress-bar');var w=15;b.style.width=w+'%';c
 function doneProgress(){clearInterval(npTimer);$('nprogress-bar').style.width='100%';setTimeout(function(){$('nprogress-bar').style.width='0%'},400)}
 
 // ===== State =====
-var currentLevel='ALL',currentCoin='ALL',searchQuery='',currentTimeFilter='ALL',currentSort='latest',ARTICLES_DATA=[],PAGE_SIZE=25,currentPage=0;
+var currentLevel='ALL',currentCoin='ALL',currentSource='ALL',searchQuery='',currentTimeFilter='ALL',currentSort='latest',ARTICLES_DATA=[],PAGE_SIZE=25,currentPage=0;
 var voted={};
 
 // ===== Prices (now in GL override below) =====
@@ -421,12 +421,17 @@ function updateTopics(){
   if(ht)ht.innerHTML=html;
 }
 
+function setSource(src){
+  currentSource=src||'ALL';
+  applyFilterDOM();
+}
+
 function updateSources(){
   var srcMap={};
   ARTICLES_DATA.forEach(function(a){srcMap[a.source]=(srcMap[a.source]||0)+1});
   var srcSorted=Object.keys(srcMap).sort(function(a,b){return srcMap[b]-srcMap[a]});
   var srcMax=Math.max.apply(null,Object.values(srcMap))||1;
-  var html='';srcSorted.forEach(function(s){var p=Math.round(srcMap[s]/srcMax*100);html+='<div class="source-row"><span class="src-name">'+esc(s)+'</span><div class="src-bar-wrap"><div class="src-bar-fill" style="width:'+p+'%"></div></div><span class="src-val">'+srcMap[s]+'</span></div>'});
+  var html='';srcSorted.forEach(function(s){var p=Math.round(srcMap[s]/srcMax*100);html+='<div class="source-row" onclick="setSource(\''+esc(s)+'\')" style="cursor:pointer"><span class="src-name" style="color:'+(currentSource===s?'#ffd700':'')+'">'+esc(s)+'</span><div class="src-bar-wrap"><div class="src-bar-fill" style="width:'+p+'%"></div></div><span class="src-val">'+srcMap[s]+'</span></div>'});
   var sd=$('source-dist');
   if(sd)sd.innerHTML=html;
 }
@@ -445,6 +450,7 @@ function applyFilterDOM(){
       if(!tags.includes(currentCoin))show=false;
     }
     if(searchQuery&&!(a.title||'').toLowerCase().includes(searchQuery))show=false;
+    if(currentSource!=='ALL'&&(a.source||'')!==currentSource)show=false;
     if(currentTimeFilter!=='ALL'){
       var ts=Date.parse(a.published_at||a.created_at||a.time||'');
       if(!ts)show=false;
