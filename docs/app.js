@@ -761,7 +761,7 @@ function renderChainPanel(mb,cd,coin){
     html+='<div class="chain-chart">';
     html+='<div class="label" style="margin-bottom:6px;display:flex;justify-content:space-between;align-items:center">';
     html+='  <span>📈 24h走势图（15分钟线）</span>';
-    html+='  <span style="font-size:12px;font-weight:600;color:'+lineColor+'">高:'+f4(maxP)+' 开:'+f4(startP)+' 现:'+f4(endP)+' <span style="font-weight:700;color:'+lineColor+'">'+(isUp?'+':'')+changePct+'%</span></span>';
+    html+='  <span style="font-size:12px;color:'+lineColor+'"><span style="font-weight:700">'+(isUp?'+':'')+changePct+'%</span></span>';
     html+='</div>';
     
     html+='<svg width="100%" height="'+chH+'" viewBox="0 0 '+chW+' '+chH+'" preserveAspectRatio="none" style="overflow:visible;display:block">';
@@ -777,10 +777,8 @@ function renderChainPanel(mb,cd,coin){
       else if(p===startP) label='开盘';
       else if(p===endP) label='现价';
       html+='<line x1="0" y1="'+y+'" x2="'+chW+'" y2="'+y+'" stroke="'+gColor+'" stroke-width="1"/>';
-      // Left price (on the line, left side)
-      html+='<text x="0" y="'+y+'" fill="'+tColor+'" font-size="9" font-family="monospace" dominant-baseline="central">'+f4(p)+'</text>';
-      // Right label (on the line, right side)
-      html+='<text x="'+(chW-1)+'" y="'+y+'" fill="'+(label==='现价'?lineColor:tColor)+'" font-size="'+(label==='现价'?'9':'8')+'" text-anchor="end" dominant-baseline="central" font-weight="'+(label==='现价'?'bold':'normal')+'">'+label+'</text>';
+      // Left price + type tag
+      html+='<text x="0" y="'+y+'" fill="'+(label==='现价'?lineColor:tColor)+'" font-size="'+(label==='现价'?'9':'8')+'" font-family="monospace" dominant-baseline="central" font-weight="'+(label==='现价'?'bold':'normal')+'">'+f4(p)+(label?' '+label:'')+'</text>';
     });
     
     // ===== Area fill =====
