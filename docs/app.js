@@ -411,7 +411,23 @@ setInterval(function(){
 document.addEventListener('DOMContentLoaded',function(){
   var si=$('search-input');
   if(si)si.addEventListener('input',function(){doSearch(this.value)});
-  // Set active stats
   qsa('.stat-item')[0]&&qsa('.stat-item')[0].classList.add('active');
   startRelTime();
 });
+// If app.js loaded after DOM, initialize immediately
+if(document.readyState!=='loading'){
+  var si=$('search-input');
+  if(si)si.addEventListener('input',function(){doSearch(this.value)});
+  qsa('.stat-item')[0]&&qsa('.stat-item')[0].classList.add('active');
+  if(typeof ARTICLES_DATA!=='undefined')renderCards(ARTICLES_DATA);
+}
+// window.load fallback for renderCards
+if(typeof window!=='undefined'){
+  if(document.readyState==='complete'){
+    if(typeof ARTICLES_DATA!=='undefined'&&typeof renderCards==='function')renderCards(ARTICLES_DATA);
+  }else{
+    window.addEventListener('load',function(){
+      if(typeof ARTICLES_DATA!=='undefined'&&typeof renderCards==='function')renderCards(ARTICLES_DATA);
+    });
+  }
+}
