@@ -440,40 +440,109 @@ function renderCalendar(){
   var cd=typeof CALENDAR_DATA!=='undefined'?CALENDAR_DATA:[];
   if(!cd||!cd.length){cp.innerHTML='<div class="cal-empty">暂无财经日历数据</div>';return}
   
-  // Group by date
+  // Group events by date
   var groups={};
   cd.forEach(function(ev){
     var d=ev.date;
     if(!d)return;
     if(!groups[d])groups[d]={weekday:ev.weekday||'',isToday:!!ev.isToday,events:[]};
-    if(!groups[d].events)groups[d].events=[];
     groups[d].events.push(ev);
   });
   
-  var dates=Object.keys(groups).sort();
+  // Determine current month from today or first event date
+  var todayStr=new Date().toISOString().slice(0,10);
+  var sortedDates=Object.keys(groups).sort();
+  // Find which month to show: try today, or first event month
+  var focusDate=sortedDates.indexOf(todayStr)>=0?todayStr:sortedDates[0];
+  var focusParts=focusDate.split('-');
+  var curYear=parseInt(focusParts[0]),curMonth=parseInt(focusParts[1]);
+  // Limit events to current month grid
+  var monthKey=curYear+'-'+(curMonth<10?'0':'')+curMonth;
   
-  // Show first 2 dates by default, rest collapsed
-  var showCount=2;
-  var hasMore=dates.length>showCount;
-  if(hasMore)dates=dates.slice(0,showCount);
+  // Build calendar grid for current month
+  var firstDay=new Date(curYear,curMonth-1,1);
+  var lastDay=new Date(curYear,curMonth,0);
+  var totalDays=lastDay.getDate();
+  var startWeekday=firstDay.getDay(); // 0=Sun
   
-  var html='';
-  dates.forEach(function(ds){
-    var g=groups[ds];
-    var tc=g.isToday?' cal-today':'';
-    html+='<div class="cal-date-group'+tc+'">';
-    html+='<div class="cal-date-hdr">'+esc(ds)+' 周'+g.weekday+'</div>';
+  // Selected date: default today if has events
+  var selectedDate=todayStr;
+  if(!groups[selectedDate])selectedDate=sortedDates[0];
+  
+  // Nav buttons
+  var monthNames=['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
+  var navMonthTxt=monthNames[curMonth-1]+' '+curYear;
+  
+  var html='<div class="cal-grid-wrap">';
+  html+='<div class="cal-grid-nav"><button class="cal-nav-btn" onclick="prevCalendarMonth()">◀</button><span class="cal-nav-title">'+navMonthTxt+'</span><button class="cal-nav-btn" onclick="nextCalendarMonth()">▶</button></div>';
+  
+  // Day-of-week header
+  var dowNames=['日','一','二','三','四','五','六'];
+  html+='<div class="cal-grid-dows">';
+  for(var wi=0;wi<7;wi++)html+='<span class="cal-gdow">'+dowNames[wi]+'</span>';
+  html+='</div>';
+  
+  // Day cells
+  html+='<div class="cal-grid-body">';
+  // Empty cells before first day
+  for(var ei=0;ei<startWeekday;ei++)html+='<div class="cal-gcell cal-gempty"></div>';
+  
+  for(var di=1;di<=totalDays;di++){
+    var dateStr=curYear+'-'+(curMonth<10?'0':'')+curMonth+'-'+(di<10?'0':'')+di;
+    var g=groups[dateStr];
+    var evCount=g?g.events.length:0;
+    var hiCount=g?g.events.filter(function(e){return e.impact==='high'}).length:0;
+    var isTodayClass=dateStr===todayStr?' cal-gtoday':'';
+    var hasClass=evCount>0?' cal-ghasevent':'';
+    var selClass=dateStr===selectedDate?' cal-gselected':'';
+    html+='<div class="cal-gcell'+isTodayClass+hasClass+selClass+'" onclick="selectCalendarDate(\''+dateStr+'\')" data-date="'+dateStr+'">';
+    html+='<span class="cal-gdaynum">'+di+'</span>';
+    if(evCount>0){
+      html+='<span class="cal-gdot">';
+      for(var hi=0;hi<hiCount&&hi<3;hi++)html+='<span class="cal-gdot-hi"></span>';
+      for(var mi=0;mi<evCount-hiCount&&mi<3;mi++)html+='<span class="cal-gdot-md"></span>';
+      html+='</span>';
+    }
+    html+='</div>';
+  }
+  html+='</div></div>'; // grid-body, grid-wrap
+  
+  // Event list for selected date
+  html+='<div id="cal-selected-date" class="cal-sel-date">';
+  if(groups[selectedDate]){
+    var g=groups[selectedDate];
+    html+='<div class="cal-sel-header">'+esc(selectedDate)+' 周'+(g.weekday||'')+'<span style="font-size:10px;color:#8b949e;margin-left:6px">'+g.events.length+' 条事件</span></div>';
     g.events.forEach(function(ev){
       html+=renderCalEvent(ev);
     });
-    html+='</div>';
-  });
-  
-  if(hasMore){
-    html+='<div class="cal-more-bar"><button class="cal-more-btn" onclick="expandCalendar()">📅 查看全部 '+(Object.keys(groups).length-showCount)+' 天日程</button></div>';
+  }else{
+    html+='<div class="cal-sel-empty">所选日期暂无事件</div>';
   }
+  html+='</div>';
   
   cp.innerHTML=html;
+  // Store state
+  window._calYear=curYear;
+  window._calMonth=curMonth;
+  window._calSelected=selectedDate;
+}
+
+function selectCalendarDate(dateStr){
+  window._calSelected=dateStr;
+  // Re-render the calendar (only event list needs update, but easier to re-render)
+  renderCalendar();
+}
+
+function prevCalendarMonth(){
+  if(window._calMonth===1){window._calYear--;window._calMonth=12}
+  else window._calMonth--;
+  renderCalendar();
+}
+
+function nextCalendarMonth(){
+  if(window._calMonth===12){window._calYear++;window._calMonth=1}
+  else window._calMonth++;
+  renderCalendar();
 }
 
 function renderCalEvent(ev){
