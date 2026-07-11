@@ -858,7 +858,7 @@ body{{font-family:'Inter','Noto Sans SC',-apple-system,BlinkMacSystemFont,sans-s
 <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleMobileSidebar()"></div>
 <div class="sidebar-mobile" id="sidebar-mobile"></div>
 <footer class="footer"><p>金峰策略 · 全球加密快讯 · 仅供研究参考 · 不构成投资建议</p><div class="update-badge" id="footer-update">🕐 更新于 —</div></footer>
-<script src="app.js?v=1783743855"></script>
+<script src="app.js?v=1783743866"></script>
 <script>var DATA = ''' + articles_json + '''; var CALENDAR_DATA = ''' + calendar_json + '''; var CHAIN_DATA = ''' + chain_data_json + '''; renderCards(DATA);</script>
 
 <!-- ===== 链上数据弹窗 ===== -->
