@@ -331,7 +331,7 @@ function applyDateFilter(dateStr){
   groups.forEach(function(g){
     var dateHdr = g.querySelector('.cal-date-hdr');
     if(!dateHdr) return;
-    var gDate = g.dataset.date || '';
+    var gDate = dateHdr.textContent.trim(); // 从 .cal-date-hdr 文本获取日期
     if(gDate === dateStr){
       g.style.display = '';
       // 把该组滚到可视区域
