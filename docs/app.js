@@ -60,10 +60,19 @@ function relTime(t){
   var ts;
   if(typeof t==='number'){ts=t}
   else if(typeof t==='string'){
-    if(t.includes('T')){ts=new Date(t).getTime()}
-    else if(t.match(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}/)){ts=new Date(t.replace(' ','T')+':00').getTime()}
-    else{return t}
+    // Strip timezone suffix like " CST" for parsing
+    var clean=t.replace(/\s+(CST|UTC|GMT)[+-]?\d*$/,'');
+    if(clean.includes('T')||clean.includes(' ')){
+      // Try ISO first, then space-separated
+      ts=new Date(clean.replace(' ','T')).getTime();
+      if(isNaN(ts)){
+        ts=new Date(clean.replace(/(\d{4}-\d{2}-\d{2})\s+(\d{2}:\d{2}).*/,'$1T$2:00')).getTime();
+      }
+    }else if(t.match(/^\d{4}-\d{2}-\d{2}/)){
+      ts=new Date(clean.slice(0,10)+'T'+clean.slice(11,16)+':00').getTime();
+    }else{return t}
   }else{return''}
+  if(isNaN(ts))return t;
   var m=Math.floor((now-ts)/60000);
   if(m<1)return'刚刚';
   if(m<60){return m+'分钟前'}
