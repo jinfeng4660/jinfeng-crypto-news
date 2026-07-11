@@ -263,35 +263,35 @@ var selectedEvKey = null;
 // ==== Filter ====
 function setFilter(f){
   currentFilter=f;
-  document.querySelectorAll('.filter-btn').forEach(function(b){{
+  document.querySelectorAll('.filter-btn').forEach(function(b){
     b.classList.toggle('active',b.textContent.includes(f==='high'?'高':f==='medium'?'中':'全部'));
-  }});
+  });
   renderEventList();
 }
 
 // ==== Render Event List ====
 function renderEventList(){
   var el=$('event-list');
-  var filtered=EVENTS_DATA.filter(function(ev){{
+  var filtered=EVENTS_DATA.filter(function(ev){
     if(currentFilter==='ALL')return true;
     return ev.impact===currentFilter;
-  }});
+  });
   
   // Group by date
-  var groups={{}};
-  filtered.forEach(function(ev){{
+  var groups={};
+  filtered.forEach(function(ev){
     var d=ev.date;
-    if(!groups[d])groups[d]={{events:[]}};
+    if(!groups[d])groups[d]={events:[]};
     groups[d].events.push(ev);
-  }});
+  });
   
   var dates=Object.keys(groups).sort().reverse();
   var html='';
-  dates.forEach(function(ds){{
+  dates.forEach(function(ds){
     var tc=ds===todayStr?' cal-today':'';
     html+='<div class="cal-date-group'+tc+'">';
     html+='<div class="cal-date-hdr">'+esc(ds)+'</div>';
-    groups[ds].events.forEach(function(ev){{
+    groups[ds].events.forEach(function(ev){
       var key=ev.currency+'|'+ev.title;
       var sel=key===selectedEvKey?' selected':'';
       var ic=ev.impact==='high'?'hi':'md';
@@ -308,9 +308,9 @@ function renderEventList(){
       if(ev.previous)vals+='<span class="cal-val prev">前: '+esc(ev.previous)+'</span>';
       if(vals)html+='<div class="cal-vals">'+vals+'</div>';
       html+='</div>';
-    }});
+    });
     html+='</div>';
-  }});
+  });
   
   if(!html)html='<div class="empty-state">暂无匹配事件</div>';
   el.innerHTML=html;
@@ -331,23 +331,23 @@ function showDetail(key){
   var ccy=key.split('|')[0];
   var title=key.split('|')[1];
   // Also get events with same title (possibly different currency for comparison)
-  var related=EVENTS_DATA.filter(function(ev){{
+  var related=EVENTS_DATA.filter(function(ev){
     return ev.title===title;
-  }});
+  });
   // Group history by currency
-  var histByCcy={{}};
-  related.forEach(function(ev){{
+  var histByCcy={};
+  related.forEach(function(ev){
     var c=ev.currency;
     if(!histByCcy[c])histByCcy[c]=[];
     histByCcy[c].push(ev);
-  }});
+  });
   
   // Latest event (the one that was clicked or first)
-  var latest = related.filter(function(ev){{return ev.currency===ccy}})[0] || related[0];
-  if(!latest){{rp.innerHTML='<div class="empty-state">无数据</div>';return}}
+  var latest = related.filter(function(ev){return ev.currency===ccy})[0] || related[0];
+  if(!latest){rp.innerHTML='<div class="empty-state">无数据</div>';return}
   
   var imp=latest.impact==='high'?'hi':'md';
-  var ai=latest.ai_analysis||{{}};
+  var ai=latest.ai_analysis||{};
   var ic=latest.impact==='high'?'🔴 高':'🟡 中';
   
   var html='';
@@ -369,69 +369,69 @@ function showDetail(key){
   html+='</div>';
   
   // Historical bars
-  if(latest.actual&&latest.forecast){{
-    try{{
+  if(latest.actual&&latest.forecast){
+    try{
       var maxVal=0;
-      ['actual','forecast','previous'].forEach(function(k){{
+      ['actual','forecast','previous'].forEach(function(k){
         var v=parseFloat(String(latest[k]||'0').replace(/[^0-9.]/g,''));
         if(v>maxVal)maxVal=v;
-      }});
-      if(maxVal>0){{
+      });
+      if(maxVal>0){
         html+='<div class="hist-chart">';
-        ['previous','forecast','actual'].forEach(function(k){{
+        ['previous','forecast','actual'].forEach(function(k){
           var lbl={previous:'前',forecast:'预',actual:'实'}[k];
           var v=parseFloat(String(latest[k]||'0').replace(/[^0-9.]/g,''));
           var pct=(v/maxVal*80+5);
           html+='<div class="hist-row"><span class="hist-lbl">'+lbl+'</span><div class="hist-bar-wrap"><div class="hist-bar '+k+'" style="width:'+pct+'%"></div></div><span class="hist-val">'+(latest[k]||'—')+'</span></div>';
-        }});
+        });
         html+='</div>';
-      }}
-    }}catch(e){{}}
-  }}
+      }
+    }catch(e){}
+  }
   html+='</div>';
   
   // AI Analysis
-  if(ai.impact_assessment||ai.crypto_relevance||ai.trend_note){{
+  if(ai.impact_assessment||ai.crypto_relevance||ai.trend_note){
     html+='<div class="ai-card"><h3>🤖 AI 分析</h3><div class="ai-grid">';
     if(ai.trend_note)html+='<div class="ai-row"><span class="ai-lbl">趋势</span><span class="ai-val">'+esc(ai.trend_note)+'</span></div>';
     if(ai.impact_assessment)html+='<div class="ai-row"><span class="ai-lbl">影响评估</span><span class="ai-val">'+esc(ai.impact_assessment)+'</span></div>';
     if(ai.crypto_relevance)html+='<div class="ai-row"><span class="ai-lbl">加密关联</span><span class="ai-val">'+esc(ai.crypto_relevance)+'</span></div>';
     html+='</div></div>';
-  }}
+  }
   
   // Historical timeline: same title across all dates
-  var sortedHist = related.slice().sort(function(a,b){{return a.date.localeCompare(b.date)||a.time.localeCompare(b.time)}});
-  if(sortedHist.length>1){{
+  var sortedHist = related.slice().sort(function(a,b){return a.date.localeCompare(b.date)||a.time.localeCompare(b.time)});
+  if(sortedHist.length>1){
     html+='<div class="data-card"><h3>📈 历史发布记录 ('+sortedHist.length+'次)</h3>';
     html+='<table class="history-table"><thead><tr><th>日期</th><th>币种</th><th>实际</th><th>预测</th><th>前值</th><th>偏差</th></tr></thead><tbody>';
-    sortedHist.forEach(function(ev){{
+    sortedHist.forEach(function(ev){
       var actualVal=ev.actual||'—';
       var forecastVal=ev.forecast||'—';
       var prevVal=ev.previous||'—';
       var devHtml='<span class="val" style="color:#484f58">—</span>';
-      if(ev.actual&&ev.forecast){{
-        try{{
+      if(ev.actual&&ev.forecast){
+        try{
           var a=parseFloat(String(ev.actual).replace(/[^0-9.-]/g,''));
           var f=parseFloat(String(ev.forecast).replace(/[^0-9.-]/g,''));
-          if(f!==0){{
+          if(f!==0){
             var d=((a-f)/Math.abs(f)*100).toFixed(1);
             devHtml='<span class="val '+(d>0?'up':'down')+'">'+(d>0?'+':'')+d+'%</span>';
-          }}
-        }}catch(e){{}}
-      }}
+          }
+        }catch(e){}
+      }
       html+='<tr><td>'+esc(ev.date)+'</td><td>'+esc(ev.currency)+'</td>';
       html+='<td class="val">'+actualVal+'</td><td>'+forecastVal+'</td><td>'+prevVal+'</td>';
       html+='<td>'+devHtml+'</td></tr>';
-    }});
+    });
     html+='</tbody></table></div>';
-  }}
+  }
   
   rp.innerHTML=html;
 }
 
 // ==== Utility ====
-function $(id){{return document.getElementById(id)}}
-function esc(s){{var d=document.createElement('div');d.textContent=s;return d.innerHTML}}
+function $(id){return document.getElementById(id)}
+function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
 
 var todayStr=''' + today_str + ''';
 
