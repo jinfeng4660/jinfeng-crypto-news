@@ -770,24 +770,36 @@ function renderChainPanel(mb,cd,coin){
     html+='  <span style="font-size:12px;color:'+lineColor+'"><span style="font-weight:700">'+(isUp?'+':'')+changePct+'%</span></span>';
     html+='</div>';
     
-    html+='<svg width="100%" height="'+chH+'" viewBox="0 0 '+chW+' '+chH+'" preserveAspectRatio="none" style="overflow:visible;display:block;width:100%;vector-effect:non-scaling-stroke">';
+    // Use a container: SVG fills 100% width, price labels are positioned via CSS
+    html+='<div style="position:relative;width:100%">';
     
-    // ===== Horizontal lines + price labels for key points =====
+    // Price labels as HTML (not SVG) — unaffected by SVG scaling
+    html+='<div style="position:absolute;left:0;top:0;right:0;bottom:0;pointer-events:none;z-index:1">';
     var gColor='rgba(255,255,255,0.06)';
     var tColor='#8b949e';
     keyPrices.forEach(function(p){
       var y=py(p);
+      var yPct=((y-topPad)/plotH*100);
       var label='';
       if(p===chartMaxP) label='最高';
       else if(p===chartMinP) label='最低';
       else if(p===startP) label='开盘';
       else if(p===endP) label='现价';
+      var clr=(label==='现价'?lineColor:tColor);
+      html+='<div style="position:absolute;left:0;top:'+yPct+'%;transform:translateY(-50%);font-size:11px;font-family:monospace;color:'+clr+';font-weight:'+(label==='现价'?'bold':'normal')+';white-space:nowrap">'+f4(p)+(label?' <span style="font-size:10px;opacity:0.7">'+label+'</span>':'')+'</div>';
+    });
+    html+='</div>';
+    
+    // SVG only for lines/area — no text, preserveAspectRatio=none works fine
+    html+='<svg width="100%" height="'+chH+'" viewBox="0 0 '+chW+' '+chH+'" preserveAspectRatio="none" style="overflow:visible;display:block;width:100%">';
+    
+    // Horizontal lines
+    keyPrices.forEach(function(p){
+      var y=py(p);
       html+='<line x1="0" y1="'+y+'" x2="'+chW+'" y2="'+y+'" stroke="'+gColor+'" stroke-width="1"/>';
-      // Left price + type tag
-      html+='<text x="2" y="'+y+'" fill="'+(label==='现价'?lineColor:tColor)+'" font-size="'+(label==='现价'?'10':'9')+'" font-family="monospace" dominant-baseline="central" font-weight="'+(label==='现价'?'bold':'normal')+'">'+f4(p)+(label?' '+label:'')+'</text>';
     });
     
-    // ===== Area fill =====
+    // Area fill
     var areaPts=[];
     prices.forEach(function(p,i){
       var y=py(p);
@@ -796,33 +808,31 @@ function renderChainPanel(mb,cd,coin){
     var areaStr='0,'+chH+' '+areaPts.join(' ')+' '+px(klineCount-1)+','+chH;
     html+='<polygon points="'+areaStr+'" fill="'+areaColor+'" stroke="none"/>';
     
-    // ===== Price line =====
+    // Price line
     var pts=[];
     prices.forEach(function(p,i){
       pts.push(px(i)+','+py(p));
     });
     html+='<polyline points="'+pts.join(' ')+'" fill="none" stroke="'+lineColor+'" stroke-width="1.5" stroke-linejoin="round"/>';
     
-    // ===== Start/End dots =====
+    // Start/End dots
     var startY=py(prices[0]);
     var endY=py(prices[prices.length-1]);
-    // Start dot (small)
     html+='<circle cx="'+px(0)+'" cy="'+startY+'" r="2.5" fill="'+lineColor+'" opacity="0.6"/>';
-    // End dot (big)
     html+='<circle cx="'+px(klineCount-1)+'" cy="'+endY+'" r="4" fill="'+lineColor+'" stroke="#0d0e12" stroke-width="2"/>';
     
-    // ===== Volume bars (thin, bottom 25%) =====
+    // Volume bars
     var vols=d.klines.map(function(c){return c.v});
     var maxVol=Math.max.apply(null,vols);
-    var volH=plotH*0.18; // 18% of plot height at bottom
-    var volY=chH-1;      // bottom of chart
+    var volH=plotH*0.18;
+    var volY=chH-1;
     var barWidth=(chW/klineCount)*0.6;
     vols.forEach(function(v,i){
       var barH=(v/maxVol)*volH;
       html+='<rect x="'+(px(i)-barWidth/2)+'" y="'+(volY-barH)+'" width="'+barWidth+'" height="'+barH+'" fill="'+lineColor+'" opacity="0.15"/>';
     });
     
-    html+='</svg></div>';
+    html+='</svg></div></div>';  // close svg, relative container, chain-chart
   }
   
   // Update timestamp
