@@ -707,7 +707,7 @@ function updateStats(){
 
 function updateCount(){
   var visible=qsa('.card:not(.hidden)').length;
-  $('feed-count').textContent=visible+' / '+ARTICLES_DATA.length+' 条';
+  var el=$('feed-count');if(el)el.textContent=visible+' / '+ARTICLES_DATA.length+' 条';
 }
 
 // ===== Sidebar =====
