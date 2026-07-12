@@ -336,6 +336,7 @@ function qs(s,ctx){return (ctx||document).querySelector(s)}
 function qsa(s,ctx){return (ctx||document).querySelectorAll(s)}
 
 // ===== NProgress =====
+console.log('SCRIPT_STARTED');
 var npTimer=null;
 function startProgress(){var b=$('nprogress-bar');var w=15;b.style.width=w+'%';clearInterval(npTimer);npTimer=setInterval(function(){w+=(100-w)*0.06;if(w>=95)w=95;b.style.width=w+'%'},300)}
 function doneProgress(){clearInterval(npTimer);$('nprogress-bar').style.width='100%';setTimeout(function(){$('nprogress-bar').style.width='0%'},400)}
