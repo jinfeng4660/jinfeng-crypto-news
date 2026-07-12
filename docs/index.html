@@ -338,6 +338,7 @@ function qsa(s,ctx){return (ctx||document).querySelectorAll(s)}
 // ===== NProgress =====
 console.log('SCRIPT_STARTED');
 var npTimer=null;
+console.log("AD_CHECK_LINE13",typeof ARTICLES_DATA,ARTICLES_DATA?ARTICLES_DATA.length:"N/A");
 function startProgress(){var b=$('nprogress-bar');if(!b)return;var w=15;b.style.width=w+'%';clearInterval(npTimer);npTimer=setInterval(function(){w+=(100-w)*0.06;if(w>=95)w=95;b.style.width=w+'%'},300)}
 function doneProgress(){clearInterval(npTimer);var b=$('nprogress-bar');if(!b)return;b.style.width='100%';setTimeout(function(){if(b)b.style.width='0%'},400)}
 
