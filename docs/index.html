@@ -338,8 +338,8 @@ function qsa(s,ctx){return (ctx||document).querySelectorAll(s)}
 // ===== NProgress =====
 console.log('SCRIPT_STARTED');
 var npTimer=null;
-function startProgress(){var b=$('nprogress-bar');var w=15;b.style.width=w+'%';clearInterval(npTimer);npTimer=setInterval(function(){w+=(100-w)*0.06;if(w>=95)w=95;b.style.width=w+'%'},300)}
-function doneProgress(){clearInterval(npTimer);$('nprogress-bar').style.width='100%';setTimeout(function(){$('nprogress-bar').style.width='0%'},400)}
+function startProgress(){var b=$('nprogress-bar');if(!b)return;var w=15;b.style.width=w+'%';clearInterval(npTimer);npTimer=setInterval(function(){w+=(100-w)*0.06;if(w>=95)w=95;b.style.width=w+'%'},300)}
+function doneProgress(){clearInterval(npTimer);var b=$('nprogress-bar');if(!b)return;b.style.width='100%';setTimeout(function(){if(b)b.style.width='0%'},400)}
 
 // ===== State =====
 var currentLevel='ALL',currentCoin='ALL',currentSource='ALL',searchQuery='',currentTimeFilter='ALL',currentSort='latest',PAGE_SIZE=25,currentPage=0;
@@ -699,8 +699,8 @@ function toggleExpand(i,e){
 function updateStats(){
   var stats={S:0,A:0,B:0,C:0};
   ARTICLES_DATA.forEach(function(a){stats[a.level]=(stats[a.level]||0)+1});
-  $('stat-all').textContent=ARTICLES_DATA.length;
-  $('stat-s').textContent=stats.S||0;$('stat-a').textContent=stats.A||0;$('stat-b').textContent=stats.B||0;$('stat-c').textContent=stats.C||0;
+  var el=$('stat-all');if(el)el.textContent=ARTICLES_DATA.length;
+  el=$('stat-s');if(el)el.textContent=stats.S||0;el=$('stat-a');if(el)el.textContent=stats.A||0;el=$('stat-b');if(el)el.textContent=stats.B||0;el=$('stat-c');if(el)el.textContent=stats.C||0;
   var max=Math.max(stats.S||1,stats.A||1,stats.B||1,stats.C||1);
   ['S','A','B','C'].forEach(function(l){var el=$('bar-'+l.toLowerCase());if(el)el.style.width=((stats[l]||0)/max*100)+'%'});
 }
