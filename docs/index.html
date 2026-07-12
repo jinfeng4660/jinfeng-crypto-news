@@ -341,7 +341,8 @@ function startProgress(){var b=$('nprogress-bar');var w=15;b.style.width=w+'%';c
 function doneProgress(){clearInterval(npTimer);$('nprogress-bar').style.width='100%';setTimeout(function(){$('nprogress-bar').style.width='0%'},400)}
 
 // ===== State =====
-var currentLevel='ALL',currentCoin='ALL',currentSource='ALL',searchQuery='',currentTimeFilter='ALL',currentSort='latest',ARTICLES_DATA=[],PAGE_SIZE=25,currentPage=0;
+var currentLevel='ALL',currentCoin='ALL',currentSource='ALL',searchQuery='',currentTimeFilter='ALL',currentSort='latest',PAGE_SIZE=25,currentPage=0;
+if(typeof ARTICLES_DATA==='undefined')var ARTICLES_DATA=[];
 if(typeof DATA!=='undefined'&&DATA.length)ARTICLES_DATA=DATA;
 var voted={};
 
