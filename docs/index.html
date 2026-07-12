@@ -630,7 +630,12 @@ function createCard(a,i){
     '<div class="card-votes">'+
       '<button class="vote-btn up'+(voted[i+'-bullish']?' voted':'')+'" onclick="vote('+i+',\'bullish\',event)">▲<span class="vote-count">'+bullishV+'</span></button>'+
       '<button class="vote-btn imp'+(voted[i+'-important']?' voted':'')+'" onclick="vote('+i+',\'important\',event)">⚡<span class="vote-count">'+impV+'</span></button>'+
-      '<button class="vote-btn down'+(voted[i+'-bearish']?' voted':'')+'" onclick="vote('+i+',\'bearish\',event)">▼<span class="vote-count">'+bearishV+'</span></button>'+\n      '<button class="vote-btn lol'+(voted[i+'-lol']?' voted':'')+'" onclick="vote('+i+','lol',event)" title="哈哈">😂<span class="vote-count">'+lolV+'</span></button>'+\n      '<button class="vote-btn save'+(voted[i+'-save']?' voted':'')+'" onclick="vote('+i+','save",event)" title="收藏">📌<span class="vote-count">'+saveV+'</span></button>'+\n      '<button class="vote-btn toxic'+(voted[i+'-toxic']?' voted':'')+'" onclick="vote('+i+','toxic',event)" title="有毒">🤢<span class="vote-count">'+toxicV+'</span></button>'+\n      '<button class="vote-btn like'+(voted[i+'-like']?' voted':'')+'" onclick="vote('+i+','like',event)" title="赞">👍<span class="vote-count">'+likeV+'</span></button>'+\n      '<button class="vote-btn dislike'+(voted[i+'-dislike']?' voted':'')+'" onclick="vote('+i+','dislike',event)" title="踩">👎<span class="vote-count">'+dislikeV+'</span></button>'+
+      '<button class="vote-btn down'+(voted[i+'-bearish']?' voted':'')+'" onclick="vote('+i+',\'bearish\',event)">▼<span class="vote-count">'+bearishV+'</span></button>'+
+      '<button class="vote-btn lol'+(voted[i+'-lol']?' voted':'')+'" onclick="vote('+i+',\'lol\',event)" title="哈哈">😂<span class="vote-count">'+lolV+'</span></button>'+
+      '<button class="vote-btn save'+(voted[i+'-save']?' voted':'')+'" onclick="vote('+i+',\'save\',event)" title="收藏">📌<span class="vote-count">'+saveV+'</span></button>'+
+      '<button class="vote-btn toxic'+(voted[i+'-toxic']?' voted':'')+'" onclick="vote('+i+',\'toxic\',event)" title="有毒">🤢<span class="vote-count">'+toxicV+'</span></button>'+
+      '<button class="vote-btn like'+(voted[i+'-like']?' voted':'')+'" onclick="vote('+i+',\'like\',event)" title="赞">👍<span class="vote-count">'+likeV+'</span></button>'+
+      '<button class="vote-btn dislike'+(voted[i+'-dislike']?' voted':'')+'" onclick="vote('+i+',\'dislike\',event)" title="踩">👎<span class="vote-count">'+dislikeV+'</span></button>'+
     '</div>'+
     '<div class="card-body">'+
       '<div class="card-header">'+
@@ -651,7 +656,8 @@ function createCard(a,i){
         '<div class="ai-strategy">'+esc(ai.strategy)+'</div>'+
       '</div>'+
       '<div class="card-footer">'+
-        '<button class="expand-btn" onclick="toggleExpand('+i+',event)"><span class="arrow">▾</span> AI分析</button>'+\n        '<button class="expand-btn comment-toggle" onclick="toggleCommentBox('+i+',event)"><span class="arrow">💬</span> 评论</button>'+
+        '<button class="expand-btn" onclick="toggleExpand('+i+',event)"><span class="arrow">▾</span> AI分析</button>'+
+        '<button class="expand-btn comment-toggle" onclick="toggleCommentBox('+i+',event)"><span class="arrow">💬</span> 评论</button>'+
       '</div>'+
     '</div>';
   
