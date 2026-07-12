@@ -624,7 +624,8 @@ function createCard(a,i){
   card.dataset.coins=JSON.stringify(a.coins||['ALL']);
   card.dataset.title=(a.title||'').toLowerCase();
   
-  var comHtml='<div class="comment-section" style="display:none"><div class="comment-list" id="comment-list-'+i+'"></div><form onsubmit="submitComment('+i+',event)" class="comment-form"><input id="comment-input-'+i+'" class="comment-input" placeholder="写评论…" maxlength="200"><button type="submit" class="comment-submit">发送</button></form></div>';\n  card.innerHTML=
+  var comHtml=`<div class="comment-section" style="display:none"><div class="comment-list" id="comment-list-'+i+'"></div><form onsubmit="submitComment('+i+',event)" class="comment-form"><input id="comment-input-'+i+'" class="comment-input" placeholder="写评论…" maxlength="200"><button type="submit" class="comment-submit">发送</button></form></div>`;
+  card.innerHTML=
     '<div class="left-border" style="background:'+leftColor+'"></div>'+
     '<div class="card-votes">'+
       '<button class="vote-btn up'+(voted[i+'-bullish']?' voted':'')+'" onclick="vote('+i+',\'bullish\',event)">▲<span class="vote-count">'+bullishV+'</span></button>'+
