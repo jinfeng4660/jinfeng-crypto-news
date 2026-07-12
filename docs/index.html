@@ -748,7 +748,7 @@ function updateTopics(){
     }
   });
   var topicSorted=Object.keys(topics).sort(function(a,b){return topics[b]-topics[a]}).slice(0,8);
-  var html='';topicSorted.forEach(function(t){html+='<span class="hot-topic" onclick="filterByCoin(\'+\n    comHtml+\n    '</div>';
+  var html='';topicSorted.forEach(function(t){html+='<span class="hot-topic" onclick="filterByCoin(\''+esc(t)+'\')">'+esc(t)+'</span>';});
   if(!html)html='<span class="hot-topic">无活跃话题</span>';
   var ht=$('hot-topics');
   if(ht)ht.innerHTML=html;
