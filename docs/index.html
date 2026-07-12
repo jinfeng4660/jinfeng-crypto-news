@@ -413,8 +413,8 @@ fetchPrices=async function(){
   }catch(e){console.warn('Binance price fetch failed',e)}
   renderGainersLosers();
   fetchFearGreed();
-
-fetchPrices();};
+};
+fetchPrices();
 
 // ===== Fear & Greed =====
 async function fetchFearGreed(){
