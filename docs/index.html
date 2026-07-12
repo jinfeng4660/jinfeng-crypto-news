@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -256,7 +256,7 @@ body{font-family:'Inter','Noto Sans SC',-apple-system,BlinkMacSystemFont,sans-se
   </header>
 
   <!-- Ticker -->
-  <div class="ticker-wrap"><div class="ticker" id="ticker">BTC — ETH — SOL — SUI — DOGE — 实时</div></div>
+  <div class="ticker-wrap"><div class="tickerInner" id="tickerInner"></div></div>
 
   <!-- Search + Sort + Time Filter -->
   <div class="controls">
@@ -350,7 +350,26 @@ var voted={};
 // ===== Prices (now in GL override below) =====
 setInterval(fetchPrices,60000);
 
+
+// ===== Ticker Bar =====
+var tickerSymbols=['BTC','ETH','SOL','SUI','DOGE'];
+function renderTicker(){
+  var c=$('tickerInner');
+  if(!c)return;
+  c.innerHTML='';
+  tickerSymbols.forEach(function(sym){
+    var p=lastPrices[sym]||{p:0,ch:0};
+    var ch=p.ch;
+    var cls=ch>0?'up':ch<0?'down':'flat';
+    var e=document.createElement('div');
+    e.className='ticker-item';
+    e.innerHTML='<span class="coin-ticker" onclick="openChainPanel(\''+sym+'\')"><span class="ticker-symbol">'+sym+'</span><span class="ticker-price">$'+p.p.toFixed(2)+'</span><span class="ticker-change '+cls+'">'+(ch>=0?'+':'')+ch.toFixed(2)+'%</span></span>';
+    c.appendChild(e);
+  });
+}
+
 // ===== Gainers & Losers =====
+
 var lastPrices={};
 // ===== Recent Comments Sidebar =====
 function renderRecentComments(){
