@@ -894,8 +894,8 @@ function renderComments(i,card){
 
 // ===== Mobile =====
 function toggleMobileSidebar(){
-  $('sidebar-overlay').classList.toggle('open');
-  $('sidebar-mobile').classList.toggle('open');
+  var el=$('sidebar-overlay');if(el)el.classList.toggle('open');
+  el=$('sidebar-mobile');if(el)el.classList.toggle('open');
 }
 
 // ===== Auto: silent refresh every 90 seconds =====
