@@ -338,14 +338,14 @@ function qsa(s,ctx){return (ctx||document).querySelectorAll(s)}
 // ===== NProgress =====
 console.log('SCRIPT_STARTED');
 var npTimer=null;
-console.log("AD_CHECK_LINE13",typeof ARTICLES_DATA,ARTICLES_DATA?ARTICLES_DATA.length:"N/A");
+console.log("AD_CHECK_LINE13",typeof window.ARTICLES_DATA,window.ARTICLES_DATA?window.ARTICLES_DATA.length:"N/A");
 function startProgress(){var b=$('nprogress-bar');if(!b)return;var w=15;b.style.width=w+'%';clearInterval(npTimer);npTimer=setInterval(function(){w+=(100-w)*0.06;if(w>=95)w=95;b.style.width=w+'%'},300)}
 function doneProgress(){clearInterval(npTimer);var b=$('nprogress-bar');if(!b)return;b.style.width='100%';setTimeout(function(){if(b)b.style.width='0%'},400)}
 
 // ===== State =====
 var currentLevel='ALL',currentCoin='ALL',currentSource='ALL',searchQuery='',currentTimeFilter='ALL',currentSort='latest',PAGE_SIZE=25,currentPage=0;
-if(typeof ARTICLES_DATA==='undefined')var ARTICLES_DATA=[]; console.log('AD_FALLBACK',typeof ARTICLES_DATA,ARTICLES_DATA.length);
-if(typeof DATA!=='undefined'&&DATA.length){ARTICLES_DATA=DATA;console.log('AD_FROM_DATA',typeof ARTICLES_DATA,ARTICLES_DATA.length);}
+if(typeof window.ARTICLES_DATA==='undefined')var window.ARTICLES_DATA=[]; console.log('AD_FALLBACK',typeof window.ARTICLES_DATA,window.ARTICLES_DATA.length);
+if(typeof DATA!=='undefined'&&DATA.length){window.ARTICLES_DATA=DATA;console.log('AD_FROM_DATA',typeof window.ARTICLES_DATA,window.ARTICLES_DATA.length);}
 var voted={};
 
 // ===== Prices (now in GL override below) =====
@@ -392,7 +392,7 @@ function renderRecentComments(){
   var h='';
   top.forEach(function(c){
     var cardT='';
-    if(ARTICLES_DATA[parseInt(c.idx)])cardT=esc(ARTICLES_DATA[parseInt(c.idx)].title||'').substring(0,40);
+    if(window.ARTICLES_DATA[parseInt(c.idx)])cardT=esc(window.ARTICLES_DATA[parseInt(c.idx)].title||'').substring(0,40);
     h+='<div class="rc-item"><div class="rc-text">'+esc(c.text).substring(0,60)+'</div><div class="rc-meta">'+(cardT?'<span class="rc-title">'+cardT+'</span> · ':'')+'<span class="rc-time">'+relTime(c.time)+'</span></div></div>';
   });
   el.innerHTML=h;
@@ -510,7 +510,7 @@ function genAI(a){
 }
 
 // ===== Render =====
-function renderCards(data){console.log('RENDER_CARDS_CALL',typeof data,data?data.length:'N/A');ARTICLES_DATA=data;console.log('AD_AFTER_RENDER',typeof ARTICLES_DATA,ARTICLES_DATA.length);buildCards();
+function renderCards(data){console.log('RENDER_CARDS_CALL',typeof data,data?data.length:'N/A');window.ARTICLES_DATA=data;console.log('AD_AFTER_RENDER',typeof window.ARTICLES_DATA,window.ARTICLES_DATA.length);buildCards();
   startRelTime();
   updateHeaderTime();
 }
@@ -527,7 +527,7 @@ function buildCards(){
   var fragment=document.createDocumentFragment();
   list.innerHTML='';
   
-  if(!ARTICLES_DATA.length){
+  if(!window.ARTICLES_DATA.length){
     list.innerHTML='<div class="empty-state"><div class="icon">📭</div><h3>暂无快讯</h3><p>数据采集中，请稍后刷新</p></div>';
     updateCount();updateSidebar();return
   }
@@ -604,7 +604,7 @@ function loadMore(){
 }
 
 function getSortedData(){
-  var sorted=[].concat(ARTICLES_DATA);
+  var sorted=[].concat(window.ARTICLES_DATA);
   if(currentSort==='hot')sorted.sort(function(a,b){var va=a.votes||{};var vb=b.votes||{};var sa=(va.bullish||0)+(va.bearish||0)+(va.important||0)+(va.lol||0)+(va.save||0)+(va.toxic||0)+(va.like||0)+(va.dislike||0);var sb=(vb.bullish||0)+(vb.bearish||0)+(vb.important||0)+(vb.lol||0)+(vb.save||0)+(vb.toxic||0)+(vb.like||0)+(vb.dislike||0);return sb-sa});
   return sorted;
 }
@@ -693,9 +693,9 @@ async function silentRefresh(){
     var dataMatch=content.match(/var ARTICLES_DATA = (\[.+?\]);/);
     if(dataMatch){
       var newData=JSON.parse(dataMatch[1]);
-      if(newData.length>ARTICLES_DATA.length){
+      if(newData.length>window.ARTICLES_DATA.length){
         // New news arrived - we need the time from the raw
-        if(el){el.textContent='📬 发现 '+(newData.length-ARTICLES_DATA.length)+' 条新快讯，刷新页面';el.classList.add('show')}
+        if(el){el.textContent='📬 发现 '+(newData.length-window.ARTICLES_DATA.length)+' 条新快讯，刷新页面';el.classList.add('show')}
         setTimeout(function(){location.reload()},3000);
       }else{
         if(el)el.textContent='✅ 已是最新';el.classList.add('show')
@@ -716,8 +716,8 @@ function toggleExpand(i,e){
 // ===== Stats =====
 function updateStats(){
   var stats={S:0,A:0,B:0,C:0};
-  ARTICLES_DATA.forEach(function(a){stats[a.level]=(stats[a.level]||0)+1});
-  var el=$('stat-all');if(el)el.textContent=ARTICLES_DATA.length;
+  window.ARTICLES_DATA.forEach(function(a){stats[a.level]=(stats[a.level]||0)+1});
+  var el=$('stat-all');if(el)el.textContent=window.ARTICLES_DATA.length;
   el=$('stat-s');if(el)el.textContent=stats.S||0;el=$('stat-a');if(el)el.textContent=stats.A||0;el=$('stat-b');if(el)el.textContent=stats.B||0;el=$('stat-c');if(el)el.textContent=stats.C||0;
   var max=Math.max(stats.S||1,stats.A||1,stats.B||1,stats.C||1);
   ['S','A','B','C'].forEach(function(l){var el=$('bar-'+l.toLowerCase());if(el)el.style.width=((stats[l]||0)/max*100)+'%'});
@@ -725,7 +725,7 @@ function updateStats(){
 
 function updateCount(){
   var visible=qsa('.card:not(.hidden)').length;
-  var el=$('feed-count');if(el)el.textContent=visible+' / '+ARTICLES_DATA.length+' 条';
+  var el=$('feed-count');if(el)el.textContent=visible+' / '+window.ARTICLES_DATA.length+' 条';
 }
 
 // ===== Sidebar =====
@@ -734,7 +734,7 @@ function updateSidebar(){
   updateTopics();
   renderCalendar();
   var topics={};
-  ARTICLES_DATA.forEach(function(a){
+  window.ARTICLES_DATA.forEach(function(a){
     if(a.coins){
       a.coins.forEach(function(c){
         if(c!="ALL"){topics[c]=(topics[c]||0)+1}
@@ -747,11 +747,11 @@ function updateSidebar(){
 
 function updateSentiment(){
   var bullish=0,bearish=0,neutral=0;
-  ARTICLES_DATA.forEach(function(a){
+  window.ARTICLES_DATA.forEach(function(a){
     var ai=genAI(a);
     if(ai.direction==='bullish')bullish++;else if(ai.direction==='bearish')bearish++;else neutral++;
   });
-  var total=ARTICLES_DATA.length||1;
+  var total=window.ARTICLES_DATA.length||1;
   var bp=Math.round(bullish/total*100),bp2=Math.round(bearish/total*100),np=100-bp-bp2;
   var sb=$('sentiment-bar');
   if(sb)sb.innerHTML='<div class="seg bullish" style="width:'+bp+'%"></div><div class="seg bearish" style="width:'+bp2+'%"></div><div class="seg neutral" style="width:'+np+'%"></div>';
@@ -764,7 +764,7 @@ function updateSentiment(){
 
 function updateTopics(){
   var topics={};
-  ARTICLES_DATA.forEach(function(a){
+  window.ARTICLES_DATA.forEach(function(a){
     if(a.coins){
       a.coins.forEach(function(c){
         if(c!="ALL"){topics[c]=(topics[c]||0)+1}
@@ -785,7 +785,7 @@ function setSource(src){
 
 function updateSources(){
   var srcMap={};
-  ARTICLES_DATA.forEach(function(a){srcMap[a.source]=(srcMap[a.source]||0)+1});
+  window.ARTICLES_DATA.forEach(function(a){srcMap[a.source]=(srcMap[a.source]||0)+1});
   var srcSorted=Object.keys(srcMap).sort(function(a,b){return srcMap[b]-srcMap[a]});
   var srcMax=Math.max.apply(null,Object.values(srcMap))||1;
   var html='';srcSorted.forEach(function(s){var p=Math.round(srcMap[s]/srcMax*100);html+='<div class="source-row" onclick="setSource(\''+esc(s)+'\')" style="cursor:pointer"><span class="src-name" style="color:'+(currentSource===s?'#ffd700':'')+'">'+esc(s)+'</span><div class="src-bar-wrap"><div class="src-bar-fill" style="width:'+p+'%"></div></div><span class="src-val">'+srcMap[s]+'</span></div>'});
@@ -798,7 +798,7 @@ function applyFilterDOM(){
   var cards=qsa('.card');
   cards.forEach(function(c){
     var idx=parseInt(c.dataset.i);
-    var a=ARTICLES_DATA[idx];
+    var a=window.ARTICLES_DATA[idx];
     if(!a){c.classList.add('hidden');return}
     var show=true;
     if(currentLevel!=='ALL'&&a.level!==currentLevel)show=false;
@@ -932,7 +932,7 @@ document.addEventListener('DOMContentLoaded',function(){
   var si=$('search-input');
   if(si)si.addEventListener('input',function(){doSearch(this.value)});
   qsa('.stat-item')[0]&&qsa('.stat-item')[0].classList.add('active');
-  if(ARTICLES_DATA.length&&!qsa('.card').length)buildCards();
+  if(window.ARTICLES_DATA.length&&!qsa('.card').length)buildCards();
   startRelTime();
 });
 // If app.js loaded after DOM, initialize immediately
@@ -940,16 +940,16 @@ if(document.readyState!=='loading'){
   var si=$('search-input');
   if(si)si.addEventListener('input',function(){doSearch(this.value)});
   qsa('.stat-item')[0]&&qsa('.stat-item')[0].classList.add('active');
-  if(ARTICLES_DATA.length&&!qsa('.card').length)buildCards();
-  if(typeof ARTICLES_DATA!=='undefined')renderCards(ARTICLES_DATA);
+  if(window.ARTICLES_DATA.length&&!qsa('.card').length)buildCards();
+  if(typeof window.ARTICLES_DATA!=='undefined')renderCards(window.ARTICLES_DATA);
 }
 // window.load fallback for renderCards
 if(typeof window!=='undefined'){
   if(document.readyState==='complete'){
-    if(typeof ARTICLES_DATA!=='undefined'&&typeof renderCards==='function')renderCards(ARTICLES_DATA);
+    if(typeof window.ARTICLES_DATA!=='undefined'&&typeof renderCards==='function')renderCards(window.ARTICLES_DATA);
   }else{
     window.addEventListener('load',function(){
-      if(typeof ARTICLES_DATA!=='undefined'&&typeof renderCards==='function')renderCards(ARTICLES_DATA);
+      if(typeof window.ARTICLES_DATA!=='undefined'&&typeof renderCards==='function')renderCards(window.ARTICLES_DATA);
     });
   }
 }
